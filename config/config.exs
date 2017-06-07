@@ -6,10 +6,10 @@
 use Mix.Config
 
 # Configures the endpoint
-config :brett_projekt, BrettProjekt.Endpoint,
+config :brett_projekt, BrettProjekt.Web.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "xrk8TC3kKk7/WStGWgihy404z6t2xePtOKH8Q27n/mvavFO3Y6aM6gwyjk3fIW+v",
-  render_errors: [view: BrettProjekt.ErrorView, accepts: ~w(json)],
+  secret_key_base: "AYbLuPzNjKLPpLyiOSOsjoCrN30CS4yjEy8+i8YFswsGxrRCJgbv2GqgIxhLxs1p",
+  render_errors: [view: BrettProjekt.Web.ErrorView, accepts: ~w(json)],
   pubsub: [name: BrettProjekt.PubSub,
            adapter: Phoenix.PubSub.PG2]
 

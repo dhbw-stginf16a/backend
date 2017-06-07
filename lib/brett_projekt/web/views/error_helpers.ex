@@ -1,4 +1,4 @@
-defmodule BrettProjekt.ErrorHelpers do
+defmodule BrettProjekt.Web.ErrorHelpers do
   @moduledoc """
   Conveniences for translating and building error messages.
   """
@@ -21,9 +21,9 @@ defmodule BrettProjekt.ErrorHelpers do
     #     dgettext "errors", "is invalid"
     #
     if count = opts[:count] do
-      Gettext.dngettext(BrettProjekt.Gettext, "errors", msg, msg, count, opts)
+      Gettext.dngettext(BrettProjekt.Web.Gettext, "errors", msg, msg, count, opts)
     else
-      Gettext.dgettext(BrettProjekt.Gettext, "errors", msg, opts)
+      Gettext.dgettext(BrettProjekt.Web.Gettext, "errors", msg, opts)
     end
   end
 end

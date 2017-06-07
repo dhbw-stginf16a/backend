@@ -1,4 +1,4 @@
-defmodule BrettProjekt.ErrorView do
+defmodule BrettProjekt.Web.ErrorView do
   use BrettProjekt.Web, :view
 
   def render("404.json", _assigns) do

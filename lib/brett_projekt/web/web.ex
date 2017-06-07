@@ -16,44 +16,41 @@ defmodule BrettProjekt.Web do
   below.
   """
 
-  def model do
-    quote do
-      # Define common model functionality
-    end
-  end
-
   def controller do
     quote do
-      use Phoenix.Controller
-
-      import BrettProjekt.Router.Helpers
-      import BrettProjekt.Gettext
+      use Phoenix.Controller, namespace: BrettProjekt.Web
+      import Plug.Conn
+      import BrettProjekt.Web.Router.Helpers
+      import BrettProjekt.Web.Gettext
     end
   end
 
   def view do
     quote do
-      use Phoenix.View, root: "web/templates"
+      use Phoenix.View, root: "lib/brett_projekt/web/templates",
+                        namespace: BrettProjekt.Web
 
       # Import convenience functions from controllers
       import Phoenix.Controller, only: [get_csrf_token: 0, get_flash: 2, view_module: 1]
 
-      import BrettProjekt.Router.Helpers
-      import BrettProjekt.ErrorHelpers
-      import BrettProjekt.Gettext
+      import BrettProjekt.Web.Router.Helpers
+      import BrettProjekt.Web.ErrorHelpers
+      import BrettProjekt.Web.Gettext
     end
   end
 
   def router do
     quote do
       use Phoenix.Router
+      import Plug.Conn
+      import Phoenix.Controller
     end
   end
 
   def channel do
     quote do
       use Phoenix.Channel
-      import BrettProjekt.Gettext
+      import BrettProjekt.Web.Gettext
     end
   end
 

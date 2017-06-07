@@ -1,7 +1,7 @@
-defmodule BrettProjekt.Endpoint do
+defmodule BrettProjekt.Web.Endpoint do
   use Phoenix.Endpoint, otp_app: :brett_projekt
 
-  socket "/socket", BrettProjekt.UserSocket
+  socket "/socket", BrettProjekt.Web.UserSocket
 
   # Serve at "/" the static files from "priv/static" directory.
   #
@@ -34,7 +34,19 @@ defmodule BrettProjekt.Endpoint do
   plug Plug.Session,
     store: :cookie,
     key: "_brett_projekt_key",
-    signing_salt: "Pj2oSIef"
+    signing_salt: "ZLaeu8WI"
 
-  plug BrettProjekt.Router
+  plug BrettProjekt.Web.Router
+
+  @doc """
+  Dynamically loads configuration from the system environment
+  on startup.
+
+  It receives the endpoint configuration from the config files
+  and must return the updated configuration.
+  """
+  def load_from_system_env(config) do
+    port = System.get_env("PORT") || raise "expected the PORT environment variable to be set"
+    {:ok, Keyword.put(config, :http, [:inet6, port: port])}
+  end
 end
