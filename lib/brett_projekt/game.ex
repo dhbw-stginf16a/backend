@@ -20,15 +20,30 @@ defmodule BrettProjekt.Game do
   ## Examples
 
       BrettProjekt.Game.create System.unique_integer
+
   """
   def create(game_id) do
     GenServer.start_link(__MODULE__, %BrettProjekt.Game{game_id: game_id})
   end
 
+  @doc """
+  Returns the unique game-id set when calling `create/1`
+  """
   def get_id(game) do
     GenServer.call(game, :get_id)
   end
 
+  @doc """
+  Add a new player with a given name to the game.
+
+  The player name will be trimmed and converted to lowercase.
+
+  ## Arguments
+
+    - game: The game to which the player is going to be added
+    - name: The name of the new player
+
+  """
   def add_player(game, name) do
     name = String.downcase String.trim name
     cond do
@@ -43,6 +58,9 @@ defmodule BrettProjekt.Game do
     end
   end
 
+  @doc """
+  Returns a map of players with the player-id as key and a player-struct as the value.
+  """
   def get_players(game) do
     GenServer.call(game, :get_players)
   end
@@ -68,10 +86,29 @@ defmodule BrettProjekt.Game do
     GenServer.call game, :get_join_enabled
   end
 
+  @doc """
+  Disables joining of new players
+
+  ## Arguments
+
+    - game: The game on which joining of new players should be disabled
+
+  """
   def disable_join(game) do
     GenServer.call game, :disable_join
   end
 
+  @doc """
+  Checks if a player with name is in the game
+
+  The name that will be checked gets trimmed and converted to lowercase.
+
+  ## Arguments
+
+    - game: The game to check for players
+    - player_name: Name of the player to search for
+
+  """
   def has_player?(game, player_name) do
     player = Enum.find(get_players(game), fn({_player_id, player}) ->
       %{name: name} = player
