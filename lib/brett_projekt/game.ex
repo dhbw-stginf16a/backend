@@ -1,11 +1,3 @@
-defmodule BrettProjekt.Game.Player do
-  defstruct [
-    :id,
-    :name,
-    {:roles, []}
-  ]
-end
-
 defmodule BrettProjekt.Game do
   use GenServer
 
