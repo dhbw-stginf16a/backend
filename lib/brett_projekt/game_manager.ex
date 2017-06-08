@@ -17,7 +17,7 @@ defmodule BrettProjekt.GameManager do
   end
 
   def add_game(game_manager, game) when is_pid game do
-    {:ok, game_id, game} = GenServer.call(game_manager, {:add_game, game})
+    GenServer.call(game_manager, {:add_game, game})
   end
 
   def generate_game_id(game_manager) do
@@ -46,7 +46,7 @@ defmodule BrettProjekt.GameManager do
 
   def handle_call(:generate_game_id, from, %{game_ids: game_ids} = state) do
     # Depending on length high chance of collision, so check below
-    game_id = random_game_id
+    game_id = random_game_id()
 
     case Enum.member? game_ids, game_id do
       false ->
