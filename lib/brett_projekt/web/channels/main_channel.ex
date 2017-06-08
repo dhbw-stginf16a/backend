@@ -39,7 +39,7 @@ defmodule BrettProjekt.Web.MainChannel do
 
           # Username & game valid, add the user to the game and create an auth_token
           true ->
-            case Game.add_player game, name do
+            case Game.add_new_player game, name do
               {:err, :joining_disabled} ->
                 {:reply, {:err, %{error: "joining_disabled"}}, socket}
 

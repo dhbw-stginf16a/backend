@@ -1,4 +1,6 @@
 defmodule BrettProjekt.Game do
+  alias BrettProjekt.Game.Player, as: Player
+
   @enforce_keys [:game_id]
   defstruct [
     :game_id,
@@ -42,7 +44,7 @@ defmodule BrettProjekt.Game do
     - name: The name of the new player
 
   """
-  def add_player(game, name) do
+  def add_new_player(game, name) do
     name = String.downcase String.trim name
     cond do
       join_enabled?(game) == false ->
@@ -52,7 +54,16 @@ defmodule BrettProjekt.Game do
         {:err, :name_conflict}
 
       true ->
-        GenServer.call(game, {:add_player, name})
+        roles =
+          case Enum.count get_players(game) do
+            0 -> [:admin]
+            _ -> []
+          end
+
+        player_id = GenServer.call(game, :get_new_player_id, roles)
+        {:ok, player} = Player.create player_id, name
+
+        GenServer.call(game, {:add_player, player})
     end
   end
 
