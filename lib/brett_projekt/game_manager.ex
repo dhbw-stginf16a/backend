@@ -4,7 +4,11 @@ defmodule BrettProjekt.GameManager do
 
   # ---------- CLIENT API ----------
   def start_link do
-    GenServer.start_link(__MODULE__, %{ games: %{}, game_ids: [] })
+    start_link(nil)
+  end
+
+  def start_link(name) do
+    GenServer.start_link(__MODULE__, %{ games: %{}, game_ids: [] }, name: name)
   end
 
   def add_new_game(game_manager) do
