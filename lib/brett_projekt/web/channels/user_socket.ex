@@ -2,7 +2,7 @@ defmodule BrettProjekt.Web.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "room:*", BrettProjekt.Web.RoomChannel
+  channel "main", BrettProjekt.Web.MainChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
