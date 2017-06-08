@@ -16,7 +16,7 @@ defmodule BrettProjekt.GameManager do
     add_game game_manager, game
   end
 
-  def add_game(game_manager, game) when is_pid game do
+  def add_game(game_manager, game) do
     GenServer.call(game_manager, {:add_game, game})
   end
 
@@ -28,7 +28,7 @@ defmodule BrettProjekt.GameManager do
     GenServer.call(game_manager, :get_games)
   end
 
-  def get_game_by_id(game_manager, game_id) when is_binary game_id do
+  def get_game_by_id(game_manager, game_id) do
     GenServer.call(game_manager, {:get_game_by_id, game_id})
   end
 
