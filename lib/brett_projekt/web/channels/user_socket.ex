@@ -3,6 +3,7 @@ defmodule BrettProjekt.Web.UserSocket do
 
   ## Channels
   channel "main", BrettProjekt.Web.MainChannel
+  channel "game:*", BrettProjekt.Web.GameChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
