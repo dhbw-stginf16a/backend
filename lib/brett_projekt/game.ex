@@ -60,8 +60,8 @@ defmodule BrettProjekt.Game do
             _ -> []
           end
 
-        player_id = GenServer.call(game, :get_new_player_id, roles)
-        {:ok, player} = Player.create player_id, name
+        player_id = GenServer.call game, :get_new_player_id
+        {:ok, player} = Player.create player_id, name, roles
 
         GenServer.call(game, {:add_player, player})
     end
@@ -120,7 +120,7 @@ defmodule BrettProjekt.Game do
   """
   def has_player?(game, player_name) do
     player = Enum.find(get_players(game), fn({_player_id, player}) ->
-      %{name: name} = player
+      name = Player.get_name player
       player_name = String.downcase String.trim player_name
       name == player_name
     end)

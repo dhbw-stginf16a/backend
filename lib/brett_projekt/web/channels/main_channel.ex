@@ -46,13 +46,13 @@ defmodule BrettProjekt.Web.MainChannel do
               {:err, :name_conflict} ->
                 {:reply, {:err, %{error: "name_conflict"}}, socket}
 
-              {:ok, user, _users} ->
-                %{id: user_id} = user
+              {:ok, player, _player} ->
+                player_id = BrettProjekt.Game.Player.get_id player
 
                 token = Phoenix.Token.sign(
                   BrettProjekt.Web.Endpoint,
                   "user_auth",
-                  %{game_id: game_id, user_id: user_id}
+                  %{game_id: game_id, player_id: player_id}
                 )
 
                 {:reply, {:ok, %{auth_token: token}}, socket}

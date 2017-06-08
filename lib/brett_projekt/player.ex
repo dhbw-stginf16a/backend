@@ -22,6 +22,10 @@ defmodule BrettProjekt.Game.Player do
     GenServer.call(player, :get_id)
   end
 
+  def get_name(player) do
+    GenServer.call(player, :get_name)
+  end
+
   def add_role(player, role) do
     GenServer.call(player, {:add_role, role})
   end
@@ -45,6 +49,10 @@ defmodule BrettProjekt.Game.Player do
   # ---------- Server API ----------
   def handle_call(:get_id, _form, state) do
     {:reply, state.id, state}
+  end
+
+  def handle_call(:get_name, _from, state) do
+    {:reply, state.name, state}
   end
 
   def handle_call({:add_role, role}, _from, state) do
