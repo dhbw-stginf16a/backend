@@ -1,4 +1,5 @@
 # BrettProjekt
+[![Travis](https://img.shields.io/travis/dhbw-stginf16a/backend.svg?style=flat-square)](https://travis-ci.org/dhbw-stginf16a/backend)
 
 To start your Phoenix server:
 
