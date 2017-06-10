@@ -1,1 +1,18 @@
 language: elixir
+elixir:
+- 1.4.4
+otp_release:
+- 19.3
+env:
+- TRAVIS_MODE=test
+- TRAVIS_MODE=documentation
+script:
+- if [ "$TRAVIS_MODE" == "test" ]; then mix test --trace; fi
+- if [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_MODE" == "documentation" ]; then sh ./.travis-documentation.sh; fi
+before_install:
+- mkdir -p $HOME/.ssh
+- openssl aes-256-cbc -K $encrypted_6ab9ee237a71_key -iv $encrypted_6ab9ee237a71_iv
+  -in .deploy_key.enc -out $HOME/.ssh/id_rsa -d
+- chmod 600 $HOME/.ssh/id_rsa
+- printf "Host github.com\n    IdentityFile ~/.ssh/id_rsa\n   StrictHostKeyChecking
+  no\n" >> $HOME/.ssh/config
