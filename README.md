@@ -8,6 +8,7 @@
 ### Install Elixir
 
 Arch Linux:
+
 `sudo pacman -S elixir`
 
 Ubuntu/Debian Linux:
@@ -19,31 +20,30 @@ sudo apt-get install elixir
 ```
 
 Windows, MacOS, BSD:
+
 *figure it out yourself :P*
 
 Install Elixir's package manager: hex
 
 `mix local.hex`
 
-Install Phoenix
+Install dependencies:
+
+`mix deps.get`
 
 `mix archive.install https://github.com/phoenixframework/archives/raw/master/phoenix_new.ez`
 
 
 ### Starting
-To start your Phoenix server:
+Start your Phoenix server:
 
-  * Install dependencies with `mix deps.get`
-  * Start Phoenix endpoint with `mix phx.server`
+`iex -S mix phx.server`
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
-
-Ready to run in production? Please [check our deployment guides](http://www.phoenixframework.org/docs/deployment).
+The API is now served at [`localhost:4000`](http://localhost:4000).
 
 ## Learn more
 
   * Official website: http://www.phoenixframework.org/
   * Guides: http://phoenixframework.org/docs/overview
   * Docs: https://hexdocs.pm/phoenix
-  * Mailing list: http://groups.google.com/group/phoenix-talk
   * Source: https://github.com/phoenixframework/phoenix
