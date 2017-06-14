@@ -31,7 +31,8 @@ defmodule BrettProjekt.Mixfile do
      {:phoenix_pubsub, "~> 1.0"},
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"},
-     {:ex_doc, "~> 0.16", only: :dev}
+     {:ex_doc, "~> 0.16", only: :dev},
+     {:poison, "~> 3.1"}
     ]
   end
 end
