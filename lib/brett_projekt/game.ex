@@ -34,6 +34,16 @@ defmodule BrettProjekt.Game do
     GenServer.call(game, :get_id)
   end
 
+  defp name_valid?(name) do
+    cond do
+      is_binary(name) == false -> false
+      String.printable?(name) == false -> false
+      String.length(name) < 3 -> false
+      String.length(name) > 12 -> false
+      true -> true
+    end
+  end
+
   @doc """
   Add a new player with a given name to the game.
 
@@ -48,11 +58,14 @@ defmodule BrettProjekt.Game do
   def add_new_player(game, name) do
     name = String.downcase String.trim name
     cond do
+      name_valid?(name) == false ->
+        {:error, :name_invalid}
+      
       join_enabled?(game) == false ->
-        {:err, :joining_disabled}
+        {:error, :joining_disabled}
 
       has_player?(game, name) == true ->
-        {:err, :name_conflict}
+        {:error, :name_conflict}
 
       true ->
         roles =
