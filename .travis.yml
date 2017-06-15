@@ -7,6 +7,9 @@ env:
 - TRAVIS_MODE=test
 - TRAVIS_MODE=documentation
 - TRAVIS_MODE=code_analysis
+matrix:
+  allow_failures:
+    - env: TRAVIS_MODE=code_analysis
 script:
 - if [ "$TRAVIS_MODE" == "test" ]; then mix test --trace; fi
 - if [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_MODE" == "documentation" ]; then sh ./.travis-documentation.sh; fi
