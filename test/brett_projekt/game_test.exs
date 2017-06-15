@@ -1,5 +1,5 @@
 defmodule BrettProjekt.GameTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case, async: false
   doctest BrettProjekt.Game
   alias BrettProjekt.Game, as: Game
   alias BrettProjekt.Game.Player, as: Player
