@@ -10,6 +10,7 @@ defmodule BrettProjekt.Application do
     children = [
       # Start the endpoint when the application starts
       supervisor(BrettProjekt.Web.Endpoint, []),
+      supervisor(BrettProjekt.GameManager, [:main_game_manager])
       # Start your own worker by calling: BrettProjekt.Worker.start_link(arg1, arg2, arg3)
       # worker(BrettProjekt.Worker, [arg1, arg2, arg3]),
     ]
