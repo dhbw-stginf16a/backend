@@ -26,7 +26,8 @@ defmodule BrettProjekt.Web.MainChannel do
         game = GameManager.get_game_by_id :main_game_manager, game_id
 
         cond do
-          # Check whether the username is a printable string and is between 3 and 8 characters
+          # Check whether the username is a printable string
+          # and is between 3 and 8 characters long
           (not is_binary name) or
           (not String.printable? name) or
           (String.length(name) < 3) or
@@ -37,7 +38,8 @@ defmodule BrettProjekt.Web.MainChannel do
           game == nil ->
             {:reply, {:err, %{error: "game_id_invalid"}}, socket}
 
-          # Username & game valid, add the user to the game and create an auth_token
+            # Username & game valid, add the user to the game
+            # and create an auth_token
           true ->
             case Game.add_new_player game, name do
               {:err, :joining_disabled} ->

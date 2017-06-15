@@ -29,7 +29,7 @@ defmodule BrettProjekt.Question.ServerManager do
       true
 
   """
-  def start_link() do
+  def start_link do
     start_link(nil)
   end
 
@@ -79,7 +79,8 @@ defmodule BrettProjekt.Question.ServerManager do
     case QuestionServer.load_questions_from_file(question_server, file) do
       :ok ->
         # A new QuestionServer instance has been created, save it as the current
-        GenServer.call(server_manager, {:replace_question_server, question_server})
+        GenServer.call(server_manager,
+                       {:replace_question_server, question_server})
       error -> error
     end
   end

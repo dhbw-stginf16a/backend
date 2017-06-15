@@ -1,3 +1,4 @@
+# credo:disable-for-next-line Credo.Check.Readability.ModuleNames
 defmodule BrettProjekt.Question.Parser.V0_1 do
   @moduledoc """
   Parser for the question file-format version 0.1.
@@ -22,10 +23,11 @@ defmodule BrettProjekt.Question.Parser.V0_1 do
   defp assign_question_ids(questions) do
     id_count = -1
 
-    Enum.map(questions, fn(question) ->
-      id_count = id_count + 1
-      {id_count, Map.put(question, "id", id_count)}
-    end)
+    questions
+    |> Enum.map(fn(question) ->
+         id_count = id_count + 1
+         {id_count, Map.put(question, "id", id_count)}
+       end)
     |> Enum.into(%{})
   end
 end

@@ -73,7 +73,7 @@ defmodule BrettProjekt.Game.Player do
   end
 
   def handle_call({:add_role, role}, _from, state) do
-    {:reply, :ok, %{state | roles: [ role | state.roles ]}}
+    {:reply, :ok, %{state | roles: [role | state.roles]}}
   end
 
   def handle_call(:get_roles, _from, state) do
@@ -88,4 +88,3 @@ defmodule BrettProjekt.Game.Player do
     {:reply, :ok, %{state | ready: ready}}
   end
 end
-

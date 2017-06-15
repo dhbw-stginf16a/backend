@@ -23,7 +23,8 @@ defmodule BrettProjekt.Game do
 
   """
   def create(game_id) do
-    GenServer.start_link(BrettProjekt.GameServer, %BrettProjekt.Game{game_id: game_id})
+    GenServer.start_link(BrettProjekt.GameServer,
+                         %BrettProjekt.Game{game_id: game_id})
   end
 
   @doc """

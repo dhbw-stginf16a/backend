@@ -14,8 +14,10 @@ defmodule BrettProjekt.Application do
       # Start the endpoint when the application starts
       supervisor(BrettProjekt.Web.Endpoint, []),
       supervisor(BrettProjekt.GameManager, [:main_game_manager]),
-      supervisor(BrettProjekt.Question.ServerManager, [:main_question_manager, questions_file_path])
-      # Start your own worker by calling: BrettProjekt.Worker.start_link(arg1, arg2, arg3)
+      supervisor(BrettProjekt.Question.ServerManager,
+                 [:main_question_manager, questions_file_path])
+      # Start your own worker by calling:
+      # BrettProjekt.Worker.start_link(arg1, arg2, arg3)
       # worker(BrettProjekt.Worker, [arg1, arg2, arg3]),
     ]
 

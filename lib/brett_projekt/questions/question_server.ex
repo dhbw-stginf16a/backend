@@ -10,12 +10,12 @@ defmodule BrettProjekt.Question.Server do
 
   @doc """
   Starts the question-server without a name assigned.
-  
+
   The initial set of questions will be empty.
   Add some by invoking `load_questions_from_file/2` or
   `load_questions_from_json/2`.
   """
-  def start_link() do
+  def start_link do
     start_link(nil)
   end
 
@@ -60,7 +60,10 @@ defmodule BrettProjekt.Question.Server do
       {:ok, decoded} ->
         case Map.get decoded, "version" do
           0.1 ->
-            GenServer.call(question_server, {:set_questions, BrettProjekt.Question.Parser.V0_1.parse(decoded)})
+            GenServer.call(question_server, {
+              :set_questions,
+              BrettProjekt.Question.Parser.V0_1.parse(decoded)
+            })
           nil ->
             {:error, :file_invalid}
           _ ->
@@ -92,7 +95,8 @@ defmodule BrettProjekt.Question.Server do
 
   def handle_call(:get_questions, _from, state) do
     question_list =
-      Enum.to_list(state.questions)
+      state.questions
+      |> Enum.to_list
       |> Enum.map(fn ({id, question}) -> question end)
 
     {:reply, question_list, state}
@@ -102,4 +106,3 @@ defmodule BrettProjekt.Question.Server do
     {:reply, state.questions[id], state}
   end
 end
-

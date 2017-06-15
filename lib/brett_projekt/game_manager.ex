@@ -39,7 +39,7 @@ defmodule BrettProjekt.GameManager do
 
   """
   def start_link(name) do
-    GenServer.start_link(__MODULE__, %{ games: %{}, game_ids: [] }, name: name)
+    GenServer.start_link(__MODULE__, %{games: %{}, game_ids: []}, name: name)
   end
 
   @doc """
@@ -124,13 +124,15 @@ defmodule BrettProjekt.GameManager do
   end
 
   # ---------- SERVER API ----------
-  defp random_game_id() do
+  defp random_game_id do
     game_id_length = 6
 
     time_str = to_string :os.system_time(:millisecond)
     unique_int_str = to_string System.unique_integer
-    hash = :crypto.hash(:md5, time_str <> unique_int_str)
-           |> Base.encode32(case: :upper, padding: false)
+    hash =
+      time_str <> unique_int_str
+      |> (&:crypto.hash(:md5, &1)).()
+      |> Base.encode32(case: :upper, padding: false)
 
     String.slice hash, 0..game_id_length
   end
@@ -141,30 +143,30 @@ defmodule BrettProjekt.GameManager do
 
     case Enum.member? game_ids, game_id do
       false ->
-        new_state = %{ state | game_ids: [game_id | game_ids] }
+        new_state = %{state | game_ids: [game_id | game_ids]}
         {:reply, game_id, new_state}
       true ->
         handle_call(:generate_game_id, from, state)
     end
   end
 
-  def handle_call({:add_game, game}, _from, %{ games: games } = state) do
+  def handle_call({:add_game, game}, _from, %{games: games} = state) do
     game_id = Game.get_id game
 
     case Map.get(games, game_id) do
       nil ->
-        new_state = %{ state | games: Map.put(games, game_id, game) }
+        new_state = %{state | games: Map.put(games, game_id, game)}
         {:reply, {:ok, game_id, game}, new_state}
       _ ->
         {:reply, {:err, :game_already_registered}, state}
     end
   end
 
-  def handle_call(:get_games, _from, %{ games: games } = state) do
+  def handle_call(:get_games, _from, %{games: games} = state) do
     {:reply, games, state}
   end
 
-  def handle_call({:get_game_by_id, game_id}, _from, %{ games: games } = state) do
+  def handle_call({:get_game_by_id, game_id}, _from, %{games: games} = state) do
     {:reply, Map.get(games, game_id, nil), state}
   end
 end
