@@ -8,7 +8,7 @@
     <title>BrettProjekt.Web.GameChannel – brett_projekt v0.0.1</title>
     <link rel="stylesheet" href="dist/app-4ecae1abb8.css" />
     
-    <script src="dist/sidebar_items-238e44ede6.js"></script>
+    <script src="dist/sidebar_items-6d8ce3af46.js"></script>
   </head>
   <body data-type="modules">
     <script>try { if(localStorage.getItem('night-mode')) document.body.className += ' night-mode'; } catch (e) { }</script>
@@ -86,6 +86,25 @@
     </h2>
     <div class="summary-row">
   <div class="summary-signature">
+    <a href="#auth_token_valid?/2">auth_token_valid?(auth_token, game_id)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Check validity of <code class="inline">auth_token</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#broadcast_lobby_update/2">broadcast_lobby_update(socket, game)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Send a broadcast to all users in this game/channel with the updated
+list of players and startable status of the game</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="#code_change/3">code_change(old, socket, extra)</a>
   </div>
   
@@ -95,10 +114,11 @@
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#handle_in/3">handle_in(arg1, arg2, socket)</a>
+    <a href="#handle_in/3">handle_in(arg1, payload, socket)</a>
   </div>
   
-    <div class="summary-synopsis"><p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.3.0-rc.2/Phoenix.Channel.html#c:handle_in/3"><code class="inline">Phoenix.Channel.handle_in/3</code></a></p>
+    <div class="summary-synopsis"><p>Sets the team membership of the user with the “auth_token” in the payload.
+Broadcasts a lobby_update to all users in this game/channel</p>
 </div>
   
 </div>
@@ -116,7 +136,7 @@
     <a href="#join/3">join(channel, payload, socket)</a>
   </div>
   
-    <div class="summary-synopsis"><p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.3.0-rc.2/Phoenix.Channel.html#c:join/3"><code class="inline">Phoenix.Channel.join/3</code></a></p>
+    <div class="summary-synopsis"><p>Join the channel of a particular game</p>
 </div>
   
 </div>
@@ -149,7 +169,65 @@
             </a>
             Functions
           </h1>
-          <div class="detail" id="code_change/3">
+          <div class="detail" id="auth_token_valid?/2">
+  
+  <div class="detail-header">
+    <a href="#auth_token_valid?/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <span class="signature">auth_token_valid?(auth_token, game_id)</span>
+    
+    
+    
+  </div>
+  <section class="docstring">
+    <p>Check validity of <code class="inline">auth_token</code>.</p>
+<p>Check whether</p>
+<ul>
+<li><code class="inline">game_id</code>    is the same as the one in the <code class="inline">auth_token</code>
+</li>
+<li><code class="inline">auth_token</code> is not nil
+</li>
+<li><code class="inline">auth_token</code> has not expired
+</li>
+<li><code class="inline">auth_token</code> is not invalid
+</li>
+</ul>
+<h2 id="auth_token_valid?/2-examples" class="section-heading">
+  <a href="#auth_token_valid?/2-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Examples
+</h2>
+
+<pre><code class="iex elixir">iex&gt; game_id = &quot;abc&quot;
+iex&gt; token = Phoenix.Token.sign(
+         BrettProjekt.Web.Endpoint,
+         &quot;user_auth&quot;,
+         %{game_id: game_id, player_id: 1}
+     )
+iex&gt; BrettProjekt.Web.GameChannel.auth_token_valid? token, game_id</code></pre>
+
+  </section>
+</div>
+<div class="detail" id="broadcast_lobby_update/2">
+  
+  <div class="detail-header">
+    <a href="#broadcast_lobby_update/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <span class="signature">broadcast_lobby_update(socket, game)</span>
+    
+    
+    
+  </div>
+  <section class="docstring">
+    <p>Send a broadcast to all users in this game/channel with the updated
+list of players and startable status of the game.</p>
+
+  </section>
+</div>
+<div class="detail" id="code_change/3">
   
   <div class="detail-header">
     <a href="#code_change/3" class="detail-link" title="Link to this function">
@@ -173,13 +251,25 @@
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <span class="signature">handle_in(arg1, arg2, socket)</span>
+    <span class="signature">handle_in(arg1, payload, socket)</span>
     
     
     
   </div>
   <section class="docstring">
-    <p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.3.0-rc.2/Phoenix.Channel.html#c:handle_in/3"><code class="inline">Phoenix.Channel.handle_in/3</code></a>.</p>
+    <p>Sets the team membership of the user with the “auth_token” in the payload.
+Broadcasts a lobby_update to all users in this game/channel.</p>
+<h2 id="handle_in/3-returns" class="section-heading">
+  <a href="#handle_in/3-returns" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Returns
+</h2>
+
+<ul>
+<li>{:reply, :ok, socket}
+</li>
+<li>{:reply, {:error, %{reason: msg}}, socket}
+</li>
+</ul>
 
   </section>
 </div>
@@ -213,7 +303,19 @@
     
   </div>
   <section class="docstring">
-    <p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.3.0-rc.2/Phoenix.Channel.html#c:join/3"><code class="inline">Phoenix.Channel.join/3</code></a>.</p>
+    <p>Join the channel of a particular game.</p>
+<p><code class="inline">payload</code> has to contain an “auth_token” valid for the <code class="inline">socket</code></p>
+<h2 id="join/3-returns" class="section-heading">
+  <a href="#join/3-returns" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Returns
+</h2>
+
+<ul>
+<li>{:ok, socket}
+</li>
+<li>{:error, msg} msg is an error code from <code class="inline">auth_token_valid</code>
+</li>
+</ul>
 
   </section>
 </div>
