@@ -5,7 +5,7 @@ fonts/icomoon.eot
 fonts/icomoon.svg
 fonts/icomoon.ttf
 fonts/icomoon.woff
-dist/sidebar_items-8e8c1a7126.js
+dist/sidebar_items-238e44ede6.js
 api-reference.html
 404.html
 BrettProjekt.Application.html
@@ -13,6 +13,9 @@ BrettProjekt.Game.html
 BrettProjekt.Game.Player.html
 BrettProjekt.GameManager.html
 BrettProjekt.GameServer.html
+BrettProjekt.Question.Parser.V0_1.html
+BrettProjekt.Question.Server.html
+BrettProjekt.Question.ServerManager.html
 BrettProjekt.Web.html
 BrettProjekt.Web.Endpoint.html
 BrettProjekt.Web.ErrorHelpers.html
