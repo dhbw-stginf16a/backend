@@ -130,4 +130,8 @@ defmodule BrettProjekt.Game do
       _ -> true
     end
   end
+
+  def startable?(_game) do
+    false
+  end
 end
