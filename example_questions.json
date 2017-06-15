@@ -1,0 +1,35 @@
+{
+  "version": 0.1,
+  "categories": {
+    "Universe": [
+      {
+        "possibilities": [
+          {
+            "text": "How much is seven times six?",
+            "index": "0"
+          },
+          {
+            "text": "How much is nine times six?",
+            "index": "1"
+          },
+          {
+            "text": "What is the answer to all questions?",
+            "index": "2"
+          }
+        ],
+        "difficulty": 1,
+        "category": "Universe",
+        "question": "What is the question with the answer 42?",
+        "type": "wildcard",
+        "answers": [
+          {
+            "text": "How much is nine times six.",
+            "index": "1"
+          }
+        ],
+        "status": "approved",
+        "requiredAnswers": "1"
+      }
+    ]
+  }
+}
