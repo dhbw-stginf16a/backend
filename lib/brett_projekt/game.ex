@@ -4,6 +4,7 @@ defmodule BrettProjekt.Game do
   @enforce_keys [:game_id]
   defstruct [
     :game_id,
+    {:categories, []},  # still available categories
     {:id_count, 0},
     {:players, %{}},
     {:join_enabled, true}
@@ -133,6 +134,14 @@ defmodule BrettProjekt.Game do
   end
 
   def startable?(_game) do
-    false
+    false  # TODO
+  end
+
+  def round_started?(_game) do
+    false  # TODO
+  end
+
+  def get_categories(game) do
+    GenServer.call game, :get_categories
   end
 end

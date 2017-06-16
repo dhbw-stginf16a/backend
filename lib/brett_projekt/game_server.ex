@@ -31,4 +31,8 @@ defmodule BrettProjekt.GameServer do
   def handle_call(:get_new_player_id, _from, state) do
     {:reply, state.id_count, %{state | id_count: state.id_count + 1}}
   end
+
+  def handle_call(:get_categories, _from, state) do
+    {:reply, state.categories, state}
+  end
 end

@@ -70,9 +70,13 @@ defmodule BrettProjekt.Web.GameChannel do
 
   ## Returns
   - {:reply, :ok, socket}
+  - {:reply, {:error, %{reason: :empty_team}}, socket}
   - {:reply, {:error, %{reason: msg}}, socket}
 
   """
+  def handle_in("set_categories", %{"team" => ""}, socket) do
+    {:reply, {:error, %{reason: :empty_team}}, socket}
+  end
   def handle_in("set_team", payload, socket) do
     case auth_token_valid?(payload["auth_token"], socket.assigns[:game_id]) do
       {:ok, token_payload} ->
@@ -85,9 +89,44 @@ defmodule BrettProjekt.Web.GameChannel do
         |> Player.set_team(payload["team"])
 
         broadcast_lobby_update socket, game
-        # get player and set their team
         {:reply, :ok, socket}
 
+      {:error, msg} -> {:reply, {:error, %{reason: msg}}, socket}
+    end
+  end
+
+  @doc """
+  ## Returns
+  - {:reply, :ok, socket}
+  - {:reply, {:error, %{reason: :categories_unavailable}}, socket}
+  - {:reply, {:error, %{reason: msg}}, socket}
+  """
+  def handle_in("set_categories", %{"categories" => []}, socket) do
+    {:reply, {:error, %{reason: :empty_categories}}, socket}
+  end
+  def handle_in("set_categories", payload, socket) do
+    case auth_token_valid?(payload["auth_token"], socket.assigns[:game_id]) do
+      {:ok, token_payload} ->
+        categories = payload["categories"]
+        game = GameManager.get_game_by_id(:main_game_manager,
+                                          token_payload.game_id)
+
+        categories_available =
+          game
+          |> Game.get_categories
+          |> MapSet.new
+          |> (&MapSet.subset?(MapSet.new(categories), &1)).()
+        unless categories_available do
+          {:reply, {:error, %{reason: :categories_unavailable}}, socket}
+        else
+          game
+          |> Game.get_players
+          |> Map.get(token_payload.player_id)
+          |> Player.set_categories(categories)
+
+          broadcast_round_preparation socket, game
+          {:reply, :ok, socket}
+        end
       {:error, msg} -> {:reply, {:error, %{reason: msg}}, socket}
     end
   end
@@ -109,6 +148,25 @@ defmodule BrettProjekt.Web.GameChannel do
       end)
     broadcast(socket, "lobby_update", %{
       startable: Game.startable?(game),
+      players: players
+    })
+  end
+
+  def broadcast_round_preparation(socket, game) do
+    players = game
+      |> Game.get_players
+      |> Enum.map(fn({_id, player}) ->
+        %{
+          id: Player.get_id(player),
+          name: Player.get_name(player),
+          team: Player.get_team(player),
+          roles: Player.get_roles(player),
+          categories: Player.get_categories(player)
+        }
+      end)
+    broadcast(socket, "round_preparation", %{
+      round_started: Game.round_started?(game),
+      categories: Game.get_categories(game),
       players: players
     })
   end

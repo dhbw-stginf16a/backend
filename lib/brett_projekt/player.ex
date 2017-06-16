@@ -6,6 +6,7 @@ defmodule BrettProjekt.Game.Player do
     :id,
     :name,
     :team,
+    {:categories, []},
     {:ready, false},
     {:roles, []}
   ]
@@ -33,6 +34,14 @@ defmodule BrettProjekt.Game.Player do
 
   def get_team(player) do
     GenServer.call(player, :get_team)
+  end
+
+  def get_categories(player) do
+    GenServer.call(player, :get_categories)
+  end
+
+  def set_categories(player, categories) do
+    GenServer.call(player, {:set_categories, categories})
   end
 
   def add_role(player, role) do
@@ -70,6 +79,14 @@ defmodule BrettProjekt.Game.Player do
 
   def handle_call({:set_team, team}, _from, state) do
     {:reply, :ok, %{state | team: team}}
+  end
+
+  def handle_call(:get_categories, _from, state) do
+    {:reply, state.categories, state}
+  end
+
+  def handle_call({:set_categories, categories}, _from, state) do
+    {:reply, :ok, %{state | categories: categories}}
   end
 
   def handle_call({:add_role, role}, _from, state) do
