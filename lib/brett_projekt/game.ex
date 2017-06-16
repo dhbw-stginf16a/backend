@@ -146,6 +146,10 @@ defmodule BrettProjekt.Game do
     end
   end
 
+  def get_player(game, player_id) do
+    Enum.find(get_players(game), fn({id, _player}) -> id == player_id end)
+  end
+
   def startable?(_game) do
     false  # TODO
   end
