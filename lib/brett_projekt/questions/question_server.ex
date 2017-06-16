@@ -55,16 +55,18 @@ defmodule BrettProjekt.Question.Server do
     - `{:error, :json_decoding_error}`
     - `{:error, :file_version_not_supported}`: No parser for the file-format version available
     - `{:error, :file_invalid}`: Error while parsing the questions file
+    - `{:error, :questions_invalid, reason}`: Questions themselves are invalid (too few categories?)
   """
   def load_questions_from_json(question_server, json) do
     case Poison.decode json do
       {:ok, decoded} ->
         case Map.get decoded, "version" do
           0.1 ->
-            GenServer.call(question_server, {
-              :set_questions,
-              BrettProjekt.Question.Parser.V0_1.parse(decoded)
-            })
+            parsed = BrettProjekt.Question.Parser.V0_1.parse(decoded)
+            case check_questions parsed do
+              :ok    -> set_questions(question_server, parsed)
+              reason -> {:error, :questions_invalid, reason}
+            end
           nil ->
             {:error, :file_invalid}
           _ ->
@@ -72,6 +74,19 @@ defmodule BrettProjekt.Question.Server do
         end
       error -> {:error, :json_decoding_error, error}
     end
+  end
+
+  defp check_questions(questions) do
+    cond do
+      length(get_categories_from_questions(questions)) < 3 ->
+        :not_enough_categories
+      true ->
+        :ok
+    end
+  end
+
+  defp set_questions(question_server, questions) do
+    GenServer.call(question_server, {:set_questions, questions})
   end
 
   @doc """

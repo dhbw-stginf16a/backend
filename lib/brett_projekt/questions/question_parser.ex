@@ -21,13 +21,9 @@ defmodule BrettProjekt.Question.Parser.V0_1 do
   end
 
   defp assign_question_ids(questions) do
-    id_count = -1
-
     questions
-    |> Enum.map(fn(question) ->
-         id_count = id_count + 1
-         {id_count, Map.put(question, "id", id_count)}
-       end)
+    |> Enum.with_index
+    |> Enum.map(fn ({element, index}) -> {index, element} end)
     |> Enum.into(%{})
   end
 end
