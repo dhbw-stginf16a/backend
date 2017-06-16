@@ -33,6 +33,9 @@ defmodule BrettProjekt.GameServer do
   end
 
   def handle_call(:get_categories, _from, state) do
-    {:reply, state.categories, state}
+    {:reply, [], state}  # TODO
+  end
+
+  def handle_call(:set_player_categories, _from, state) do
   end
 end

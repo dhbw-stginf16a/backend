@@ -4,7 +4,8 @@ defmodule BrettProjekt.Game do
   @enforce_keys [:game_id]
   defstruct [
     :game_id,
-    {:categories, []},  # still available categories
+    {:round, 0},
+    {:rounds, []},
     {:id_count, 0},
     {:players, %{}},
     {:join_enabled, true}
@@ -61,7 +62,7 @@ defmodule BrettProjekt.Game do
     cond do
       name_valid?(name) == false ->
         {:error, :name_invalid}
-      
+
       join_enabled?(game) == false ->
         {:error, :joining_disabled}
 
@@ -156,5 +157,25 @@ defmodule BrettProjekt.Game do
 
   def get_categories(game) do
     GenServer.call game, :get_categories
+  end
+
+  def set_player_categories(game, player, categories) do
+    categories_available =
+      game
+      |> get_categories
+      |> MapSet.new
+      |> (&MapSet.subset?(MapSet.new(categories), &1)).()
+
+    GenServer.call game, {:set_player_categories, player, categories}
+
+    unless categories_available do
+      {:error, :categories_unavailable}
+    else
+      :ok
+    end
+  end
+
+  def get_player_categories(game, player) do
+    # TODO
   end
 end
