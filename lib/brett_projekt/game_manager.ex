@@ -56,7 +56,10 @@ defmodule BrettProjekt.GameManager do
 
   """
   def add_new_game(game_manager) do
-    {:ok, game} = Game.create generate_game_id game_manager
+    question_server =
+      BrettProjekt.Question.ServerManager.get_question_server :main_question_manager
+
+    {:ok, game} = Game.create generate_game_id(game_manager), question_server
     add_game game_manager, game
   end
 

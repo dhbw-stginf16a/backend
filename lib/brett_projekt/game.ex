@@ -1,7 +1,7 @@
 defmodule BrettProjekt.Game do
   alias BrettProjekt.Game.Player, as: Player
 
-  @enforce_keys [:game_id]
+  @enforce_keys [:game_id, :question_server]
   defstruct [
     :game_id,
     {:mode, :lobby},
@@ -9,7 +9,8 @@ defmodule BrettProjekt.Game do
     {:rounds, []},
     {:id_count, 0},
     {:players, %{}},
-    {:join_enabled, true}
+    {:join_enabled, true},
+    :question_server
   ]
 
   # ---------- CLIENT API ----------
@@ -25,9 +26,10 @@ defmodule BrettProjekt.Game do
       BrettProjekt.Game.create System.unique_integer
 
   """
-  def create(game_id) do
+  def create(game_id, question_server) do
     GenServer.start_link(BrettProjekt.GameServer,
-                         %BrettProjekt.Game{game_id: game_id})
+                         %BrettProjekt.Game{game_id: game_id,
+                                            question_server: question_server})
   end
 
   @doc """
@@ -180,7 +182,21 @@ defmodule BrettProjekt.Game do
     end
   end
 
-  def game_started?()
+  def start(game) do
+    GenServer.call(game, {:set_mode, :round_preparation})
+    initialize_round game
+  end
+
+  def game_started?(game) do
+    GenServer.call(game, :get_mode) != :lobby
+  end
+
+  def initialize_round(game) do
+    # Randomly generate a list of question-lists per team
+    # Each question-list has 3 questions of different categories and each team
+    # has questions of the same categories
+    true
+  end
 
   def round_started?(_game) do
     false  # TODO
