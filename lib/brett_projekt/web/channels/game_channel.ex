@@ -113,6 +113,31 @@ defmodule BrettProjekt.Web.GameChannel do
   end
 
   @doc """
+  Starts the game and broadcasts a round-preparation update afterwards.
+
+  ## Returns
+  - {:reply, :ok, socket}
+  - {:reply, {:error, %{reason: :auth_token_invalid}}, socket}
+  - {:reply, {:error, %{reason: :auth_token_missing}}, socket}
+  - {:reply, {:error, %{reason: :missing_permission}}, socket}
+  - {:reply, {:error, %{reason: :game_not_startable}}, socket}
+  """
+  def handle_in("start_game", payload, socket) do
+    case check_auth_token(payload["auth_toke"], socket.assigns[:game_id]) do
+      {:ok, _, game, player} ->
+        cond do
+          not Enum.member(Player.get_roles(player), :admin) ->
+            {:reply, {:error, %{reason: :missing_permission}}, socket}
+          not Game.startable?(game) ->
+            {:reply, {:error, %{reason: :game_not_startable}}, socket}
+          true ->
+            Game.start game
+            broadcast_round_preparation socket, game
+        end
+    end
+  end
+
+  @doc """
   Send a broadcast to all users in this game/channel with the updated
   list of players and startable status of the game.
   """
