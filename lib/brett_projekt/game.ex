@@ -151,7 +151,10 @@ defmodule BrettProjekt.Game do
   end
 
   def get_player(game, player_id) do
-    Enum.find(get_players(game), fn({id, _player}) -> id == player_id end)
+    case Enum.find(get_players(game), fn({id, _player}) -> id == player_id end) do
+      {id, player} -> player
+      _            -> nil
+    end
   end
 
   @doc """
