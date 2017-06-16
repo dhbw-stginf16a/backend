@@ -5,7 +5,8 @@ defmodule BrettProjekt.Question.Server do
 
   @enforce_keys []
   defstruct [
-    {:questions, %{}}
+    {:questions, %{}},
+    {:categories, []}
   ]
 
   @doc """
@@ -89,8 +90,30 @@ defmodule BrettProjekt.Question.Server do
     GenServer.call(question_server, {:get_question, id})
   end
 
+  @doc """
+  Returns a list of all categories
+  """
+  @spec get_categories(pid) :: list
+  def get_categories(question_server) do
+    GenServer.call(question_server, :get_categories)
+  end
+
+  @doc """
+  Generates a list of categories from a map of questions
+
+  This function, depending on the list of questions, may have a big overhead.
+  It is better to only call this function when importing the questions and
+  buffer its output.
+  """
+  defp get_categories_from_questions(questions) do
+    Enum.reduce(questions, MapSet.new, fn({_, question}, acc) ->
+      MapSet.put acc, question["category"] end)
+    |> Enum.to_list
+  end
+
   def handle_call({:set_questions, questions}, _from, state) do
-    {:reply, :ok, %{state | questions: questions}}
+    categories = get_categories_from_questions questions
+    {:reply, :ok, %{state | questions: questions, categories: categories}}
   end
 
   def handle_call(:get_questions, _from, state) do
@@ -104,5 +127,9 @@ defmodule BrettProjekt.Question.Server do
 
   def handle_call({:get_question, id}, _from, state) do
     {:reply, state.questions[id], state}
+  end
+
+  def handle_call(:get_categories, _from, state) do
+    {:reply, state.categories, state}
   end
 end

@@ -23,11 +23,14 @@ defmodule BrettProjekt.Web.GameChannel do
            )
       iex> BrettProjekt.Web.GameChannel.auth_token_valid? token, game_id
   """
-  def auth_token_valid?(auth_token, game_id) do
+  def check_auth_token(auth_token, game_id) do
     verification = Phoenix.Token.verify(BrettProjekt.Web.Endpoint,
                                         "user_auth", auth_token)
     case verification do
-      {:ok, %{game_id: ^game_id} = payload} -> {:ok, payload}
+      {:ok, %{game_id: ^game_id} = payload} ->
+        game = GameManager.get_game_by_id :main_game_manager, payload[:game_id]
+        player = Game.get_player game, payload[:player_id]
+        {:ok, payload, game, player}
       # Client shouldn't know game_id is valid for another game
       {:ok, _payload}                       -> {:error, :auth_token_invalid}
       {:error, :missing}                    -> {:error, :auth_token_missing}
@@ -47,21 +50,10 @@ defmodule BrettProjekt.Web.GameChannel do
   """
   def join(channel, payload, socket) do
     game_id = String.replace_prefix channel, "game:", ""
-    case auth_token_valid?(payload["auth_token"], game_id) do
-      {:ok, _token_payload} -> {:ok, assign(socket, :game_id, game_id)}
-      {:error, msg}        -> {:error, %{reason: msg}}
+    case check_auth_token(payload["auth_token"], game_id) do
+      {:ok, _token_payload, _, _} -> {:ok, assign(socket, :game_id, game_id)}
+      {:error, msg}               -> {:error, %{reason: msg}}
     end
-  end
-
-  @doc """
-  Creates a new game and returns its id.
-
-  ## Returns
-  {:reply, {:ok, %{game_id: game_id}}, socket}
-  """
-  def handle_in("create_game", _payload, socket) do
-    {:ok, game_id, _game} = GameManager.add_new_game :main_game_manager
-    {:reply, {:ok, %{game_id: game_id}}, socket}
   end
 
   @doc """
@@ -79,15 +71,9 @@ defmodule BrettProjekt.Web.GameChannel do
     {:reply, {:error, %{reason: :empty_team}}, socket}
   end
   def handle_in("set_team", payload, socket) do
-    case auth_token_valid?(payload["auth_token"], socket.assigns[:game_id]) do
-      {:ok, token_payload} ->
-        game = GameManager.get_game_by_id(:main_game_manager,
-                                          token_payload.game_id)
-
-        game
-        |> Game.get_players
-        |> Map.get(token_payload.player_id)
-        |> Player.set_team(payload["team"])
+    case check_auth_token(payload["auth_token"], socket.assigns[:game_id]) do
+      {:ok, _token_payload, game, player} ->
+        Player.set_team player, payload["team"]
 
         broadcast_lobby_update socket, game
         {:reply, :ok, socket}
@@ -109,17 +95,10 @@ defmodule BrettProjekt.Web.GameChannel do
   def handle_in("set_categories", %{"categories" => []}, socket) do
     {:reply, {:error, %{reason: :categories_empty}}, socket}
   end
-  def handle_in("set_categories", %{"categories" => categories} = payload, socket) do
-    case auth_token_valid?(payload["auth_token"], socket.assigns[:game_id]) do
-      {:ok, token_payload} ->
-        categories = payload["categories"]
-        game = GameManager.get_game_by_id(:main_game_manager,
-                                          token_payload.game_id)
-        player =
-          game
-          |> Game.get_players
-          |> Map.get(token_payload.player_id)
-        case Game.set_player_categories(game, player, categories) do  # TODO
+  def handle_in("set_categories", %{"categories" => _categories} = payload, socket) do
+    case check_auth_token(payload["auth_token"], socket.assigns[:game_id]) do
+      {:ok, _token_payload, game, player} ->
+        case Game.set_player_categories(game, player, payload["categories"]) do
           :ok ->
             broadcast_round_preparation socket, game
             {:reply, :ok, socket}

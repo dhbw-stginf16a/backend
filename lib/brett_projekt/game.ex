@@ -4,6 +4,7 @@ defmodule BrettProjekt.Game do
   @enforce_keys [:game_id]
   defstruct [
     :game_id,
+    {:mode, :lobby},
     {:round, 0},
     {:rounds, []},
     {:id_count, 0},
@@ -147,9 +148,39 @@ defmodule BrettProjekt.Game do
     end
   end
 
-  def startable?(_game) do
-    false  # TODO
+  def get_player(game, player_id) do
+    Enum.find(get_players(game), fn({id, _player}) -> id == player_id end)
   end
+
+  @doc """
+  Check whether the game is startable.
+
+  The game can only be started, if every player is assigned to a team and
+  there are at least two teams with players assigned to them.
+  """
+  def startable?(game) do
+    # Check if every player is in a team
+    players_without_team =
+      Enum.filter(get_players(game), fn ({id, player}) ->
+        Player.get_team(player) == nil end)
+
+    # Check if at least two teams have players in them
+    teams_with_players =
+      Enum.reduce(get_players(game), MapSet.new, fn({id, player}, acc) ->
+        case Player.get_team(player) do
+          nil  -> acc
+          team -> MapSet.put acc, team
+        end
+      end)
+
+    cond do
+      length(players_without_team) > 0 -> false
+      length(teams_with_players) < 2   -> false
+      true                             -> true
+    end
+  end
+
+  def game_started?()
 
   def round_started?(_game) do
     false  # TODO
