@@ -38,4 +38,8 @@ defmodule BrettProjekt.GameServer do
 
   def handle_call(:set_player_categories, _from, state) do
   end
+
+  def handle_call(:get_mode, _from, state) do
+    {:reply, state.mode, state}
+  end
 end
