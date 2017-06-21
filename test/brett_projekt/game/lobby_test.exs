@@ -173,7 +173,7 @@ defmodule BrettProjekt.Game.LobbyTest do
     assert game_state == new_state
 
     # Setting any ready-value to false should result in it being false
-    target_state = put_in(game_state, [:players, 0, :ready], false)
+    target_state = put_in(game_state.players[0].ready, false)
     new_state =
       game_state
       |> Lobby.set_ready(0, false)
