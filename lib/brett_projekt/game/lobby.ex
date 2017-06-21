@@ -10,14 +10,14 @@ defmodule BrettProjekt.Game.Lobby do
   end
 
   def add_player(game_state, player_name) do
-    game_state
+    {:ok, game_state}
   end
 
   def switch_team(game_state, player_id, team_id) do
-    game_state
+    {:ok, game_state}
   end
 
   def set_ready(game_state, player_id, ready) do
-    game_state
+    {:ok, game_state}
   end
 end

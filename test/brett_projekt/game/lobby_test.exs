@@ -35,7 +35,7 @@ defmodule BrettProjekt.Game.LobbyTest do
     }
 
     check_player_inserted = fn (game_state, player_id, player_name) ->
-      game_state = Lobby.add_player(game_state, player_name)
+      {:ok, game_state} = Lobby.add_player(game_state, player_name)
 
       assert %{name: player_name, ready: false} == game_state.players[player_id]
 
@@ -80,7 +80,7 @@ defmodule BrettProjekt.Game.LobbyTest do
     }
 
     # Switch to an empty team
-    game_state = Lobby.switch_team(game_state, 0, 0)
+    {:ok, game_state} = Lobby.switch_team(game_state, 0, 0)
     assert %Lobby{
       teams: %{
         0 => [0],
@@ -100,7 +100,7 @@ defmodule BrettProjekt.Game.LobbyTest do
     } == game_state
 
     # Switch to the team the player is currently in does not alter the state
-    game_state = Lobby.switch_team(game_state, 0, 0)
+    {:ok, game_state} = Lobby.switch_team(game_state, 0, 0)
     assert %Lobby{
       teams: %{
         0 => [0],
@@ -120,7 +120,7 @@ defmodule BrettProjekt.Game.LobbyTest do
     } == game_state
 
     # Switch into an already populated team
-    game_state = Lobby.switch_team(game_state, 1, 0)
+    {:ok, game_state} = Lobby.switch_team(game_state, 1, 0)
     assert %Lobby{
       teams: %{
         0 => [0, 1],
@@ -139,6 +139,10 @@ defmodule BrettProjekt.Game.LobbyTest do
       }
     } == game_state
   end
+
+  # TODO think about replacing this with bind
+  def unwrap({:ok, val}), do: val
+  def unwrap(val), do: raise "Cannot unwrap #{inspect val}"
 
   test "set ready status" do
     game_state = %Lobby{
@@ -163,13 +167,17 @@ defmodule BrettProjekt.Game.LobbyTest do
     new_state =
       game_state
       |> Lobby.set_ready(1, true)
+      |> unwrap
       |> Lobby.set_ready(1, false)
+      |> unwrap
     assert game_state == new_state
 
     new_state =
       game_state
       |> Lobby.set_ready(0, false)
+      |> unwrap
       |> Lobby.set_ready(0, true)
+      |> unwrap
     assert game_state == new_state
 
     # Setting any ready-value to false should result in it being false
@@ -177,7 +185,9 @@ defmodule BrettProjekt.Game.LobbyTest do
     new_state =
       game_state
       |> Lobby.set_ready(0, false)
+      |> unwrap
       |> Lobby.set_ready(1, false)
+      |> unwrap
     assert target_state == new_state
 
     # Setting any ready-value to true should result in it being true
@@ -185,7 +195,9 @@ defmodule BrettProjekt.Game.LobbyTest do
     new_state =
       game_state
       |> Lobby.set_ready(0, true)
+      |> unwrap
       |> Lobby.set_ready(1, true)
+      |> unwrap
     assert target_state == new_state
   end
 end
