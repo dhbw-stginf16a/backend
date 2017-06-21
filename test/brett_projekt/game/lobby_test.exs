@@ -35,7 +35,7 @@ defmodule BrettProjekt.Game.LobbyTest do
     }
 
     check_player_inserted = fn (game_state, player_id, player_name) ->
-      game_state = Lobby.add_player(game_state, name)
+      game_state = Lobby.add_player(game_state, player_name)
 
       assert %{name: player_name, ready: false} == game_state.players[player_id]
 
@@ -54,10 +54,10 @@ defmodule BrettProjekt.Game.LobbyTest do
     end
 
     game_state
-    |> check_player_inserted.(0, "daniel", game_state)
-    |> check_player_inserted.(1, "leon", game_state)
-    |> check_player_inserted.(2, "thore", game_state)
-    |> check_player_inserted.(3, "vanessa", game_state)
+    |> check_player_inserted.(0, "daniel")
+    |> check_player_inserted.(1, "leon")
+    |> check_player_inserted.(2, "thore")
+    |> check_player_inserted.(3, "vanessa")
   end
 
   test "switch team" do
@@ -178,7 +178,7 @@ defmodule BrettProjekt.Game.LobbyTest do
       game_state
       |> Lobby.set_ready(0, false)
       |> Lobby.set_ready(1, false)
-    assert target_state = new_state
+    assert target_state == new_state
 
     # Setting any ready-value to true should result in it being true
     target_state = put_in(game_state, [:players, 1, :ready], true)
@@ -186,6 +186,6 @@ defmodule BrettProjekt.Game.LobbyTest do
       game_state
       |> Lobby.set_ready(0, true)
       |> Lobby.set_ready(1, true)
-    assert target_state = new_state
+    assert target_state == new_state
   end
 end

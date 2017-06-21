@@ -41,6 +41,10 @@ Start your Phoenix server:
 
 The API is now served at [`localhost:4000`](http://localhost:4000).
 
+### Run tests
+
+`mix test`
+
 ## Learn more
 
   * Official website: http://www.phoenixframework.org/
