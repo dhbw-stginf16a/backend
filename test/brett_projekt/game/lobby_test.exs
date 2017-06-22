@@ -45,6 +45,8 @@ defmodule BrettProjekt.Game.LobbyTest do
         |> Enum.reduce([], fn ({team, players}, acc) ->
           if Enum.member?(players, player_id) do
             [team | acc]
+          else
+            acc
           end
         end)
 
