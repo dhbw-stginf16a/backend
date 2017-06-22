@@ -6,7 +6,13 @@ defmodule BrettProjekt.Game.Lobby do
     {:players, %{}}
   ]
 
-  defp least_populated_team(game_state) do
+  @type team :: [non_neg_integer]
+  @type player_id :: non_neg_integer
+  @type team_id :: non_neg_integer
+  @type lobby_state :: %Lobby{teams: map, players: map}
+
+  @spec least_populated_team(%Lobby{teams: map}) :: integer
+  defp least_populated_team(%Lobby{} = game_state) do
     teams = game_state.teams
 
     {smallest_team, _} =
@@ -21,6 +27,7 @@ defmodule BrettProjekt.Game.Lobby do
     smallest_team
   end
 
+  @spec get_player_team_id(lobby_state, player_id) :: team_id
   defp get_player_team_id(game_state, player_id) do
     {team_id, team} =
       Enum.find(game_state.teams, fn {_, team} -> Enum.member? team, player_id end)
@@ -28,17 +35,21 @@ defmodule BrettProjekt.Game.Lobby do
     team_id
   end
 
+  @spec add_player_to_team(team, player_id) :: team
   defp add_player_to_team(team, player_id) do
-    case Enum.member?(team, player_id) do
-      true -> team
-      false -> [player_id | team]
+    if Enum.member?(team, player_id) do
+      team
+    else
+      [player_id | team]
     end
   end
 
+  @spec remove_player_from_team(team, player_id) :: team
   defp remove_player_from_team(team, player_id) do
     Enum.filter(team, fn p_id -> p_id != player_id end)
   end
 
+  @spec create_game(pos_integer) :: lobby_state
   def create_game(team_count) do
     teams =
       for team_id <- 0..(team_count - 1), into: %{} do
@@ -48,6 +59,7 @@ defmodule BrettProjekt.Game.Lobby do
     %Lobby{teams: teams}
   end
 
+  @spec add_player(lobby_state, String.t) :: {:ok, lobby_state}
   def add_player(game_state, player_name) do
     player = %{name: player_name, ready: false}
     player_id = length Map.values game_state.players
@@ -62,6 +74,7 @@ defmodule BrettProjekt.Game.Lobby do
     {:ok, %{game_state | players: players, teams: teams}}
   end
 
+  @spec switch_team(lobby_state, player_id, team_id) :: {atom, any}
   def switch_team(game_state, player_id, team_id) do
     old_team_id = get_player_team_id game_state, player_id
     old_team = remove_player_from_team(game_state.teams[old_team_id], player_id)
@@ -79,6 +92,7 @@ defmodule BrettProjekt.Game.Lobby do
     end
   end
 
+  @spec set_ready(lobby_state, player_id, boolean) :: {atom, any}
   def set_ready(game_state, player_id, ready) do
     if game_state.players[player_id] == nil do
       {:error, :invalid_player_id}
