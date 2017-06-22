@@ -48,10 +48,10 @@ defmodule BrettProjekt.Game.LobbyStateTransformationTest do
     assert {:ok, round_prep_state} == StateTrafo.transform lobby_state
   end
 
-  test "everyonoe needs to be ready to start a game" do
+  test "everyone needs to be ready to start a game" do
     lobby_state = populated_lobby
     lobby_state = put_in(lobby_state.players[1].ready, false)
-    assert {:error, :some_player_not_ready} == StateTrafo.transform lobby_state
+    assert {:error, :not_everyone_ready} == StateTrafo.transform lobby_state
   end
 
   test "cannot start game without players" do

@@ -8,8 +8,31 @@ defmodule BrettProjekt.Game.LobbyStateTransformation do
     end
   end
 
+  defp everyone_ready?(state) do
+    Enum.reduce(state.players, true,
+                fn ({_player_id, %{name: _, ready: ready}}, acc) ->
+      acc and ready
+    end)
+  end
+
+  defp count_players(state) do
+    Enum.count state.players
+  end
+
   # TODO use category provider
   def transform(%Lobby{} = state) do
+    cond do
+      not everyone_ready?(state) -> {:error, :not_everyone_ready}
+      count_players(state) == 0  -> {:error, :no_players}
+      count_players(state) == 1  -> {:error, :you_are_alone}
+      true                       -> {:ok, force_transform(state)}
+    end
+  end
+
+  @doc """
+  Transform without error checking.
+  """
+  defp force_transform(state) do
     categories = [5, 1, 2]
 
     category_map = for category_id <- categories, into: %{} do
@@ -25,9 +48,9 @@ defmodule BrettProjekt.Game.LobbyStateTransformation do
       }}end)
       |> Enum.into(%{})
 
-    {:ok, %RoundPrep{
+    %RoundPrep{
       categories: categories,
       teams: teams
-    }}
+    }
   end
 end
