@@ -5,31 +5,43 @@ defmodule BrettProjekt.Game.RoundPreparationTest do
 
   def base_state() do
     %RoundPrep{
-      categories: [0, 1, 2],
+      categories: [5, 1, 2],
       teams: %{
         0 => %{
-          players: [%{
-            id: 0,
-            name: "Daniel",
-          }],
+          players: [
+            %{
+              id: 0,
+              name: "Daniel",
+            },
+            %{
+              id: 1,
+              name: "Erik"
+            }
+          ],
           categories: %{
-            0 => nil,
+            5 => nil,
             1 => nil,
             2 => nil
           }
         },
         1 => %{
-          players: [],
+          players: [%{
+            id: 3,
+            name: "Vanessa"
+          }],
           categories: %{
-            0 => nil,
+            5 => nil,
             1 => nil,
             2 => nil
           }
         },
         2 => %{
-          players: [],
+          players: [%{
+            id: 2,
+            name: "Dorian"
+          }],
           categories: %{
-            0 => nil,
+            5 => nil,
             1 => nil,
             2 => nil
           }
