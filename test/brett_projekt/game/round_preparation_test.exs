@@ -8,16 +8,10 @@ defmodule BrettProjekt.Game.RoundPreparationTest do
       categories: [5, 1, 2],
       teams: %{
         0 => %{
-          players: [
-            %{
-              id: 0,
-              name: "Daniel",
-            },
-            %{
-              id: 1,
-              name: "Erik"
-            }
-          ],
+          players: %{
+            0 => "Daniel",
+            1 => "Erik"
+          },
           categories: %{
             5 => nil,
             1 => nil,
@@ -25,10 +19,9 @@ defmodule BrettProjekt.Game.RoundPreparationTest do
           }
         },
         1 => %{
-          players: [%{
-            id: 3,
-            name: "Vanessa"
-          }],
+          players: %{
+            3 => "Vanessa"
+          },
           categories: %{
             5 => nil,
             1 => nil,
@@ -36,10 +29,9 @@ defmodule BrettProjekt.Game.RoundPreparationTest do
           }
         },
         2 => %{
-          players: [%{
-            id: 2,
-            name: "Dorian"
-          }],
+          players: %{
+            2 => "Dorian"
+          },
           categories: %{
             5 => nil,
             1 => nil,
@@ -74,7 +66,7 @@ defmodule BrettProjekt.Game.RoundPreparationTest do
     assert [1] == get_player_categories(new_state, @player_id)
   end
 
-  test "set categories of nonexistant player" do
+  test "set categories of nonexistent player" do
     game_state = base_state()
     # Cannot set categories for nonexistent player
     assert {:error, :player_nonexistent} ==
