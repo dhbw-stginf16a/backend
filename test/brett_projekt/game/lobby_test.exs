@@ -1,5 +1,6 @@
 defmodule BrettProjekt.Game.LobbyTest do
   use ExUnit.Case, async: false
+  import BrettProjekt.MonadUtil
   alias BrettProjekt.Game.Lobby, as: Lobby
 
   test "create initial game-state" do
@@ -139,10 +140,6 @@ defmodule BrettProjekt.Game.LobbyTest do
       }
     } == game_state
   end
-
-  # TODO think about replacing this with bind
-  def unwrap({:ok, val}), do: val
-  def unwrap(val), do: raise "Cannot unwrap #{inspect val}"
 
   test "set ready status" do
     game_state = %Lobby{
