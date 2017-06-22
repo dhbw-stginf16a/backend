@@ -3,18 +3,22 @@ defmodule BrettProjekt.Game.LobbyTest do
   import BrettProjekt.MonadUtil
   alias BrettProjekt.Game.Lobby, as: Lobby
 
-  test "create initial game-state" do
-    team_count = 3
-    game_state = Lobby.create_game team_count
-
-    assert %Lobby{
+  def base_state() do
+    %Lobby{
       teams: %{
         0 => [],
         1 => [],
         2 => []
       },
       players: %{}
-    } == game_state
+    }
+  end
+
+  test "create initial game-state" do
+    team_count = 3
+    game_state = Lobby.create_game team_count
+
+    assert base_state == game_state
   end
 
   @doc """
@@ -26,14 +30,7 @@ defmodule BrettProjekt.Game.LobbyTest do
     - assign the player exactly one team
   """
   test "add player" do
-    game_state = %Lobby{
-      teams: %{
-        0 => [],
-        1 => [],
-        2 => []
-      },
-      players: %{}
-    }
+    game_state = base_state
 
     check_player_inserted = fn (game_state, player_id, player_name) ->
       {:ok, game_state} = Lobby.add_player(game_state, player_name)
