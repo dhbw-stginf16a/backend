@@ -126,7 +126,7 @@ defmodule BrettProjekt.Game.LobbyTest do
     {:ok, game_state} = Lobby.switch_team(game_state, 1, 0)
     assert %Lobby{
       teams: %{
-        0 => [0, 1],
+        0 => [1, 0],
         1 => [],
         2 => []
       },
@@ -141,6 +141,9 @@ defmodule BrettProjekt.Game.LobbyTest do
         }
       }
     } == game_state
+
+    # Switch to nonexistent team
+    {:error, :team_invalid} = Lobby.switch_team(game_state, 1, 99)
   end
 
   test "set ready status" do
@@ -161,6 +164,9 @@ defmodule BrettProjekt.Game.LobbyTest do
         }
       }
     }
+
+    # Set ready-status for invalid player
+    assert {:error, :invalid_player_id} = Lobby.set_ready(game_state, 99, true)
 
     # Flipping state back and forth results in no change
     new_state =
@@ -190,7 +196,7 @@ defmodule BrettProjekt.Game.LobbyTest do
     assert target_state == new_state
 
     # Setting any ready-value to true should result in it being true
-    target_state = put_in(game_state, [:players, 1, :ready], true)
+    target_state = put_in(game_state.players[1].ready, true)
     new_state =
       game_state
       |> Lobby.set_ready(0, true)
