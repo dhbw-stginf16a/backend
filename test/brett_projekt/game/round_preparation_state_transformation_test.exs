@@ -11,7 +11,6 @@ defmodule BrettProjekt.Game.RoundPreparationStateTransformationTest do
   end
 
   # TODO mock question provider
-  # TODO pipes!
   test "transform round prep to round" do
     # assign categories
     values = [
@@ -31,7 +30,7 @@ defmodule BrettProjekt.Game.RoundPreparationStateTransformationTest do
                     assign_category(state, team_id, category_id, player_id)
                   end)
 
-    assert RoundTest.base_state == StateTrafo.transform round_preparation_state
+    assert {:ok, RoundTest.base_state} == StateTrafo.transform round_preparation_state
   end
 
   test "cannot start game while not all categories assigned" do

@@ -6,20 +6,14 @@ defmodule BrettProjekt.Game.LobbyStateTransformationTest do
   alias BrettProjekt.Game.RoundPreparation, as: RoundPrep
   alias BrettProjekt.Game.RoundPreparationTest, as: RoundPrepTest
 
-  #test "transform lobby into round prep integration" do
-  #  base_state = LobbyTest.base_state
-  #  base_state
-  #  |> Lobby.add_player "Daniel"
-  #  |> Lobby.add_player "Leon"
-  #  |> StateTransformation.transform
-  #end
+  # TODO integration test
 
   def populated_lobby() do
     %Lobby{
       teams: %{
         0 => [0, 1],
         1 => [3],
-        2 => [1],
+        2 => [2],
         3 => []
       },
       players: %{
