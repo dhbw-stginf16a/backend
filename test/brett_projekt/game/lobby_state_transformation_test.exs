@@ -39,7 +39,7 @@ defmodule BrettProjekt.Game.LobbyStateTransformationTest do
   test "transform lobby into round prep" do
     lobby_state = get_populated_lobby()
 
-    round_prep_state = RoundPrepTest.base_state
+    round_prep_state = RoundPrepTest.get_base_state()
 
     # Remove unpopulated teams
     # Add categories

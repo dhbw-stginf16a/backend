@@ -2,7 +2,7 @@ defmodule BrettProjekt.Game.RoundTest do
   use ExUnit.Case, async: false
   alias BrettProjekt.Game.Round, as: Round
 
-  def base_state do
+  def get_base_state() do
     %Round{
       teams: %{
         0 => %{
@@ -81,14 +81,14 @@ defmodule BrettProjekt.Game.RoundTest do
   @question_id_2 6
 
   test "answer by nonexistent user" do
-    game_state = base_state()
+    game_state = get_base_state()
 
     assert {:error, :player_nonexistent} ==
       Round.answer_questions(game_state, @nonexistent_player_id, %{})
   end
 
   test "answer for unavailable question" do
-    game_state = base_state()
+    game_state = get_base_state()
 
     assert {:error, :question_unavailable} ==
       Round.answer_questions(game_state, @player_id,
@@ -96,7 +96,7 @@ defmodule BrettProjekt.Game.RoundTest do
   end
 
   test "empty answers clear all previously given ones" do
-    game_state = base_state()
+    game_state = get_base_state()
 
     {:ok, new_state} = Round.answer_questions(game_state, @player_id,
                                               %{@question_id_0 => :fancyanswer,
@@ -116,7 +116,7 @@ defmodule BrettProjekt.Game.RoundTest do
   end
 
   test "partial answers replace all previously given ones" do
-    game_state = base_state()
+    game_state = get_base_state()
 
     {:ok, new_state} = Round.answer_questions(game_state, @player_id,
                                               %{@question_id_0 => :fancyanswer,
@@ -137,7 +137,7 @@ defmodule BrettProjekt.Game.RoundTest do
   end
 
   test "answer all questions" do
-    game_state = base_state()
+    game_state = get_base_state()
 
     {:ok, new_state} = Round.answer_questions(game_state, @player_id, %{
       @question_id_0 => :fancyanswer,
