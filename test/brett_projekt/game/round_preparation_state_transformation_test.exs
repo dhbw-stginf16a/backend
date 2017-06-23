@@ -28,15 +28,54 @@ defmodule BrettProjekt.Game.RoundPreparationStateTransformationTest do
   end
 
   # TODO mock question provider
-  test "transform round prep to round" do
+  defp get_questions() do
+    questions = %{
+      0 => %{
+        1 => %{
+          4 => :question
+        },
+        2 => %{
+          6 => :question
+        },
+        5 => %{
+          9 => :question
+        },
+      },
+      1 => %{
+        1 => %{
+          2 => :question
+        },
+        2 => %{
+          6 => :question
+        },
+        5 => %{
+          19 => :question
+        }
+      },
+      2 => %{
+        1 => %{
+          1 => :question
+        },
+        2 => %{
+          42 => :question
+        },
+        5 => %{
+          28 => :question
+        }
+      }
+    }
+  end
 
-    assert {:ok, RoundTest.get_base_state()} == StateTrafo.transform get_prepared_round()
+  test "transform round prep to round" do
+    assert {:ok, RoundTest.get_base_state()} ==
+      StateTrafo.transform(get_prepared_round(), get_questions())
   end
 
   test "cannot start game while not all categories assigned" do
     round_preparation_state =
       get_prepared_round()
       |> assign_category(0, 5, nil)
-    assert {:error, :not_all_categories_assigned} == StateTrafo.transform round_preparation_state
+    assert {:error, :not_all_categories_assigned} ==
+      StateTrafo.transform(round_preparation_state, get_questions())
   end
 end
