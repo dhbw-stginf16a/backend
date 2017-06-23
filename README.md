@@ -1,9 +1,9 @@
 # BrettProjekt - Backend
 [![Travis](https://img.shields.io/travis/dhbw-stginf16a/backend.svg)](https://travis-ci.org/dhbw-stginf16a/backend)
 
-[Doc](https://dhbw-stginf16a.github.io/backend)
+[Documentation](https://dhbw-stginf16a.github.io/backend)
 
-## Setup
+## Installation
 
 ### Install Elixir
 
@@ -21,33 +21,35 @@ sudo apt-get install elixir
 
 Windows, MacOS, BSD:
 
-*figure it out yourself :P*
+Take a look at the [official instructions](https://elixir-lang.org/install.html)
 
-Install Elixir's package manager: hex
+### Install Elixir's package manager: hex
 
 `mix local.hex`
 
-Install dependencies:
+### Install dependencies:
 
 `mix deps.get`
 
 `mix archive.install https://github.com/phoenixframework/archives/raw/master/phoenix_new.ez`
 
 
-### Starting
+## Running
 Start your Phoenix server:
 
 `iex -S mix phx.server`
 
 The API is now served at [`localhost:4000`](http://localhost:4000).
 
-### Run tests
+## Testing
 
 `mix test`
 
-## Learn more
+## Learn more about the tools
 
-  * Official website: http://www.phoenixframework.org/
-  * Guides: http://phoenixframework.org/docs/overview
-  * Docs: https://hexdocs.pm/phoenix
-  * Source: https://github.com/phoenixframework/phoenix
+- Language: [Elixir](https://elixir-lang.org/)
+- Web Framwork: [Phoenix](http://www.phoenixframework.org/)
+- Code style checking: [Credo](https://github.com/rrrene/credo)
+- JSON: [Poison](https://github.com/devinus/poison)
+- Documentation: [ExDoc](https://github.com/elixir-lang/ex_doc)
+- Unit Testing: [ExUnit](https://hexdocs.pm/ex_unit/ExUnit.html)

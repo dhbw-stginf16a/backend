@@ -121,7 +121,7 @@ defmodule BrettProjekt.Question.Server do
     question_list =
       state.questions
       |> Enum.to_list
-      |> Enum.map(fn ({id, question}) -> question end)
+      |> Enum.map(fn ({_id, question}) -> question end)
 
     {:reply, question_list, state}
   end
