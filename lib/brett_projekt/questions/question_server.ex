@@ -106,7 +106,8 @@ defmodule BrettProjekt.Question.Server do
   buffer its output.
   """
   defp get_categories_from_questions(questions) do
-    Enum.reduce(questions, MapSet.new, fn({_, question}, acc) ->
+    questions
+    |> Enum.reduce(MapSet.new, fn({_, question}, acc) ->
       MapSet.put acc, question["category"] end)
     |> Enum.to_list
   end
@@ -120,7 +121,7 @@ defmodule BrettProjekt.Question.Server do
     question_list =
       state.questions
       |> Enum.to_list
-      |> Enum.map(fn ({id, question}) -> question end)
+      |> Enum.map(fn ({_id, question}) -> question end)
 
     {:reply, question_list, state}
   end

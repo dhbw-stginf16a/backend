@@ -1,6 +1,5 @@
 defmodule BrettProjekt.Game.RoundPreparationTest do
   use ExUnit.Case, async: false
-  import BrettProjekt.MonadUtil
   alias BrettProjekt.Game.RoundPreparation, as: RoundPrep
 
   def base_state() do

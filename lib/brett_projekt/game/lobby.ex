@@ -16,7 +16,8 @@ defmodule BrettProjekt.Game.Lobby do
     teams = game_state.teams
 
     {smallest_team, _} =
-      Enum.reduce(teams, {-1, nil}, fn ({team_id, team}, {small_tid, small_ts}) ->
+      Enum.reduce(teams, {-1, nil},
+                  fn ({team_id, team}, {small_tid, small_ts}) ->
         if small_ts == nil or small_ts > length(team) do
           {team_id, length(team)}
         else
@@ -29,8 +30,10 @@ defmodule BrettProjekt.Game.Lobby do
 
   @spec get_player_team_id(lobby_state, player_id) :: team_id
   defp get_player_team_id(game_state, player_id) do
-    {team_id, team} =
-      Enum.find(game_state.teams, fn {_, team} -> Enum.member? team, player_id end)
+    {team_id, _team} =
+      Enum.find(game_state.teams, fn {_, team} ->
+        Enum.member? team, player_id
+      end)
 
     team_id
   end

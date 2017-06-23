@@ -1,9 +1,7 @@
 defmodule BrettProjekt.Game.RoundPreparationStateTransformationTest do
   use ExUnit.Case, async: false
   alias BrettProjekt.Game.RoundPreparationStateTransformation, as: StateTrafo
-  alias BrettProjekt.Game.RoundPreparation, as: RoundPrep
   alias BrettProjekt.Game.RoundPreparationTest, as: RoundPrepTest
-  alias BrettProjekt.Game.Round, as: Round
   alias BrettProjekt.Game.RoundTest, as: RoundTest
 
   def assign_category(game_state, team_id, category_id, player_id) do
@@ -34,8 +32,8 @@ defmodule BrettProjekt.Game.RoundPreparationStateTransformationTest do
   end
 
   test "cannot start game while not all categories assigned" do
-    round_preparation_state = RoundPrepTest.base_state
-    round_preparation_state = put_in RoundPrepTest.base_state.teams[0].categories[5], 1
+    round_preparation_state = RoundPrepTest.base_state()
+    round_preparation_state = put_in(round_preparation_state.teams[0].categories[5], 1)
     assert {:error, :not_all_categories_assigned} == StateTrafo.transform round_preparation_state
   end
 end
