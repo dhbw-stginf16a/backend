@@ -60,11 +60,12 @@ defmodule BrettProjekt.Question.Server do
     case Poison.decode json do
       {:ok, decoded} ->
         case Map.get decoded, "version" do
-          0.1 ->
-            GenServer.call(question_server, {
-              :set_questions,
-              BrettProjekt.Question.Parser.V0_1.parse(decoded)
-            })
+          "1.0" ->
+            case BrettProjekt.Question.Parser.V1_0.parse(decoded) do
+              parsed when is_map parsed ->
+                GenServer.call(question_server, {:set_questions, parsed})
+              error -> error
+            end
           nil ->
             {:error, :file_invalid}
           _ ->
@@ -107,7 +108,7 @@ defmodule BrettProjekt.Question.Server do
   """
   defp get_categories_from_questions(questions) do
     Enum.reduce(questions, MapSet.new, fn({_, question}, acc) ->
-      MapSet.put acc, question["category"] end)
+      MapSet.put(acc, question.category) end)
     |> Enum.to_list
   end
 
