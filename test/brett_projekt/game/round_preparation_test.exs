@@ -48,6 +48,7 @@ defmodule BrettProjekt.Game.RoundPreparationTest do
                       fn {category_id, _} -> category_id end)
       ++ acc
     end)
+    |> MapSet.new
   end
 
   @player_id 0
@@ -58,11 +59,11 @@ defmodule BrettProjekt.Game.RoundPreparationTest do
     game_state = get_base_state()
     # Valid choice assigns category and replaces old
     {:ok, new_state} = RoundPrep.set_player_categories(game_state,
-                                                       @player_id, [0, 2])
-    assert [0, 2] == get_player_categories(new_state, @player_id)
+                                                       @player_id, [2, 5])
+    assert MapSet.new([5, 2]) == get_player_categories(new_state, @player_id)
     {:ok, new_state} = RoundPrep.set_player_categories(new_state,
                                                        @player_id, [1])
-    assert [1] == get_player_categories(new_state, @player_id)
+    assert MapSet.new([1]) == get_player_categories(new_state, @player_id)
   end
 
   test "set categories of nonexistent player" do
@@ -77,31 +78,33 @@ defmodule BrettProjekt.Game.RoundPreparationTest do
     # Unavailable categories can not be chosen (even if valid are included)
     assert {:error, :category_unavailable} ==
       RoundPrep.set_player_categories(game_state, @player_id, [0, 9])
+    assert {:ok, _state} =
+      RoundPrep.set_player_categories(game_state, @player_id, [1])
   end
 
   test "set taken categories" do
     game_state = get_base_state()
     # Cannot set categories taken by other players
     {:ok, new_state} = RoundPrep.set_player_categories(game_state,
-                                                       @player_id, [0])
+                                                       @player_id, [1])
     assert {:error, :category_taken} ==
-      RoundPrep.set_player_categories(new_state, @other_player_id, [0, 1])
+      RoundPrep.set_player_categories(new_state, @other_player_id, [2, 1])
   end
 
   test "set same categories" do
     game_state = get_base_state()
     # Choosing same categories a second time does nothing
     {:ok, new_state} = RoundPrep.set_player_categories(game_state,
-                                                       @player_id, [0, 1])
+                                                       @player_id, [2, 1])
     assert game_state != new_state
     assert {:ok, new_state} ==
-      RoundPrep.set_player_categories(new_state,@player_id, [0, 1])
+      RoundPrep.set_player_categories(new_state,@player_id, [2, 1])
   end
 
   test "initial player categories" do
     game_state = get_base_state()
     # Player has no categories at the beginning
-    assert [] == get_player_categories(game_state, @player_id)
+    assert MapSet.new == get_player_categories(game_state, @player_id)
   end
 
   test "clear categories" do
