@@ -5,7 +5,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="ExDoc v0.16.1">
-    <title>BrettProjekt.Web – brett_projekt v0.0.1</title>
+    <title>BrettProjekt.Question.Type.List – brett_projekt v0.0.1</title>
     <link rel="stylesheet" href="dist/app-4ecae1abb8.css" />
     
     <script src="dist/sidebar_items-32313a178f.js"></script>
@@ -62,24 +62,10 @@
 
       <h1>
         <small class="visible-xs">brett_projekt v0.0.1</small>
-        BrettProjekt.Web
+        BrettProjekt.Question.Type.List
         
       </h1>
 
-      
-        <section id="moduledoc">
-          <p>A module that keeps using definitions for controllers,
-views and so on.</p>
-<p>This can be used in your application as:</p>
-<pre><code class="elixir">use BrettProjekt.Web, :controller
-use BrettProjekt.Web, :view</code></pre>
-<p>The definitions below will be executed for every view,
-controller, etc, so keep them short and clean, focused
-on imports, uses and aliases.</p>
-<p>Do NOT define functions inside the quoted expressions
-below.</p>
-
-        </section>
       
 
       
@@ -100,34 +86,13 @@ below.</p>
     </h2>
     <div class="summary-row">
   <div class="summary-signature">
-    <a href="#__using__/1">__using__(which)</a>
-  </div>
-  
-    <div class="summary-synopsis"><p>When used, dispatch to the appropriate controller/view/etc</p>
-</div>
-  
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#channel/0">channel()</a>
+    <a href="#parse/1">parse(imported)</a>
   </div>
   
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#controller/0">controller()</a>
-  </div>
-  
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#router/0">router()</a>
-  </div>
-  
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#view/0">view()</a>
+    <a href="#validate_answer/2">validate_answer(question, answer_json)</a>
   </div>
   
 </div>
@@ -151,33 +116,14 @@ below.</p>
             </a>
             Functions
           </h1>
-          <div class="detail" id="__using__/1">
+          <div class="detail" id="parse/1">
   
   <div class="detail-header">
-    <a href="#__using__/1" class="detail-link" title="Link to this macro">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this macro</span>
-    </a>
-    <span class="signature">__using__(which)</span>
-    
-    
-      <span class="note">(macro)</span>
-    
-    
-  </div>
-  <section class="docstring">
-    <p>When used, dispatch to the appropriate controller/view/etc.</p>
-
-  </section>
-</div>
-<div class="detail" id="channel/0">
-  
-  <div class="detail-header">
-    <a href="#channel/0" class="detail-link" title="Link to this function">
+    <a href="#parse/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <span class="signature">channel()</span>
+    <span class="signature">parse(imported)</span>
     
     
     
@@ -186,46 +132,14 @@ below.</p>
     
   </section>
 </div>
-<div class="detail" id="controller/0">
+<div class="detail" id="validate_answer/2">
   
   <div class="detail-header">
-    <a href="#controller/0" class="detail-link" title="Link to this function">
+    <a href="#validate_answer/2" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <span class="signature">controller()</span>
-    
-    
-    
-  </div>
-  <section class="docstring">
-    
-  </section>
-</div>
-<div class="detail" id="router/0">
-  
-  <div class="detail-header">
-    <a href="#router/0" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <span class="signature">router()</span>
-    
-    
-    
-  </div>
-  <section class="docstring">
-    
-  </section>
-</div>
-<div class="detail" id="view/0">
-  
-  <div class="detail-header">
-    <a href="#view/0" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <span class="signature">view()</span>
+    <span class="signature">validate_answer(question, answer_json)</span>
     
     
     

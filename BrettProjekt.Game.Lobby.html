@@ -5,10 +5,10 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="ExDoc v0.16.1">
-    <title>BrettProjekt.Game.Player – brett_projekt v0.0.1</title>
+    <title>BrettProjekt.Game.Lobby – brett_projekt v0.0.1</title>
     <link rel="stylesheet" href="dist/app-4ecae1abb8.css" />
     
-    <script src="dist/sidebar_items-6210d7ab39.js"></script>
+    <script src="dist/sidebar_items-32313a178f.js"></script>
   </head>
   <body data-type="modules">
     <script>try { if(localStorage.getItem('night-mode')) document.body.className += ' night-mode'; } catch (e) { }</script>
@@ -62,7 +62,7 @@
 
       <h1>
         <small class="visible-xs">brett_projekt v0.0.1</small>
-        BrettProjekt.Game.Player
+        BrettProjekt.Game.Lobby
         
       </h1>
 
@@ -78,6 +78,37 @@
             Summary
           </h1>
           
+  <div class="summary-types summary">
+    <h2>
+      <a href="#types">Types</a>
+    </h2>
+    <div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:lobby_state/0">lobby_state()</a>
+  </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:player_id/0">player_id()</a>
+  </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:team/0">team()</a>
+  </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:team_id/0">team_id()</a>
+  </div>
+  
+</div>
+
+  </div>
+
 
           
   <div class="summary-functions summary">
@@ -86,61 +117,25 @@
     </h2>
     <div class="summary-row">
   <div class="summary-signature">
-    <a href="#add_role/2">add_role(player, role)</a>
+    <a href="#add_player/2">add_player(game_state, player_name)</a>
   </div>
   
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#create/3">create(player_id, name, roles \\ [])</a>
+    <a href="#create_game/1">create_game(team_count)</a>
   </div>
   
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#get_id/1">get_id(player)</a>
+    <a href="#set_ready/3">set_ready(game_state, player_id, ready)</a>
   </div>
   
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#get_name/1">get_name(player)</a>
-  </div>
-  
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#get_roles/1">get_roles(player)</a>
-  </div>
-  
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#get_team/1">get_team(player)</a>
-  </div>
-  
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#has_role?/2">has_role?(player, role)</a>
-  </div>
-  
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#ready?/1">ready?(player)</a>
-  </div>
-  
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#set_ready/2">set_ready(player, ready)</a>
-  </div>
-  
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#set_team/2">set_team(player, team)</a>
+    <a href="#switch_team/3">switch_team(game_state, player_id, team_id)</a>
   </div>
   
 </div>
@@ -154,6 +149,107 @@
       
 
       
+        <section id="types" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#types">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+            Types
+          </h1>
+          <div class="types-list">
+            <div class="detail" id="t:lobby_state/0">
+  
+  <div class="detail-header">
+    <a href="#t:lobby_state/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <span class="signature">lobby_state()</span>
+    
+    
+    
+      <div class="specs">
+        
+          <pre>lobby_state() :: %BrettProjekt.Game.Lobby{players: map, teams: map}</pre>
+        
+      </div>
+    
+  </div>
+  <section class="docstring">
+    
+  </section>
+</div>
+<div class="detail" id="t:player_id/0">
+  
+  <div class="detail-header">
+    <a href="#t:player_id/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <span class="signature">player_id()</span>
+    
+    
+    
+      <div class="specs">
+        
+          <pre>player_id() :: non_neg_integer</pre>
+        
+      </div>
+    
+  </div>
+  <section class="docstring">
+    
+  </section>
+</div>
+<div class="detail" id="t:team/0">
+  
+  <div class="detail-header">
+    <a href="#t:team/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <span class="signature">team()</span>
+    
+    
+    
+      <div class="specs">
+        
+          <pre>team() :: [non_neg_integer]</pre>
+        
+      </div>
+    
+  </div>
+  <section class="docstring">
+    
+  </section>
+</div>
+<div class="detail" id="t:team_id/0">
+  
+  <div class="detail-header">
+    <a href="#t:team_id/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <span class="signature">team_id()</span>
+    
+    
+    
+      <div class="specs">
+        
+          <pre>team_id() :: non_neg_integer</pre>
+        
+      </div>
+    
+  </div>
+  <section class="docstring">
+    
+  </section>
+</div>
+
+          </div>
+        </section>
+      
 
       
         <section id="functions" class="details-list">
@@ -164,162 +260,88 @@
             </a>
             Functions
           </h1>
-          <div class="detail" id="add_role/2">
+          <div class="detail" id="add_player/2">
   
   <div class="detail-header">
-    <a href="#add_role/2" class="detail-link" title="Link to this function">
+    <a href="#add_player/2" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <span class="signature">add_role(player, role)</span>
+    <span class="signature">add_player(game_state, player_name)</span>
     
     
+    
+      <div class="specs">
+        
+          <pre>add_player(<a href="#t:lobby_state/0">lobby_state</a>, <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>) :: {:ok, <a href="#t:lobby_state/0">lobby_state</a>}</pre>
+        
+      </div>
     
   </div>
   <section class="docstring">
     
   </section>
 </div>
-<div class="detail" id="create/3">
-  
-    <span id="create/2"></span>
+<div class="detail" id="create_game/1">
   
   <div class="detail-header">
-    <a href="#create/3" class="detail-link" title="Link to this function">
+    <a href="#create_game/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <span class="signature">create(player_id, name, roles \\ [])</span>
+    <span class="signature">create_game(team_count)</span>
     
     
+    
+      <div class="specs">
+        
+          <pre>create_game(pos_integer) :: <a href="#t:lobby_state/0">lobby_state</a></pre>
+        
+      </div>
     
   </div>
   <section class="docstring">
     
   </section>
 </div>
-<div class="detail" id="get_id/1">
+<div class="detail" id="set_ready/3">
   
   <div class="detail-header">
-    <a href="#get_id/1" class="detail-link" title="Link to this function">
+    <a href="#set_ready/3" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <span class="signature">get_id(player)</span>
+    <span class="signature">set_ready(game_state, player_id, ready)</span>
     
     
+    
+      <div class="specs">
+        
+          <pre>set_ready(<a href="#t:lobby_state/0">lobby_state</a>, <a href="#t:player_id/0">player_id</a>, boolean) :: {atom, any}</pre>
+        
+      </div>
     
   </div>
   <section class="docstring">
     
   </section>
 </div>
-<div class="detail" id="get_name/1">
+<div class="detail" id="switch_team/3">
   
   <div class="detail-header">
-    <a href="#get_name/1" class="detail-link" title="Link to this function">
+    <a href="#switch_team/3" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <span class="signature">get_name(player)</span>
+    <span class="signature">switch_team(game_state, player_id, team_id)</span>
     
     
     
-  </div>
-  <section class="docstring">
-    
-  </section>
-</div>
-<div class="detail" id="get_roles/1">
-  
-  <div class="detail-header">
-    <a href="#get_roles/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <span class="signature">get_roles(player)</span>
-    
-    
-    
-  </div>
-  <section class="docstring">
-    
-  </section>
-</div>
-<div class="detail" id="get_team/1">
-  
-  <div class="detail-header">
-    <a href="#get_team/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <span class="signature">get_team(player)</span>
-    
-    
-    
-  </div>
-  <section class="docstring">
-    
-  </section>
-</div>
-<div class="detail" id="has_role?/2">
-  
-  <div class="detail-header">
-    <a href="#has_role?/2" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <span class="signature">has_role?(player, role)</span>
-    
-    
-    
-  </div>
-  <section class="docstring">
-    
-  </section>
-</div>
-<div class="detail" id="ready?/1">
-  
-  <div class="detail-header">
-    <a href="#ready?/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <span class="signature">ready?(player)</span>
-    
-    
-    
-  </div>
-  <section class="docstring">
-    
-  </section>
-</div>
-<div class="detail" id="set_ready/2">
-  
-  <div class="detail-header">
-    <a href="#set_ready/2" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <span class="signature">set_ready(player, ready)</span>
-    
-    
-    
-  </div>
-  <section class="docstring">
-    
-  </section>
-</div>
-<div class="detail" id="set_team/2">
-  
-  <div class="detail-header">
-    <a href="#set_team/2" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <span class="signature">set_team(player, team)</span>
-    
-    
+      <div class="specs">
+        
+          <pre>switch_team(<a href="#t:lobby_state/0">lobby_state</a>, <a href="#t:player_id/0">player_id</a>, <a href="#t:team_id/0">team_id</a>) :: {atom, any}</pre>
+        
+      </div>
     
   </div>
   <section class="docstring">
