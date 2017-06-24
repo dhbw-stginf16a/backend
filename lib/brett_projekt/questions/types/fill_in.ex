@@ -77,4 +77,40 @@ defmodule BrettProjekt.Question.Type.FillIn do
     |> String.replace("ß", "ss")
     |> remove_non_alphanumeric_chars
   end
+
+  defp answer_valid?(%FillInQuestion{} = question, answer_json) do
+    invalid_answers =
+      answer_json["answers"]
+      |> Enum.with_index
+      |> Enum.filter(fn {answer, pos} ->
+        cond do
+          not String.valid?(answer) -> true
+          question.answers[pos] == nil -> true
+          true -> false
+        end
+      end)
+
+    length(invalid_answers) < 1
+  end
+
+  defp answer_correct?(%FillInQuestion{} = question, answer_json) do
+    correct_answers =
+      answer_json["answers"]
+      |> List.with_index
+      |> Enum.filter(fn {answer, pos} ->
+        solution = question.answers[pos]
+
+        String.equals?(solution, normalize_answer(answer))
+      end)
+
+    length(correct_answers) == Enum.count(question.answers)
+  end
+
+  def validate_answer(%FillInQuestion{} = question, answer_json) do
+    if answer_valid?(question, answer_json) do
+      {:ok, answer_correct?(question, answer_json)}
+    else
+      {:error, :answer_invalid}
+    end
+  end
 end
