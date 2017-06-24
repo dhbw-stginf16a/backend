@@ -4,6 +4,7 @@ defmodule BrettProjekt.Question.Parser.V1_0 do
   alias QuestionType.List, as: ListQuestion
   alias QuestionType.MultipleChoice, as: MultipleChoiceQuestion
   alias QuestionType.Wildcard, as: WildcardQuestion
+  alias QuestionType.FillIn, as: FillInQuestion
 
   @moduledoc """
   Parser for the question file-format version 1.0.
@@ -58,8 +59,9 @@ defmodule BrettProjekt.Question.Parser.V1_0 do
       "wildcard" -> WildcardQuestion.parse(question)
       "multipleChoice" -> MultipleChoiceQuestion.parse(question)
       "list" -> ListQuestion.parse(question)
+      "fillIn" -> FillInQuestion.parse(question)
       nil -> {:error, :question_has_no_type}
-      _ -> {:error, :question_type_not_supported}
+      type -> {:error, :question_type_not_supported, type}
     end
   end
 end
