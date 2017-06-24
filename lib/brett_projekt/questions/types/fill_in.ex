@@ -78,7 +78,7 @@ defmodule BrettProjekt.Question.Type.FillIn do
     |> remove_non_alphanumeric_chars
   end
 
-  defp answer_valid?(%FillInQuestion{} = question, answer_json) do
+  def answer_valid?(%FillInQuestion{} = question, answer_json) do
     invalid_answers =
       answer_json["answers"]
       |> Enum.with_index
@@ -104,13 +104,5 @@ defmodule BrettProjekt.Question.Type.FillIn do
       end)
 
     length(correct_answers) == Enum.count(question.answers)
-  end
-
-  def validate_answer(%FillInQuestion{} = question, answer_json) do
-    if answer_valid?(question, answer_json) do
-      {:ok, answer_correct?(question, answer_json)}
-    else
-      {:error, :answer_invalid}
-    end
   end
 end

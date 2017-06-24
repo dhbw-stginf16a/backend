@@ -31,8 +31,13 @@ defmodule BrettProjekt.Question.Type.Wildcard do
     }
   end
 
+  # TODO: check if unknown format is valid
+  def answer_valid?(%WildcardQuestion{} = question, json_answer) do
+    false
+  end
+
   # TODO: apply(magic, [answer_evaluation])
-  def validate_answer(%WildcardQuestion{} = question, json_answer) do
-    {:ok, false}
+  def answer_correct?(%WildcardQuestion{} = question, json_answer) do
+    false
   end
 end

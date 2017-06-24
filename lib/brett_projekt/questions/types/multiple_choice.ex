@@ -43,7 +43,7 @@ defmodule BrettProjekt.Question.Type.MultipleChoice do
   {:ok, false}
   {:error, :answer_invalid}
 
-  defp answer_valid?(json) do
+  defp answer_valid?(_question, json) do
     answer = json["answer"]
 
     answer != nil and is_integer(answer)
@@ -51,13 +51,5 @@ defmodule BrettProjekt.Question.Type.MultipleChoice do
 
   defp answer_correct?(%MultipleChoiceQuestion{} = question, answer_json) do
     question.answer == answer_json["answer"]
-  end
-
-  def validate_answer(%MultipleChoiceQuestion{} = question, answer_json) do
-    if answer_valid? answer_json do
-      answer_correct?(question, answer_json)
-    else
-      {:error, :answer_invalid}
-    end
   end
 end

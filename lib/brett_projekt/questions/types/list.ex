@@ -35,7 +35,7 @@ defmodule BrettProjekt.Question.Type.List do
     }
   end
 
-  defp answer_valid?(json) do
+  def answer_valid?(_question, json) do
     case json["answers"] do
       answers when is_list answers ->
         invalid_elements =
@@ -91,13 +91,5 @@ defmodule BrettProjekt.Question.Type.List do
       end)
 
     correct_answers >= question.required_answers
-  end
-
-  def validate_answer(%ListQuestion{} = question, answer_json) do
-    if answer_valid? answer_json do
-      answer_correct?(question, answer_json)
-    else
-      {:error, :answer_invalid}
-    end
   end
 end
