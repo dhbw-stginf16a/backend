@@ -43,7 +43,7 @@ defmodule BrettProjekt.Question.Parser.V1_0 do
     errored_transforms =
       question_structs
       |> Enum.filter(fn {_id, struct} ->
-        not Map.has_key?(struct, :__struct__)
+        not is_map(struct) or not Map.has_key?(struct, :__struct__)
       end)
 
     if length(errored_transforms) < 1 do
