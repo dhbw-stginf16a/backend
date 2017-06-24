@@ -1,6 +1,4 @@
 defmodule BrettProjekt.Question.Server do
-  use GenServer
-  alias BrettProjekt.Question.Parser, as: QuestionParser
   alias __MODULE__, as: QuestionServer
 
   @enforce_keys []
@@ -28,7 +26,7 @@ defmodule BrettProjekt.Question.Server do
   `load_questions_from_json/2`.
   """
   def start_link(name) do
-    GenServer.start_link(__MODULE__, %QuestionServer{}, name: name)
+    Agent.start_link(fn () -> %QuestionServer{} end, name: name)
   end
 
   @doc """
@@ -61,10 +59,11 @@ defmodule BrettProjekt.Question.Server do
       {:ok, decoded} ->
         case Map.get decoded, "version" do
           "1.0" ->
-            case BrettProjekt.Question.Parser.V1_0.parse(decoded) do
-              parsed when is_map parsed ->
-                GenServer.call(question_server, {:set_questions, parsed})
-              error -> error
+            parsed = BrettProjekt.Question.Parser.V1_0.parse(decoded)
+            if is_map(parsed) do
+              set_questions(question_server, parsed)
+            else
+              parsed  # Is error message
             end
           nil ->
             {:error, :file_invalid}
@@ -75,12 +74,19 @@ defmodule BrettProjekt.Question.Server do
     end
   end
 
+  defp set_questions(question_server, questions) do
+    Agent.update(question_server, fn state ->
+      categories = get_categories_from_questions questions
+      %QuestionServer{state | questions: questions, categories: categories}
+    end)
+  end
+
   @doc """
   Get all questions as a list.
   """
   @spec get_questions(pid) :: list
   def get_questions(question_server) do
-    GenServer.call(question_server, :get_questions)
+    Agent.get(question_server, fn state -> Map.values state.questions end)
   end
 
   @doc """
@@ -88,7 +94,7 @@ defmodule BrettProjekt.Question.Server do
   """
   @spec get_question(pid, integer) :: map
   def get_question(question_server, id) do
-    GenServer.call(question_server, {:get_question, id})
+    Agent.get(question_server, fn state -> Map.get(state.questions, id) end)
   end
 
   @doc """
@@ -96,7 +102,7 @@ defmodule BrettProjekt.Question.Server do
   """
   @spec get_categories(pid) :: list
   def get_categories(question_server) do
-    GenServer.call(question_server, :get_categories)
+    Agent.get(question_server, fn state -> state.categories end)
   end
 
   @doc """
@@ -107,30 +113,9 @@ defmodule BrettProjekt.Question.Server do
   buffer its output.
   """
   defp get_categories_from_questions(questions) do
-    Enum.reduce(questions, MapSet.new, fn({_, question}, acc) ->
+    questions
+    |> Enum.reduce(MapSet.new, fn({_, question}, acc) ->
       MapSet.put(acc, question.category) end)
     |> Enum.to_list
-  end
-
-  def handle_call({:set_questions, questions}, _from, state) do
-    categories = get_categories_from_questions questions
-    {:reply, :ok, %{state | questions: questions, categories: categories}}
-  end
-
-  def handle_call(:get_questions, _from, state) do
-    question_list =
-      state.questions
-      |> Enum.to_list
-      |> Enum.map(fn ({_id, question}) -> question end)
-
-    {:reply, question_list, state}
-  end
-
-  def handle_call({:get_question, id}, _from, state) do
-    {:reply, state.questions[id], state}
-  end
-
-  def handle_call(:get_categories, _from, state) do
-    {:reply, state.categories, state}
   end
 end

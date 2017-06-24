@@ -1,7 +1,6 @@
 defmodule BrettProjekt.Question.ServerManager do
   use GenServer
   alias BrettProjekt.Question.Server, as: QuestionServer
-  alias __MODULE__, as: QuestionServerManager
 
   @moduledoc """
   Manager for handling `BrettProjekt.Question.Server` easily.

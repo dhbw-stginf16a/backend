@@ -96,11 +96,11 @@ defmodule BrettProjekt.Question.Type.FillIn do
   defp answer_correct?(%FillInQuestion{} = question, answer_json) do
     correct_answers =
       answer_json["answers"]
-      |> List.with_index
+      |> Enum.with_index
       |> Enum.filter(fn {answer, pos} ->
         solution = question.answers[pos]
 
-        String.equals?(solution, normalize_answer(answer))
+        String.equivalent?(solution, normalize_answer(answer))
       end)
 
     length(correct_answers) == Enum.count(question.answers)
