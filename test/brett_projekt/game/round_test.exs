@@ -85,6 +85,9 @@ defmodule BrettProjekt.Game.RoundTest do
 
     assert {:error, :player_nonexistent} ==
       Round.answer_questions(game_state, @nonexistent_player_id, %{})
+
+    assert {:error, :player_nonexistent} !=
+      Round.answer_questions(game_state, @player_id, %{})
   end
 
   test "answer for unavailable question" do
@@ -93,6 +96,10 @@ defmodule BrettProjekt.Game.RoundTest do
     assert {:error, :question_unavailable} ==
       Round.answer_questions(game_state, @player_id,
                              %{@unavailable_question_id => :some_answer})
+
+    assert {:error, :question_unavailable} !=
+      Round.answer_questions(game_state, @player_id,
+                             %{@question_id_0 => :some_answer})
   end
 
   test "empty answers clear all previously given ones" do
