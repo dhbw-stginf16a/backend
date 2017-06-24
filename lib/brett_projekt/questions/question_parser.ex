@@ -10,6 +10,15 @@ defmodule BrettProjekt.Question.Parser.V1_0 do
   Parser for the question file-format version 1.0.
   """
 
+  @type question_id :: non_neq_integer
+  @type question_struct :: map
+  @type question_parsing_error :: {:error, error_code :: atom} |
+                                  {:error, error_code :: atom, msg :: atom}
+  @type json_object :: %{string => any}
+
+
+  @spec parse(json_object) :: %{question_id => question_struct} |
+                                               question_parsing_error
   def parse(decoded_json) do
     decoded_json
     |> Map.get("categories")
@@ -19,6 +28,7 @@ defmodule BrettProjekt.Question.Parser.V1_0 do
   end
 
   # TODO: Category already in question (file format change)
+  @spec flatten_categories(json_object) :: [json_object]
   defp flatten_categories(categories) do
     Enum.flat_map(Map.to_list(categories), fn({category, questions}) ->
       category_questions = Enum.map(questions, fn(question) ->
@@ -27,6 +37,7 @@ defmodule BrettProjekt.Question.Parser.V1_0 do
     end)
   end
 
+  @spec assign_question_ids([json_object]) :: %{question_id => json_object}
   defp assign_question_ids(questions) do
     questions
     |> Enum.with_index
@@ -35,6 +46,7 @@ defmodule BrettProjekt.Question.Parser.V1_0 do
     end)
   end
 
+  @spec to_question_structs()
   def to_question_structs(questions) do
     question_structs =
       for {id, question} <- questions, into: %{} do
