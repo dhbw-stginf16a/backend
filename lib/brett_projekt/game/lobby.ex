@@ -28,6 +28,16 @@ defmodule BrettProjekt.Game.Lobby do
     smallest_team
   end
 
+  defp name_valid?(name) do
+    cond do
+      is_binary(name) == false -> false
+      String.printable?(name) == false -> false
+      String.length(name) < 3 -> false
+      String.length(name) > 12 -> false
+      true -> true
+    end
+  end
+
   @spec get_player_team_id(lobby_state, player_id) :: team_id
   defp get_player_team_id(game_state, player_id) do
     {team_id, _team} =
@@ -62,8 +72,26 @@ defmodule BrettProjekt.Game.Lobby do
     %Lobby{teams: teams}
   end
 
+  @spec has_player?(lobby_state, String.t) :: boolean
+  def has_player?(game_state, player_name) do
+    Enum.any?(game_state.players, fn {_player_id, player} ->
+      String.equivalent?(player_name, player.name)
+    end)
+  end
+
   @spec add_player(lobby_state, String.t) :: {:ok, lobby_state}
   def add_player(game_state, player_name) do
+    cond do
+			name_valid?(player_name) == false ->
+        {:error, :name_invalid}
+      has_player?(game_state, player_name) ->
+        {:error, :name_conflict}
+      true ->
+        force_add_player(game_state, player_name)
+    end
+  end
+
+  defp force_add_player(game_state, player_name) do
     player = %{name: player_name, ready: false}
     player_id = length Map.values game_state.players
     team_id = least_populated_team game_state
