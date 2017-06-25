@@ -29,7 +29,7 @@ defmodule BrettProjekt.Game.RoundPreparationStateTransformationTest do
 
   # TODO mock question provider
   defp get_questions() do
-    questions = %{
+    %{
       0 => %{
         1 => %{
           4 => :question
