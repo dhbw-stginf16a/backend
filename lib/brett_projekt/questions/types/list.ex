@@ -39,7 +39,7 @@ defmodule BrettProjekt.Question.Type.List do
     case json["answers"] do
       answers when is_list answers ->
         invalid_elements =
-          Enum.filter(answers, not &String.valid?/1)
+          Enum.filter(answers, &(not String.valid? &1))
 
         length(invalid_elements) > 0
       _ -> false
