@@ -34,7 +34,8 @@ defmodule BrettProjekt.Mixfile do
      {:ex_doc, "~> 0.16", only: :dev},
      {:poison, "~> 3.1"},
      {:credo, "~> 0.8", only: [:dev, :test], runtime: false},
-     {:dialyxir, "~> 0.5.0", only: [:dev]}
+     {:dialyxir, "~> 0.5.0", only: [:dev]},
+     {:hashids, "~> 2.0"}
     ]
   end
 end
