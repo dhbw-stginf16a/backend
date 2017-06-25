@@ -5,7 +5,7 @@ fonts/icomoon.eot
 fonts/icomoon.svg
 fonts/icomoon.ttf
 fonts/icomoon.woff
-dist/sidebar_items-dd1e602fc7.js
+dist/sidebar_items-9aa956cfb2.js
 api-reference.html
 404.html
 BrettProjekt.Application.html
@@ -17,13 +17,16 @@ BrettProjekt.Game.Round.html
 BrettProjekt.Game.RoundEvaluation.html
 BrettProjekt.Game.RoundPreparation.html
 BrettProjekt.Game.RoundPreparationStateTransformation.html
+BrettProjekt.Game.RoundStateTransformation.html
 BrettProjekt.GameManager.html
 BrettProjekt.MonadUtil.html
+BrettProjekt.Question.html
 BrettProjekt.Question.Parser.V1_0.html
 BrettProjekt.Question.Server.html
 BrettProjekt.Question.ServerManager.html
 BrettProjekt.Question.Type.FillIn.html
 BrettProjekt.Question.Type.List.html
+BrettProjekt.Question.Type.Mock.html
 BrettProjekt.Question.Type.MultipleChoice.html
 BrettProjekt.Question.Type.Wildcard.html
 BrettProjekt.Web.html
