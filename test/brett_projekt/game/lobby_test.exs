@@ -31,9 +31,11 @@ defmodule BrettProjekt.Game.LobbyTest do
   """
   test "add player" do
     game_state = get_base_state()
+    IO.inspect game_state, label: "Game state :)"
 
     check_player_inserted = fn (game_state, player_id, player_name) ->
-      {:ok, game_state} = Lobby.add_player(game_state, player_name)
+      {:ok, {game_state, _player_id}} =
+        Lobby.add_player(game_state, player_name)
 
       assert %{name: player_name, ready: false} == game_state.players[player_id]
 

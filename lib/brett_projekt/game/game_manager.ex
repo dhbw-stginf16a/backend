@@ -72,6 +72,11 @@ defmodule BrettProjekt.GameManager do
     {:ok, game, game_id}
   end
 
+  @spec get_game_by_id(Agent.agent, game_id) :: game | nil
+  def get_game_by_id(game_manager, game_id) do
+    Agent.get(game_manager, fn state -> state.games[game_id] end)
+  end
+
   defp add_game(game_manager, game, game_id) do
     Agent.update(game_manager, fn state ->
       %{state | games: Map.put(state.games, game_id, game)}

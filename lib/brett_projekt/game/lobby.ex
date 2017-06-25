@@ -79,10 +79,11 @@ defmodule BrettProjekt.Game.Lobby do
     end)
   end
 
-  @spec add_player(lobby_state, String.t) :: {:ok, lobby_state}
+  @spec add_player(lobby_state, String.t) ::
+    {:ok, {lobby_state}, player_id} | {:error, :name_invalid | :name_conlict}
   def add_player(game_state, player_name) do
     cond do
-			name_valid?(player_name) == false ->
+      name_valid?(player_name) == false ->
         {:error, :name_invalid}
       has_player?(game_state, player_name) ->
         {:error, :name_conflict}
@@ -93,16 +94,16 @@ defmodule BrettProjekt.Game.Lobby do
 
   defp force_add_player(game_state, player_name) do
     player = %{name: player_name, ready: false}
-    player_id = length Map.values game_state.players
-    team_id = least_populated_team game_state
+    player_id = game_state.players |> Map.values |> Enum.count
+    team_id = least_populated_team(game_state)
 
-    players = Map.put game_state.players, player_id, player
+    players = Map.put(game_state.players, player_id, player)
     teams = %{
       game_state.teams |
       team_id => add_player_to_team(game_state.teams[team_id], player_id)
     }
 
-    {:ok, %{game_state | players: players, teams: teams}}
+    {:ok, {%{game_state | players: players, teams: teams}, player_id}}
   end
 
   @spec switch_team(lobby_state, player_id, team_id) :: {atom, any}
