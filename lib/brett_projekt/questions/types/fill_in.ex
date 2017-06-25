@@ -93,7 +93,7 @@ defmodule BrettProjekt.Question.Type.FillIn do
     length(invalid_answers) < 1
   end
 
-  defp answer_correct?(%FillInQuestion{} = question, answer_json) do
+  def answer_correct?(%FillInQuestion{} = question, answer_json) do
     correct_answers =
       answer_json["answers"]
       |> Enum.with_index
@@ -104,5 +104,11 @@ defmodule BrettProjekt.Question.Type.FillIn do
       end)
 
     length(correct_answers) == Enum.count(question.answers)
+  end
+
+  def correct_answer(%FillInQuestion{} = question) do
+    %{
+      "answers" => Map.values(question.answers)
+    }
   end
 end

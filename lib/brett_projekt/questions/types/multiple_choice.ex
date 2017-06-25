@@ -5,7 +5,7 @@ defmodule BrettProjekt.Question.Type.MultipleChoice do
     :question,
     :category,
     :difficulty,
-    :answer,
+    :answers,
     :possibilities
   ]
   defstruct [
@@ -13,13 +13,13 @@ defmodule BrettProjekt.Question.Type.MultipleChoice do
     :question,
     :category,
     :difficulty,
-    :answer,
+    :answers,
     :possibilities
   ]
 
-  defp parse_answer(imported_answers) do
+  defp parse_answers(imported_answers) do
     # Answer is the index of the correct possibility
-    Map.get(hd(imported_answers), "index")
+    Enum.map(imported_answers, fn %{"index" => index} -> index end)
   end
 
   defp parse_possibilities(imported_possibilities) do
@@ -34,22 +34,29 @@ defmodule BrettProjekt.Question.Type.MultipleChoice do
       question: imported["question"],
       category: imported["category"],
       difficulty: imported["difficulty"],
-      answer: parse_answer(imported["answers"]),
+      answers: parse_answers(imported["answers"]),
       possibilities: parse_possibilities(imported["possibilities"])
     }
   end
 
-  {:ok, true}
-  {:ok, false}
-  {:error, :answer_invalid}
-
   defp answer_valid?(_question, json) do
-    answer = json["answer"]
+    answers = json["answers"]
 
-    answer != nil and is_integer(answer)
+    cond do
+      answers == nil -> false
+      not is_list(answers) -> false
+      not Enum.all?(answers, &is_integer/1) -> false
+      true -> true
+    end
   end
 
   defp answer_correct?(%MultipleChoiceQuestion{} = question, answer_json) do
-    question.answer == answer_json["answer"]
+    MapSet.new(question.answers) == MapSet.new(answer_json["answers"])
+  end
+
+  def correct_answer(%MultipleChoiceQuestion{} = question) do
+    %{
+      "answers" => question.answers
+    }
   end
 end

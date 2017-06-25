@@ -16,6 +16,13 @@ defmodule BrettProjekt.Game.RoundEvaluationTest do
                     correct_answer: :correct_answer,
                     score: 1
                   }
+                },
+                %{
+                  9 => %{
+                    answer: :correct_answer,
+                    correct_answer: :correct_answer,
+                    score: 1
+                  }
                 }
               ]
             },
@@ -29,7 +36,7 @@ defmodule BrettProjekt.Game.RoundEvaluationTest do
                     score: 0
                   },
                   9 => %{
-                    answer: :wrong_answer,
+                    answer: nil,
                     correct_answer: :correct_answer,
                     score: 0
                   }
@@ -86,7 +93,7 @@ defmodule BrettProjekt.Game.RoundEvaluationTest do
                     score: 1
                   },
                   28 => %{
-                    answer: :wrong_answer,
+                    answer: nil,
                     correct_answer: :correct_answer,
                     score: 0
                   },

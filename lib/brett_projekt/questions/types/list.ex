@@ -92,4 +92,10 @@ defmodule BrettProjekt.Question.Type.List do
 
     correct_answers >= question.required_answers
   end
+
+  def correct_answer(%ListQuestion{} = question) do
+    %{
+      "answers" => question.answers
+    }
+  end
 end

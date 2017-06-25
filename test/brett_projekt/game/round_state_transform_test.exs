@@ -1,7 +1,7 @@
 defmodule BrettProjekt.Game.RoundStateTransformationTest do
   use ExUnit.Case, async: false
   alias BrettProjekt.Game.Round, as: Round
-  alias BrettProjekt.Game.RoundEvaluation, as: RoundEval
+  alias BrettProjekt.Game.RoundStateTransformation, as: RoundTrafo
   alias BrettProjekt.Game.RoundEvaluationTest, as: RoundEvalTest
   alias BrettProjekt.Question.Type.Mock, as: MockedQuestion
 
@@ -15,6 +15,13 @@ defmodule BrettProjekt.Game.RoundStateTransformationTest do
               questions: [
                 %{
                   6 => :correct_answer
+                },
+                %{
+                  9 => %{
+                    correct_answer: :correct_answer,
+                    answer: :correct_answer,
+                    score: 1
+                  }
                 }
               ]
             },
@@ -76,21 +83,24 @@ defmodule BrettProjekt.Game.RoundStateTransformationTest do
     }
   end
 
-  # wrong answer results in a score of 0
-  # invalid answer results in a score of 0
-  # correct answer results in a score of 1
-  test "evaluation of answers" do
+  # TODO make private
+  def get_questions_map() do
     question_list = [1, 2, 4, 6, 9, 19, 28, 42]
-    questions_map = for question_id <- question_list, into: %{} do
+    for question_id <- question_list, into: %{} do
       {question_id, %MockedQuestion{
         id: :whatever,
         correct_answer: :correct_answer,
         valid_wrong_answer: :wrong_answer
       }}
     end
+  end
 
-    evaluated_round = RoundEval.evaluate_round(
-      get_answered_state(), questions_map)
+  # wrong answer results in a score of 0
+  # invalid answer results in a score of 0
+  # correct answer results in a score of 1
+  test "evaluation of answers" do
+    evaluated_round = RoundTrafo.transform(
+      get_answered_state(), get_questions_map())
     assert {:ok, RoundEvalTest.get_base_state()} == evaluated_round
   end
 end

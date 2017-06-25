@@ -12,7 +12,7 @@ defmodule BrettProjekt.Question do
     question_module = Map.get(question, :__struct__)
 
     if apply(question_module, :answer_valid?, [question, answer]) do
-      if (apply(question_module, :answer_correct?, [question, answer])) do
+      if apply(question_module, :answer_correct?, [question, answer]) do
         {:ok, true}
       else
         {:ok, false}
@@ -21,5 +21,18 @@ defmodule BrettProjekt.Question do
       {:error, :answer_invalid}
     end
   end
-end
 
+  def correct_answer(questions_map, question_id) do
+    if Map.has_key?(questions_map, question_id) do
+      {:ok, correct_answer(questions_map[question_id])}
+    else
+      {:error, :question_not_found}
+    end
+  end
+
+  def correct_answer(question) do
+    question_module = Map.get(question, :__struct__)
+
+    apply(question_module, :correct_answer, [question])
+  end
+end
