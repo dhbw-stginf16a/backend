@@ -8,7 +8,7 @@
     <title>BrettProjekt.Game.Lobby – brett_projekt v0.0.1</title>
     <link rel="stylesheet" href="dist/app-4ecae1abb8.css" />
     
-    <script src="dist/sidebar_items-b1fc9349a4.js"></script>
+    <script src="dist/sidebar_items-6b2a48786b.js"></script>
   </head>
   <body data-type="modules">
     <script>try { if(localStorage.getItem('night-mode')) document.body.className += ' night-mode'; } catch (e) { }</script>
@@ -124,6 +124,18 @@
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#create_game/1">create_game(team_count)</a>
+  </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#get_update_broadcast/1">get_update_broadcast(lobby_state)</a>
+  </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#has_player?/2">has_player?(game_state, player_name)</a>
   </div>
   
 </div>
@@ -273,7 +285,9 @@
     
       <div class="specs">
         
-          <pre>add_player(<a href="#t:lobby_state/0">lobby_state</a>, <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>) :: {:ok, <a href="#t:lobby_state/0">lobby_state</a>}</pre>
+          <pre>add_player(<a href="#t:lobby_state/0">lobby_state</a>, <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>) ::
+  {:ok, {<a href="#t:lobby_state/0">lobby_state</a>}, <a href="#t:player_id/0">player_id</a>} |
+  {:error, :name_invalid | :name_conlict}</pre>
         
       </div>
     
@@ -296,6 +310,44 @@
       <div class="specs">
         
           <pre>create_game(pos_integer) :: <a href="#t:lobby_state/0">lobby_state</a></pre>
+        
+      </div>
+    
+  </div>
+  <section class="docstring">
+    
+  </section>
+</div>
+<div class="detail" id="get_update_broadcast/1">
+  
+  <div class="detail-header">
+    <a href="#get_update_broadcast/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <span class="signature">get_update_broadcast(lobby_state)</span>
+    
+    
+    
+  </div>
+  <section class="docstring">
+    
+  </section>
+</div>
+<div class="detail" id="has_player?/2">
+  
+  <div class="detail-header">
+    <a href="#has_player?/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <span class="signature">has_player?(game_state, player_name)</span>
+    
+    
+    
+      <div class="specs">
+        
+          <pre>has_player?(<a href="#t:lobby_state/0">lobby_state</a>, <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>) :: boolean</pre>
         
       </div>
     
@@ -339,7 +391,9 @@
     
       <div class="specs">
         
-          <pre>switch_team(<a href="#t:lobby_state/0">lobby_state</a>, <a href="#t:player_id/0">player_id</a>, <a href="#t:team_id/0">team_id</a>) :: {atom, any}</pre>
+          <pre>switch_team(<a href="#t:lobby_state/0">lobby_state</a>, <a href="#t:player_id/0">player_id</a>, <a href="#t:team_id/0">team_id</a>) ::
+  {:ok, <a href="#t:lobby_state/0">lobby_state</a>} |
+  {:error, :team_invalid}</pre>
         
       </div>
     

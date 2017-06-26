@@ -8,7 +8,7 @@
     <title>BrettProjekt.GameManager – brett_projekt v0.0.1</title>
     <link rel="stylesheet" href="dist/app-4ecae1abb8.css" />
     
-    <script src="dist/sidebar_items-b1fc9349a4.js"></script>
+    <script src="dist/sidebar_items-6b2a48786b.js"></script>
   </head>
   <body data-type="modules">
     <script>try { if(localStorage.getItem('night-mode')) document.body.className += ' night-mode'; } catch (e) { }</script>
@@ -69,7 +69,7 @@
       
         <section id="moduledoc">
           <p>Provides state and functions for handling Game instances.</p>
-<p>The GameManager is implemented as a GenServer holding different Game instances.
+<p>The GameManager is implemented as an Agent holding different Game instances.
 These can be accessed by convenient functions.</p>
 <p>It also provides functions for generating unique game-identifiers.</p>
 
@@ -86,6 +86,25 @@ These can be accessed by convenient functions.</p>
             Summary
           </h1>
           
+  <div class="summary-types summary">
+    <h2>
+      <a href="#types">Types</a>
+    </h2>
+    <div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:game/0">game()</a>
+  </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:game_id/0">game_id()</a>
+  </div>
+  
+</div>
+
+  </div>
+
 
           
   <div class="summary-functions summary">
@@ -93,15 +112,6 @@ These can be accessed by convenient functions.</p>
       <a href="#functions">Functions</a>
     </h2>
     <div class="summary-row">
-  <div class="summary-signature">
-    <a href="#add_game/2">add_game(game_manager, game)</a>
-  </div>
-  
-    <div class="summary-synopsis"><p>Adds an existing <a href="BrettProjekt.Game.html"><code class="inline">BrettProjekt.Game</code></a> to the GameManager</p>
-</div>
-  
-</div>
-<div class="summary-row">
   <div class="summary-signature">
     <a href="#add_new_game/1">add_new_game(game_manager)</a>
   </div>
@@ -112,29 +122,8 @@ These can be accessed by convenient functions.</p>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#generate_game_id/1">generate_game_id(game_manager)</a>
-  </div>
-  
-    <div class="summary-synopsis"><p>Generates a unique game-id string</p>
-</div>
-  
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
     <a href="#get_game_by_id/2">get_game_by_id(game_manager, game_id)</a>
   </div>
-  
-    <div class="summary-synopsis"><p>Finds a game by id</p>
-</div>
-  
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#get_games/1">get_games(game_manager)</a>
-  </div>
-  
-    <div class="summary-synopsis"><p>Returns a map of registered games</p>
-</div>
   
 </div>
 <div class="summary-row">
@@ -165,6 +154,63 @@ These can be accessed by convenient functions.</p>
       
 
       
+        <section id="types" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#types">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+            Types
+          </h1>
+          <div class="types-list">
+            <div class="detail" id="t:game/0">
+  
+  <div class="detail-header">
+    <a href="#t:game/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <span class="signature">game()</span>
+    
+    
+    
+      <div class="specs">
+        
+          <pre>game() :: pid</pre>
+        
+      </div>
+    
+  </div>
+  <section class="docstring">
+    
+  </section>
+</div>
+<div class="detail" id="t:game_id/0">
+  
+  <div class="detail-header">
+    <a href="#t:game_id/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <span class="signature">game_id()</span>
+    
+    
+    
+      <div class="specs">
+        
+          <pre>game_id() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a></pre>
+        
+      </div>
+    
+  </div>
+  <section class="docstring">
+    
+  </section>
+</div>
+
+          </div>
+        </section>
+      
 
       
         <section id="functions" class="details-list">
@@ -175,36 +221,7 @@ These can be accessed by convenient functions.</p>
             </a>
             Functions
           </h1>
-          <div class="detail" id="add_game/2">
-  
-  <div class="detail-header">
-    <a href="#add_game/2" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <span class="signature">add_game(game_manager, game)</span>
-    
-    
-    
-  </div>
-  <section class="docstring">
-    <p>Adds an existing <a href="BrettProjekt.Game.html"><code class="inline">BrettProjekt.Game</code></a> to the GameManager</p>
-<p>The <a href="BrettProjekt.Game.html"><code class="inline">BrettProjekt.Game</code></a> needs to have a unique id already set.
-Get it form <a href="#generate_game_id/1"><code class="inline">generate_game_id/1</code></a>.</p>
-<h2 id="add_game/2-examples" class="section-heading">
-  <a href="#add_game/2-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  Examples
-</h2>
-
-<pre><code class="iex elixir">iex&gt; {:ok, game_manager} = BrettProjekt.GameManager.start_link
-iex&gt; {:ok, game} = BrettProjekt.Game.create(BrettProjekt.GameManager.generate_game_id game_manager)
-iex&gt; {:ok, game_id, ^game} = BrettProjekt.GameManager.add_game game_manager, game
-iex&gt; is_binary game_id
-true</code></pre>
-
-  </section>
-</div>
-<div class="detail" id="add_new_game/1">
+          <div class="detail" id="add_new_game/1">
   
   <div class="detail-header">
     <a href="#add_new_game/1" class="detail-link" title="Link to this function">
@@ -214,6 +231,12 @@ true</code></pre>
     <span class="signature">add_new_game(game_manager)</span>
     
     
+    
+      <div class="specs">
+        
+          <pre>add_new_game(<a href="https://hexdocs.pm/elixir/Agent.html#t:agent/0">Agent.agent</a>) :: {:ok, <a href="#t:game/0">game</a>, <a href="#t:game_id/0">game_id</a>}</pre>
+        
+      </div>
     
   </div>
   <section class="docstring">
@@ -231,24 +254,6 @@ true</code></pre>
 
   </section>
 </div>
-<div class="detail" id="generate_game_id/1">
-  
-  <div class="detail-header">
-    <a href="#generate_game_id/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <span class="signature">generate_game_id(game_manager)</span>
-    
-    
-    
-  </div>
-  <section class="docstring">
-    <p>Generates a unique game-id string</p>
-<p>The resulting string will be a Base-32 encoded 6-character long string.</p>
-
-  </section>
-</div>
 <div class="detail" id="get_game_by_id/2">
   
   <div class="detail-header">
@@ -260,53 +265,15 @@ true</code></pre>
     
     
     
-  </div>
-  <section class="docstring">
-    <p>Finds a game by id</p>
-<p>Returns <code class="inline">nil</code> no game with given id is registered.</p>
-<h2 id="get_game_by_id/2-arguments" class="section-heading">
-  <a href="#get_game_by_id/2-arguments" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  Arguments
-</h2>
-
-<ul>
-<li>game_manager: The game_manager to search on
-</li>
-<li>game_id: The game_id to search for
-</li>
-</ul>
-<h2 id="get_game_by_id/2-example" class="section-heading">
-  <a href="#get_game_by_id/2-example" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  Example
-</h2>
-
-<pre><code class="iex elixir">iex&gt; {:ok, game_manager} = BrettProjekt.GameManager.start_link
-iex&gt; {:ok, game_id, _} = BrettProjekt.GameManager.add_new_game game_manager
-iex&gt; game1 = BrettProjekt.GameManager.get_game_by_id game_manager, game_id
-iex&gt; is_pid game1
-true
-iex&gt; game2 = BrettProjekt.GameManager.get_game_by_id game_manager, &quot;foobar&quot;
-iex&gt; is_nil game2
-true</code></pre>
-
-  </section>
-</div>
-<div class="detail" id="get_games/1">
-  
-  <div class="detail-header">
-    <a href="#get_games/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <span class="signature">get_games(game_manager)</span>
-    
-    
+      <div class="specs">
+        
+          <pre>get_game_by_id(<a href="https://hexdocs.pm/elixir/Agent.html#t:agent/0">Agent.agent</a>, <a href="#t:game_id/0">game_id</a>) :: <a href="#t:game/0">game</a> | nil</pre>
+        
+      </div>
     
   </div>
   <section class="docstring">
-    <p>Returns a map of registered games</p>
-<p>The resulting map has game-ids as keys and game-pids as values.</p>
-
+    
   </section>
 </div>
 <div class="detail" id="start_link/0">
@@ -323,7 +290,7 @@ true</code></pre>
   </div>
   <section class="docstring">
     <p>Starts a new GameManager instance</p>
-<p>The GenServer will be started with no name assigned.</p>
+<p>The Agent will be started with no name assigned.</p>
 <h2 id="start_link/0-example" class="section-heading">
   <a href="#start_link/0-example" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Example
