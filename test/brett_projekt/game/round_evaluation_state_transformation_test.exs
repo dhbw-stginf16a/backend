@@ -1,6 +1,5 @@
 defmodule BrettProjekt.Game.RoundEvaluationStateTransformationTest do
   use ExUnit.Case, async: false
-  alias BrettProjekt.Game.RoundEvaluation, as: RoundEval
   alias BrettProjekt.Game.RoundEvaluationStateTransformation,
     as: RoundEvalTrafo
   alias BrettProjekt.Game.RoundEvaluationTest, as: RoundEvalTest

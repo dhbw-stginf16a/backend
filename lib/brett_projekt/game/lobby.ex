@@ -106,18 +106,19 @@ defmodule BrettProjekt.Game.Lobby do
     {:ok, {%{game_state | players: players, teams: teams}, player_id}}
   end
 
-  @spec switch_team(lobby_state, player_id, team_id) :: {atom, any}
+  @spec switch_team(lobby_state, player_id, team_id) ::
+    {:ok, lobby_state} | {:error, :team_invalid}
   def switch_team(game_state, player_id, team_id) do
     old_team_id = get_player_team_id game_state, player_id
     old_team = remove_player_from_team(game_state.teams[old_team_id], player_id)
 
     case game_state.teams[team_id] do
-      nil -> {:error, :team_invalid}
+      nil      -> {:error, :team_invalid}
       new_team ->
         teams = %{
           game_state.teams |
-          old_team_id => old_team,
-          team_id => add_player_to_team(new_team, player_id)
+            old_team_id => old_team,
+            team_id => add_player_to_team(new_team, player_id)
         }
 
         {:ok, %{game_state | teams: teams}}
@@ -132,5 +133,9 @@ defmodule BrettProjekt.Game.Lobby do
       game_state = put_in(game_state.players[player_id].ready, ready)
       {:ok, game_state}
     end
+  end
+
+  def get_update_broadcast(lobby_state) do
+    {:ok, {lobby_state, Map.put(lobby_state, :startable, false)}}
   end
 end

@@ -42,7 +42,7 @@ defmodule BrettProjekt.Game.LobbyStateTransformation do
     teams =
       state.teams
       |> Enum.filter(fn {_, player_ids} -> not Enum.empty? player_ids end)
-      |> Enum.map(fn {team_id, player_ids} -> {team_id, %{
+      |> Enum.map(fn {team_id, _player_ids} -> {team_id, %{
             players: get_team_players(state, team_id),
             categories: category_map
       }}end)

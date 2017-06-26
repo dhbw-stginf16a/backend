@@ -1,6 +1,7 @@
 defmodule BrettProjekt.Web.GameChannel do
   use Phoenix.Channel
   alias BrettProjekt.GameManager, as: GameManager
+  alias BrettProjekt.Game, as: Game
 
   @spec auth_token_valid?(String.t, GameManager.game_id) ::
     {:ok, struct} |
@@ -30,5 +31,33 @@ defmodule BrettProjekt.Web.GameChannel do
       {:ok, _token_payload} -> {:ok, assign(socket, :game_id, game_id)}
       {:error, msg}         -> {:error, %{reason: msg}}
     end
+  end
+
+  @spec handle_in(String.t, map, Phoenix.Socket.t) ::
+    {:reply,
+      :ok | {:error, %{reason: any}},
+      Phoenix.Socket.t}
+  def handle_in("set_team", payload, socket) do
+    case auth_token_valid?(payload["auth_token"], socket.assigns[:game_id]) do
+      {:ok, token_payload} ->
+        game = GameManager.get_game_by_id(:main_game_manager,
+                                          token_payload.game_id)
+
+        team_id = payload["team"]
+        player_id = token_payload.player_id
+        case Game.switch_team(game, player_id, team_id) do
+          {:ok, _} ->
+            broadcast_lobby_update(socket, game)
+            {:reply, :ok, socket}
+          {:error, :team_invalid} ->
+            {:reply, {:error, %{reason: :team_invalid}}, socket}
+        end
+      {:error, msg} -> {:reply, {:error, %{reason: msg}}, socket}
+    end
+  end
+
+  def broadcast_lobby_update(socket, game) do
+    struct = Game.get_lobby_update_broadcast(game)
+    broadcast(socket, "lobby_update", struct)
   end
 end
