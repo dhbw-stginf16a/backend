@@ -39,11 +39,39 @@ Start your Phoenix server:
 
 `iex -S mix phx.server`
 
-The API is now served at [`localhost:4000`](http://localhost:4000).
+The API is now served at `ws://localhost:4000/socket`.
 
 ## Testing
 
 `mix test`
+
+## Deployment
+To deploy this app using Apache you can start it as usual and set up a reverse proxy with Apache.
+
+First set up a virtual host by creating a file in `/etc/apache2/sites-available/` with this content:
+```apache config
+<VirtualHost *:80>
+    ProxyPass / ws://0.0.0.0:4000/
+    ProxyPassReverse / ws://0.0.0.0:4000/
+
+    ServerName example.org
+</VirtualHost>
+```
+
+This routes all traffic to port 80 to the local port 4000 using the websockets protocol.
+
+To enable this file run `sudo a2enmod yourfile.conf`
+
+You also need to enable some Apache modules:
+```
+sudo a2enmod proxy_wstunnel
+```
+
+At least that module - if it doesn't work install the others mentioned [here](https://www.digitalocean.com/community/tutorials/how-to-use-apache-http-server-as-reverse-proxy-using-mod_proxy-extension) and add them to the list.
+
+To make apache aware of all changes restart it: `sudo systemctl apache2 restart`
+
+Now the API should be reachable at ws://example.org/socket
 
 ## Learn more about the tools
 
