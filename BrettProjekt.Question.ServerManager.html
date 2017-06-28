@@ -1,0 +1,334 @@
+    <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.16.1">
+    <title>BrettProjekt.Question.ServerManager – brett_projekt v0.0.1</title>
+    <link rel="stylesheet" href="dist/app-4ecae1abb8.css" />
+    
+    <script src="dist/sidebar_items-64814a40dd.js"></script>
+  </head>
+  <body data-type="modules">
+    <script>try { if(localStorage.getItem('night-mode')) document.body.className += ' night-mode'; } catch (e) { }</script>
+
+    <div class="main">
+<button class="sidebar-toggle">
+  <span class="icon-menu" aria-hidden="true"></span>
+  <span class="sr-only">Toggle Sidebar</span>
+</button>
+<section class="sidebar">
+
+  
+  <a href="api-reference.html" class="sidebar-projectLink">
+    <div class="sidebar-projectDetails">
+      <h1 class="sidebar-projectName">
+        brett_projekt
+      </h1>
+      <h2 class="sidebar-projectVersion">
+        v0.0.1
+      </h2>
+    </div>
+    
+  </a>
+
+  <div class="sidebar-search">
+    <span class="icon-search" aria-hidden="true"></span>
+    <input type="text" class="sidebar-searchInput" placeholder="search" aria-label="Search" autocomplete="off" />
+  </div>
+
+  <ul class="sidebar-listNav">
+    <li><a id="extras-list" href="#full-list">Pages</a></li>
+
+    
+      <li><a id="modules-list" href="#full-list">Modules</a></li>
+    
+
+    
+
+    
+
+    
+  </ul>
+  <div class="gradient"></div>
+  <ul id="full-list" class="sidebar-fullList"></ul>
+</section>
+
+<section class="content">
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+
+
+      <h1>
+        <small class="visible-xs">brett_projekt v0.0.1</small>
+        BrettProjekt.Question.ServerManager
+        
+      </h1>
+
+      
+        <section id="moduledoc">
+          <p>Manager for handling <a href="BrettProjekt.Question.Server.html"><code class="inline">BrettProjekt.Question.Server</code></a> easily.</p>
+<p>The BrettProjekt-Game requires a question-server to be running and loaded
+with questions to ask the players.
+This module creates a server and loads the questions into it. (<a href="#load_questions_from_file/2"><code class="inline">load_questions_from_file/2</code></a>)</p>
+<p>A listener for file-changes can be enabled, so that a new question-server is
+created with the changed set of questions.</p>
+<p>When starting a game, the current <a href="BrettProjekt.Question.Server.html"><code class="inline">BrettProjekt.Question.Server</code></a> process
+should be retrieved using <a href="#get_question_server/1"><code class="inline">get_question_server/1</code></a> and stored in the game state.
+Therefore, if a new set of questions gets loaded, existing games will keep using
+the original question-set but new games start with an up-to-date question-set.</p>
+
+        </section>
+      
+
+      
+        <section id="summary" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#summary">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+            Summary
+          </h1>
+          
+
+          
+  <div class="summary-functions summary">
+    <h2>
+      <a href="#functions">Functions</a>
+    </h2>
+    <div class="summary-row">
+  <div class="summary-signature">
+    <a href="#get_question_server/1">get_question_server(server_manager)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Retrieves the current question-server</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#load_questions_from_file/2">load_questions_from_file(server_manager, file)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Loads questions from a JSON-file, parses it and (on success) replaces the current question-server</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#start_link/0">start_link()</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Start the ServerManager without a name</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#start_link/1">start_link(name)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Start the ServerManager under a specific name (atom)</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#start_link/2">start_link(name, filename)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Starts the ServerManager with a name and loads an initial questions-file</p>
+</div>
+  
+</div>
+
+  </div>
+
+
+          
+
+        </section>
+      
+
+      
+
+      
+        <section id="functions" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#functions">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+            Functions
+          </h1>
+          <div class="detail" id="get_question_server/1">
+  
+  <div class="detail-header">
+    <a href="#get_question_server/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <span class="signature">get_question_server(server_manager)</span>
+    
+    
+    
+  </div>
+  <section class="docstring">
+    <p>Retrieves the current question-server</p>
+<p>This value needs to be cached per Game to prevent changing the question-set
+(including ids, etc.)</p>
+<h2 id="get_question_server/1-returns" class="section-heading">
+  <a href="#get_question_server/1-returns" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Returns
+</h2>
+
+<ul>
+<li><code class="inline">{:error, :no_question_server}</code>: No question-server has been started yet.
+</li>
+<li><code class="inline">{:ok, pid_of_question_server}</code>
+</li>
+</ul>
+
+  </section>
+</div>
+<div class="detail" id="load_questions_from_file/2">
+  
+  <div class="detail-header">
+    <a href="#load_questions_from_file/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <span class="signature">load_questions_from_file(server_manager, file)</span>
+    
+    
+    
+  </div>
+  <section class="docstring">
+    <p>Loads questions from a JSON-file, parses it and (on success) replaces the current question-server</p>
+<h2 id="load_questions_from_file/2-arguments" class="section-heading">
+  <a href="#load_questions_from_file/2-arguments" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Arguments
+</h2>
+
+<ul>
+<li><code class="inline">file</code>: The file to load (absolute or relative path)
+</li>
+</ul>
+<h2 id="load_questions_from_file/2-returns" class="section-heading">
+  <a href="#load_questions_from_file/2-returns" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Returns
+</h2>
+
+<ul>
+<li><code class="inline">:ok</code>
+</li>
+<li><code class="inline">{:error, :file_not_found}</code>
+</li>
+<li><code class="inline">{:error, :file_read_error}</code>
+</li>
+<li><code class="inline">{:error, :json_decoding_error}</code>
+</li>
+<li><code class="inline">{:error, :file_version_not_supported}</code>: No parser for the file-format version available
+</li>
+<li><code class="inline">{:error, :file_invalid}</code>: Error while parsing the questions file
+</li>
+</ul>
+
+  </section>
+</div>
+<div class="detail" id="start_link/0">
+  
+  <div class="detail-header">
+    <a href="#start_link/0" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <span class="signature">start_link()</span>
+    
+    
+    
+  </div>
+  <section class="docstring">
+    <p>Start the ServerManager without a name</p>
+<h2 id="start_link/0-examples" class="section-heading">
+  <a href="#start_link/0-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Examples
+</h2>
+
+<pre><code class="iex elixir">iex&gt; {:ok, server_manager} = BrettProjekt.Question.ServerManager.start_link
+iex&gt; is_pid server_manager
+true</code></pre>
+
+  </section>
+</div>
+<div class="detail" id="start_link/1">
+  
+  <div class="detail-header">
+    <a href="#start_link/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <span class="signature">start_link(name)</span>
+    
+    
+    
+  </div>
+  <section class="docstring">
+    <p>Start the ServerManager under a specific name (atom)</p>
+<h2 id="start_link/1-examples" class="section-heading">
+  <a href="#start_link/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Examples
+</h2>
+
+<pre><code class="iex elixir">iex&gt; {:ok, server_manager} = BrettProjekt.Question.ServerManager.start_link :my_server_manager
+iex&gt; is_pid server_manager
+true</code></pre>
+
+  </section>
+</div>
+<div class="detail" id="start_link/2">
+  
+  <div class="detail-header">
+    <a href="#start_link/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <span class="signature">start_link(name, filename)</span>
+    
+    
+    
+  </div>
+  <section class="docstring">
+    <p>Starts the ServerManager with a name and loads an initial questions-file</p>
+<p>To start it without a name assinged, pass nil</p>
+
+  </section>
+</div>
+
+        </section>
+      
+
+      
+          <footer class="footer">
+        <p>
+          <span class="line">
+            Built using
+            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" rel="help" target="_blank">ExDoc</a> (v0.16.1),
+          </span>
+          <span class="line">
+            designed by
+            <a href="https://twitter.com/dignifiedquire" target="_blank" title="@dignifiedquire">Friedel Ziegelmayer</a>.
+            </span>
+        </p>
+        <button class="night-mode-toggle"><span class="sr-only">Switch theme</span></button>
+      </footer>
+    </div>
+  </div>
+</section>
+</div>
+  <script src="dist/app-126b5f0e90.js"></script>
+  </body>
+</html>
+

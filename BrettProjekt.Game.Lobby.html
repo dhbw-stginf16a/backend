@@ -1,0 +1,430 @@
+    <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.16.1">
+    <title>BrettProjekt.Game.Lobby – brett_projekt v0.0.1</title>
+    <link rel="stylesheet" href="dist/app-4ecae1abb8.css" />
+    
+    <script src="dist/sidebar_items-64814a40dd.js"></script>
+  </head>
+  <body data-type="modules">
+    <script>try { if(localStorage.getItem('night-mode')) document.body.className += ' night-mode'; } catch (e) { }</script>
+
+    <div class="main">
+<button class="sidebar-toggle">
+  <span class="icon-menu" aria-hidden="true"></span>
+  <span class="sr-only">Toggle Sidebar</span>
+</button>
+<section class="sidebar">
+
+  
+  <a href="api-reference.html" class="sidebar-projectLink">
+    <div class="sidebar-projectDetails">
+      <h1 class="sidebar-projectName">
+        brett_projekt
+      </h1>
+      <h2 class="sidebar-projectVersion">
+        v0.0.1
+      </h2>
+    </div>
+    
+  </a>
+
+  <div class="sidebar-search">
+    <span class="icon-search" aria-hidden="true"></span>
+    <input type="text" class="sidebar-searchInput" placeholder="search" aria-label="Search" autocomplete="off" />
+  </div>
+
+  <ul class="sidebar-listNav">
+    <li><a id="extras-list" href="#full-list">Pages</a></li>
+
+    
+      <li><a id="modules-list" href="#full-list">Modules</a></li>
+    
+
+    
+
+    
+
+    
+  </ul>
+  <div class="gradient"></div>
+  <ul id="full-list" class="sidebar-fullList"></ul>
+</section>
+
+<section class="content">
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+
+
+      <h1>
+        <small class="visible-xs">brett_projekt v0.0.1</small>
+        BrettProjekt.Game.Lobby
+        
+      </h1>
+
+      
+
+      
+        <section id="summary" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#summary">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+            Summary
+          </h1>
+          
+  <div class="summary-types summary">
+    <h2>
+      <a href="#types">Types</a>
+    </h2>
+    <div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:lobby_state/0">lobby_state()</a>
+  </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:player_id/0">player_id()</a>
+  </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:team/0">team()</a>
+  </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:team_id/0">team_id()</a>
+  </div>
+  
+</div>
+
+  </div>
+
+
+          
+  <div class="summary-functions summary">
+    <h2>
+      <a href="#functions">Functions</a>
+    </h2>
+    <div class="summary-row">
+  <div class="summary-signature">
+    <a href="#add_player/2">add_player(game_state, player_name)</a>
+  </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#create_game/1">create_game(team_count)</a>
+  </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#get_update_broadcast/1">get_update_broadcast(lobby_state)</a>
+  </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#has_player?/2">has_player?(game_state, player_name)</a>
+  </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#set_ready/3">set_ready(game_state, player_id, ready)</a>
+  </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#switch_team/3">switch_team(game_state, player_id, team_id)</a>
+  </div>
+  
+</div>
+
+  </div>
+
+
+          
+
+        </section>
+      
+
+      
+        <section id="types" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#types">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+            Types
+          </h1>
+          <div class="types-list">
+            <div class="detail" id="t:lobby_state/0">
+  
+  <div class="detail-header">
+    <a href="#t:lobby_state/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <span class="signature">lobby_state()</span>
+    
+    
+    
+      <div class="specs">
+        
+          <pre>lobby_state() :: %BrettProjekt.Game.Lobby{players: map, teams: map}</pre>
+        
+      </div>
+    
+  </div>
+  <section class="docstring">
+    
+  </section>
+</div>
+<div class="detail" id="t:player_id/0">
+  
+  <div class="detail-header">
+    <a href="#t:player_id/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <span class="signature">player_id()</span>
+    
+    
+    
+      <div class="specs">
+        
+          <pre>player_id() :: non_neg_integer</pre>
+        
+      </div>
+    
+  </div>
+  <section class="docstring">
+    
+  </section>
+</div>
+<div class="detail" id="t:team/0">
+  
+  <div class="detail-header">
+    <a href="#t:team/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <span class="signature">team()</span>
+    
+    
+    
+      <div class="specs">
+        
+          <pre>team() :: [non_neg_integer]</pre>
+        
+      </div>
+    
+  </div>
+  <section class="docstring">
+    
+  </section>
+</div>
+<div class="detail" id="t:team_id/0">
+  
+  <div class="detail-header">
+    <a href="#t:team_id/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <span class="signature">team_id()</span>
+    
+    
+    
+      <div class="specs">
+        
+          <pre>team_id() :: non_neg_integer</pre>
+        
+      </div>
+    
+  </div>
+  <section class="docstring">
+    
+  </section>
+</div>
+
+          </div>
+        </section>
+      
+
+      
+        <section id="functions" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#functions">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+            Functions
+          </h1>
+          <div class="detail" id="add_player/2">
+  
+  <div class="detail-header">
+    <a href="#add_player/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <span class="signature">add_player(game_state, player_name)</span>
+    
+    
+    
+      <div class="specs">
+        
+          <pre>add_player(<a href="#t:lobby_state/0">lobby_state</a>, <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>) ::
+  {:ok, {<a href="#t:lobby_state/0">lobby_state</a>}, <a href="#t:player_id/0">player_id</a>} |
+  {:error, :name_invalid | :name_conlict}</pre>
+        
+      </div>
+    
+  </div>
+  <section class="docstring">
+    
+  </section>
+</div>
+<div class="detail" id="create_game/1">
+  
+  <div class="detail-header">
+    <a href="#create_game/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <span class="signature">create_game(team_count)</span>
+    
+    
+    
+      <div class="specs">
+        
+          <pre>create_game(pos_integer) :: <a href="#t:lobby_state/0">lobby_state</a></pre>
+        
+      </div>
+    
+  </div>
+  <section class="docstring">
+    
+  </section>
+</div>
+<div class="detail" id="get_update_broadcast/1">
+  
+  <div class="detail-header">
+    <a href="#get_update_broadcast/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <span class="signature">get_update_broadcast(lobby_state)</span>
+    
+    
+    
+  </div>
+  <section class="docstring">
+    
+  </section>
+</div>
+<div class="detail" id="has_player?/2">
+  
+  <div class="detail-header">
+    <a href="#has_player?/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <span class="signature">has_player?(game_state, player_name)</span>
+    
+    
+    
+      <div class="specs">
+        
+          <pre>has_player?(<a href="#t:lobby_state/0">lobby_state</a>, <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>) :: boolean</pre>
+        
+      </div>
+    
+  </div>
+  <section class="docstring">
+    
+  </section>
+</div>
+<div class="detail" id="set_ready/3">
+  
+  <div class="detail-header">
+    <a href="#set_ready/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <span class="signature">set_ready(game_state, player_id, ready)</span>
+    
+    
+    
+      <div class="specs">
+        
+          <pre>set_ready(<a href="#t:lobby_state/0">lobby_state</a>, <a href="#t:player_id/0">player_id</a>, boolean) :: {atom, any}</pre>
+        
+      </div>
+    
+  </div>
+  <section class="docstring">
+    
+  </section>
+</div>
+<div class="detail" id="switch_team/3">
+  
+  <div class="detail-header">
+    <a href="#switch_team/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <span class="signature">switch_team(game_state, player_id, team_id)</span>
+    
+    
+    
+      <div class="specs">
+        
+          <pre>switch_team(<a href="#t:lobby_state/0">lobby_state</a>, <a href="#t:player_id/0">player_id</a>, <a href="#t:team_id/0">team_id</a>) ::
+  {:ok, <a href="#t:lobby_state/0">lobby_state</a>} |
+  {:error, :team_invalid}</pre>
+        
+      </div>
+    
+  </div>
+  <section class="docstring">
+    
+  </section>
+</div>
+
+        </section>
+      
+
+      
+          <footer class="footer">
+        <p>
+          <span class="line">
+            Built using
+            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" rel="help" target="_blank">ExDoc</a> (v0.16.1),
+          </span>
+          <span class="line">
+            designed by
+            <a href="https://twitter.com/dignifiedquire" target="_blank" title="@dignifiedquire">Friedel Ziegelmayer</a>.
+            </span>
+        </p>
+        <button class="night-mode-toggle"><span class="sr-only">Switch theme</span></button>
+      </footer>
+    </div>
+  </div>
+</section>
+</div>
+  <script src="dist/app-126b5f0e90.js"></script>
+  </body>
+</html>
+

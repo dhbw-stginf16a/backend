@@ -1,0 +1,360 @@
+    <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.16.1">
+    <title>BrettProjekt.GameManager – brett_projekt v0.0.1</title>
+    <link rel="stylesheet" href="dist/app-4ecae1abb8.css" />
+    
+    <script src="dist/sidebar_items-64814a40dd.js"></script>
+  </head>
+  <body data-type="modules">
+    <script>try { if(localStorage.getItem('night-mode')) document.body.className += ' night-mode'; } catch (e) { }</script>
+
+    <div class="main">
+<button class="sidebar-toggle">
+  <span class="icon-menu" aria-hidden="true"></span>
+  <span class="sr-only">Toggle Sidebar</span>
+</button>
+<section class="sidebar">
+
+  
+  <a href="api-reference.html" class="sidebar-projectLink">
+    <div class="sidebar-projectDetails">
+      <h1 class="sidebar-projectName">
+        brett_projekt
+      </h1>
+      <h2 class="sidebar-projectVersion">
+        v0.0.1
+      </h2>
+    </div>
+    
+  </a>
+
+  <div class="sidebar-search">
+    <span class="icon-search" aria-hidden="true"></span>
+    <input type="text" class="sidebar-searchInput" placeholder="search" aria-label="Search" autocomplete="off" />
+  </div>
+
+  <ul class="sidebar-listNav">
+    <li><a id="extras-list" href="#full-list">Pages</a></li>
+
+    
+      <li><a id="modules-list" href="#full-list">Modules</a></li>
+    
+
+    
+
+    
+
+    
+  </ul>
+  <div class="gradient"></div>
+  <ul id="full-list" class="sidebar-fullList"></ul>
+</section>
+
+<section class="content">
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+
+
+      <h1>
+        <small class="visible-xs">brett_projekt v0.0.1</small>
+        BrettProjekt.GameManager
+        
+      </h1>
+
+      
+        <section id="moduledoc">
+          <p>Provides state and functions for handling Game instances.</p>
+<p>The GameManager is implemented as an Agent holding different Game instances.
+These can be accessed by convenient functions.</p>
+<p>It also provides functions for generating unique game-identifiers.</p>
+
+        </section>
+      
+
+      
+        <section id="summary" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#summary">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+            Summary
+          </h1>
+          
+  <div class="summary-types summary">
+    <h2>
+      <a href="#types">Types</a>
+    </h2>
+    <div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:game/0">game()</a>
+  </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:game_id/0">game_id()</a>
+  </div>
+  
+</div>
+
+  </div>
+
+
+          
+  <div class="summary-functions summary">
+    <h2>
+      <a href="#functions">Functions</a>
+    </h2>
+    <div class="summary-row">
+  <div class="summary-signature">
+    <a href="#add_new_game/1">add_new_game(game_manager)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Creates a <a href="BrettProjekt.Game.html"><code class="inline">BrettProjekt.Game</code></a> and adds it to the GameManager</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#get_game_by_id/2">get_game_by_id(game_manager, game_id)</a>
+  </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#start_link/0">start_link()</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Starts a new GameManager instance</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#start_link/1">start_link(name)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Starts a new GameManager instance with a name assigned</p>
+</div>
+  
+</div>
+
+  </div>
+
+
+          
+
+        </section>
+      
+
+      
+        <section id="types" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#types">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+            Types
+          </h1>
+          <div class="types-list">
+            <div class="detail" id="t:game/0">
+  
+  <div class="detail-header">
+    <a href="#t:game/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <span class="signature">game()</span>
+    
+    
+    
+      <div class="specs">
+        
+          <pre>game() :: pid</pre>
+        
+      </div>
+    
+  </div>
+  <section class="docstring">
+    
+  </section>
+</div>
+<div class="detail" id="t:game_id/0">
+  
+  <div class="detail-header">
+    <a href="#t:game_id/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <span class="signature">game_id()</span>
+    
+    
+    
+      <div class="specs">
+        
+          <pre>game_id() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a></pre>
+        
+      </div>
+    
+  </div>
+  <section class="docstring">
+    
+  </section>
+</div>
+
+          </div>
+        </section>
+      
+
+      
+        <section id="functions" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#functions">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+            Functions
+          </h1>
+          <div class="detail" id="add_new_game/1">
+  
+  <div class="detail-header">
+    <a href="#add_new_game/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <span class="signature">add_new_game(game_manager)</span>
+    
+    
+    
+      <div class="specs">
+        
+          <pre>add_new_game(<a href="https://hexdocs.pm/elixir/Agent.html#t:agent/0">Agent.agent</a>) :: {:ok, <a href="#t:game/0">game</a>, <a href="#t:game_id/0">game_id</a>}</pre>
+        
+      </div>
+    
+  </div>
+  <section class="docstring">
+    <p>Creates a <a href="BrettProjekt.Game.html"><code class="inline">BrettProjekt.Game</code></a> and adds it to the GameManager</p>
+<p>A unique game-id will automatically be generated.</p>
+<h2 id="add_new_game/1-examples" class="section-heading">
+  <a href="#add_new_game/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Examples
+</h2>
+
+<pre><code class="iex elixir">iex&gt; {:ok, game_manager} = BrettProjekt.GameManager.start_link
+iex&gt; {:ok, _game_id, game} = BrettProjekt.GameManager.add_new_game game_manager
+iex&gt; is_pid game
+true</code></pre>
+
+  </section>
+</div>
+<div class="detail" id="get_game_by_id/2">
+  
+  <div class="detail-header">
+    <a href="#get_game_by_id/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <span class="signature">get_game_by_id(game_manager, game_id)</span>
+    
+    
+    
+      <div class="specs">
+        
+          <pre>get_game_by_id(<a href="https://hexdocs.pm/elixir/Agent.html#t:agent/0">Agent.agent</a>, <a href="#t:game_id/0">game_id</a>) :: <a href="#t:game/0">game</a> | nil</pre>
+        
+      </div>
+    
+  </div>
+  <section class="docstring">
+    
+  </section>
+</div>
+<div class="detail" id="start_link/0">
+  
+  <div class="detail-header">
+    <a href="#start_link/0" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <span class="signature">start_link()</span>
+    
+    
+    
+  </div>
+  <section class="docstring">
+    <p>Starts a new GameManager instance</p>
+<p>The Agent will be started with no name assigned.</p>
+<h2 id="start_link/0-example" class="section-heading">
+  <a href="#start_link/0-example" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Example
+</h2>
+
+<pre><code class="elixir">{:ok, game_manager} = BrettProject.GameManager.start_link</code></pre>
+
+  </section>
+</div>
+<div class="detail" id="start_link/1">
+  
+  <div class="detail-header">
+    <a href="#start_link/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <span class="signature">start_link(name)</span>
+    
+    
+    
+  </div>
+  <section class="docstring">
+    <p>Starts a new GameManager instance with a name assigned</p>
+<h2 id="start_link/1-arguments" class="section-heading">
+  <a href="#start_link/1-arguments" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Arguments
+</h2>
+
+<ul>
+<li>name: Name of the GameManager (as an Atom)
+</li>
+</ul>
+<h2 id="start_link/1-examples" class="section-heading">
+  <a href="#start_link/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Examples
+</h2>
+
+<pre><code class="elixir">{:ok, game_manager} = BrettProjekt.GameManager.start_link :my_fancy_game_manager</code></pre>
+
+  </section>
+</div>
+
+        </section>
+      
+
+      
+          <footer class="footer">
+        <p>
+          <span class="line">
+            Built using
+            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" rel="help" target="_blank">ExDoc</a> (v0.16.1),
+          </span>
+          <span class="line">
+            designed by
+            <a href="https://twitter.com/dignifiedquire" target="_blank" title="@dignifiedquire">Friedel Ziegelmayer</a>.
+            </span>
+        </p>
+        <button class="night-mode-toggle"><span class="sr-only">Switch theme</span></button>
+      </footer>
+    </div>
+  </div>
+</section>
+</div>
+  <script src="dist/app-126b5f0e90.js"></script>
+  </body>
+</html>
+
