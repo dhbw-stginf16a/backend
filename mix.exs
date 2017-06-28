@@ -8,6 +8,7 @@ defmodule BrettProjekt.Mixfile do
      elixirc_paths: elixirc_paths(Mix.env),
      compilers: [:phoenix, :gettext] ++ Mix.compilers,
      start_permanent: Mix.env == :prod,
+     dialyzer: [ignore_warnings: "dialyzer.ignore-warnings"],
      deps: deps()]
   end
 

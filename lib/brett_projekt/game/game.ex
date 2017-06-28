@@ -61,4 +61,10 @@ defmodule BrettProjekt.Game do
       apply_pure_function(game, &Game.Lobby.get_update_broadcast/1)
     lobby
   end
+
+  @spec set_ready(Agent.agent, non_neg_integer, boolean) ::
+    {:ok, nil} | {:error, :invalid_player_id}
+  def set_ready(game, player_id, ready) do
+    apply_pure_function(game, &(Game.Lobby.set_ready(&1, player_id, ready)))
+  end
 end

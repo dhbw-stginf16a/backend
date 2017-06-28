@@ -136,7 +136,8 @@ defmodule BrettProjekt.Game.Lobby do
     end
   end
 
-  @spec set_ready(lobby_state, player_id, boolean) :: {atom, any}
+  @spec set_ready(lobby_state, player_id, boolean) ::
+    {:ok, lobby_state} | {:error, :invalid_player_id}
   def set_ready(game_state, player_id, ready) do
     if game_state.players[player_id] == nil do
       {:error, :invalid_player_id}
@@ -147,6 +148,8 @@ defmodule BrettProjekt.Game.Lobby do
   end
 
   def get_update_broadcast(lobby_state) do
+    # TODO breaks if player is not in team
+    # - player isnt broadcasted
     players =
       for {team_id, team} <- lobby_state.teams do
         for player_id <- team do
@@ -156,9 +159,10 @@ defmodule BrettProjekt.Game.Lobby do
         end
       end
       |> List.flatten
+    {:ok, {_, startable}} = game_startable?(lobby_state)
 
     {:ok, {lobby_state, %{
-      startable: false,
+      startable: startable,
       players: players
     }}}
   end
