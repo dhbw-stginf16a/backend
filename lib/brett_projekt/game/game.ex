@@ -11,7 +11,7 @@ defmodule BrettProjekt.Game do
     {:ok, struct} | {:ok, {struct, any}} | {:error, any}
 
   @spec apply_pure_function(Agent.agent, pure_function) ::
-    {:ok, {struct, any}} | {:ok, struct} | {:error, any}
+    {:ok, any} | {:error, any}
   def apply_pure_function(game, pure_function) do
     result =
       Agent.get_and_update(game, fn state ->
@@ -42,16 +42,9 @@ defmodule BrettProjekt.Game do
     end
   end
 
-  defp join_enabled?(game_state) do
-    true
-  end
-
-  defp has_player?(game_state, name) do
-    false
-  end
-
+  @spec game_startable?(Agent.agent) :: {:ok, boolean}
   def game_startable?(game) do
-    false
+    apply_pure_function(game, &Game.Lobby.game_startable?/1)
   end
 
   def switch_team(game, player_id, team_id) do

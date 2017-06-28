@@ -157,9 +157,25 @@ defmodule BrettProjekt.Game.Lobby do
       end
       |> List.flatten
 
-    {:ok, %{
+    {:ok, {lobby_state, %{
       startable: false,
-      players: players 
-    }}
+      players: players
+    }}}
+  end
+
+  def game_startable?(lobby_state) do
+    all_players_ready =
+      Enum.all?(lobby_state.players, fn {player_id, player} ->
+        team_id = get_player_team_id(lobby_state, player_id)
+        ready = player.ready
+
+        team_id != nil and ready
+      end)
+
+    if all_players_ready do
+      {:ok, {lobby_state, true}}
+    else
+      {:ok, {lobby_state, false}}
+    end
   end
 end

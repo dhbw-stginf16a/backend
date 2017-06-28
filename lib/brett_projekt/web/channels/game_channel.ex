@@ -59,8 +59,36 @@ defmodule BrettProjekt.Web.GameChannel do
     end
   end
 
+  @spec handle_in(String.t, map, Phoenix.Socket.t) ::
+    {:reply,
+      :ok | {:error, %{reason:
+        :game_not_startable |
+        :missing_permission |
+        :auth_token_invalid |
+        :auth_token_missing
+      }},
+      Phoenix.Socket.t}
+  def handle_in("start_game", payload, socket) do
+    case auth_token_valid?(payload["auth_token"], socket.assigns[:game_id]) do
+      {:ok, token_payload} ->
+        game = GameManager.get_game_by_id(:main_game_manager,
+                                          token_payload.game_id)
+        player_id = token_payload.player_id
+        {:ok, startable} = Game.game_startable?(game);
+        cond do
+          not startable ->
+            {:reply, {:error, %{reason: :game_not_startable}}, socket}
+          player_id == 0 ->
+            {:reply, {:error, %{reason: :missing_permission}}, socket}
+          true ->
+            nil
+        end
+      {:error, msg} -> {:reply, {:error, %{reason: msg}}, socket}
+    end
+  end
+
   def broadcast_lobby_update(socket, game) do
     struct = Game.get_lobby_update_broadcast(game)
-    broadcast(socket, "lobby_update", struct)
+    broadcast!(socket, "lobby_update", struct)
   end
 end
