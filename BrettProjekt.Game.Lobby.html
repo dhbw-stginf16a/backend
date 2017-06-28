@@ -8,7 +8,7 @@
     <title>BrettProjekt.Game.Lobby – brett_projekt v0.0.1</title>
     <link rel="stylesheet" href="dist/app-4ecae1abb8.css" />
     
-    <script src="dist/sidebar_items-64814a40dd.js"></script>
+    <script src="dist/sidebar_items-bef0e26e6f.js"></script>
   </head>
   <body data-type="modules">
     <script>try { if(localStorage.getItem('night-mode')) document.body.className += ' night-mode'; } catch (e) { }</script>
@@ -91,6 +91,12 @@
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#t:player_id/0">player_id()</a>
+  </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:t/0">t()</a>
   </div>
   
 </div>
@@ -206,6 +212,28 @@
       <div class="specs">
         
           <pre>player_id() :: non_neg_integer</pre>
+        
+      </div>
+    
+  </div>
+  <section class="docstring">
+    
+  </section>
+</div>
+<div class="detail" id="t:t/0">
+  
+  <div class="detail-header">
+    <a href="#t:t/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <span class="signature">t()</span>
+    
+    
+    
+      <div class="specs">
+        
+          <pre>t() :: %BrettProjekt.Game.Lobby{players: %{optional(<a href="#t:player_id/0">player_id</a>) => %{name: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>, ready: boolean}}, teams: %{optional(<a href="#t:team_id/0">team_id</a>) => [<a href="#t:player_id/0">player_id</a>]}}</pre>
         
       </div>
     
