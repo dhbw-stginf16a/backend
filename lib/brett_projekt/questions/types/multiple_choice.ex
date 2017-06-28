@@ -20,8 +20,8 @@ defmodule BrettProjekt.Question.Type.MultipleChoice do
     :possibilities
   ]
 
-  @spec parse_answer([map]) :: non_neg_integer
-  defp parse_answer(imported_answers) do
+  @spec parse_answers([map]) :: non_neg_integer
+  defp parse_answers(imported_answers) do
     # Answer is the index of the correct possibility
     Enum.map(imported_answers, fn %{"index" => index} -> index end)
   end
