@@ -10,7 +10,7 @@ defmodule BrettProjekt.Question.Parser.V1_0 do
   Parser for the question file-format version 1.0.
   """
 
-  @type question_id :: non_neq_integer
+  @type question_id :: non_neg_integer
   @type question_struct :: map
   @type question_parsing_error :: {:error, error_code :: atom} |
                                   {:error, error_code :: atom, msg :: atom}
@@ -46,7 +46,9 @@ defmodule BrettProjekt.Question.Parser.V1_0 do
     end)
   end
 
-  @spec to_question_structs()
+  @spec to_question_structs(%{question_id => json_object})
+                           :: %{question_id => question_struct} |
+                              question_parsing_error
   def to_question_structs(questions) do
     question_structs =
       for {id, question} <- questions, into: %{} do
@@ -66,6 +68,8 @@ defmodule BrettProjekt.Question.Parser.V1_0 do
     end
   end
 
+  @spec to_question_struct(json_object) :: question_struct |
+                                           question_parsing_error
   def to_question_struct(question) do
     case question["type"] do
       "wildcard" -> WildcardQuestion.parse(question)
