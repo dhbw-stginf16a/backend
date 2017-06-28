@@ -1,5 +1,8 @@
 defmodule BrettProjekt.Question.Type.MultipleChoice do
   alias __MODULE__, as: MultipleChoiceQuestion
+
+  @type question_parsing_error :: {:error, atom} | {:error, atom, []}
+
   @enforce_keys [
     :id,
     :question,
@@ -17,17 +20,20 @@ defmodule BrettProjekt.Question.Type.MultipleChoice do
     :possibilities
   ]
 
-  defp parse_answers(imported_answers) do
+  @spec parse_answer([map]) :: non_neg_integer
+  defp parse_answer(imported_answers) do
     # Answer is the index of the correct possibility
     Enum.map(imported_answers, fn %{"index" => index} -> index end)
   end
 
+  @spec parse_possibilities(map) :: %{non_neg_integer => String.t}
   defp parse_possibilities(imported_possibilities) do
     Enum.reduce(imported_possibilities, %{}, fn (possibility, acc) ->
       Map.put acc, possibility["index"], possibility["text"]
     end)
   end
 
+  @spec parse(map) :: %MultipleChoiceQuestion{}
   def parse(imported) do
     %MultipleChoiceQuestion{
       id: imported["id"],
@@ -39,6 +45,7 @@ defmodule BrettProjekt.Question.Type.MultipleChoice do
     }
   end
 
+  @spec answer_valid?(%MultipleChoiceQuestion{}, map) :: boolean
   defp answer_valid?(_question, json) do
     answers = json["answers"]
 
@@ -50,6 +57,7 @@ defmodule BrettProjekt.Question.Type.MultipleChoice do
     end
   end
 
+  @spec answer_correct?(%MultipleChoiceQuestion{}, map) :: boolean
   defp answer_correct?(%MultipleChoiceQuestion{} = question, answer_json) do
     MapSet.new(question.answers) == MapSet.new(answer_json["answers"])
   end

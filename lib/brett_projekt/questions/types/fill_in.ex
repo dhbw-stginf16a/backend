@@ -1,6 +1,8 @@
 defmodule BrettProjekt.Question.Type.FillIn do
   alias BrettProjekt.Question.Type.FillIn, as: FillInQuestion
 
+  @type question_parsing_error :: {:error, atom} | {:error, atom, []}
+
   @enforce_keys [
     :id,
     :question,
@@ -16,17 +18,20 @@ defmodule BrettProjekt.Question.Type.FillIn do
     :answers
   ]
 
+  @spec parse_question(String.t) :: [String.t]
   defp parse_question(imported_question) do
     placeholder = "..."
     String.split(imported_question, placeholder)
   end
 
+  @spec parse_answers([map]) :: %{non_neg_integer => String.t}
   defp parse_answers(imported_answers) do
     for answer <- imported_answers, into: %{} do
       {answer["index"], normalize_answer(answer["text"])}
     end
   end
 
+  @spec question_valid?(map) :: boolean
   defp question_valid?(imported) do
     placeholders = length(parse_question(imported["question"])) - 1
     answers = Enum.count(parse_answers(imported["answers"]))
@@ -40,6 +45,7 @@ defmodule BrettProjekt.Question.Type.FillIn do
     end
   end
 
+  @spec parse(map) :: %FillInQuestion{} | question_parsing_error
   def parse(imported) do
     if question_valid? imported do
       %BrettProjekt.Question.Type.FillIn{
@@ -54,6 +60,7 @@ defmodule BrettProjekt.Question.Type.FillIn do
     end
   end
 
+  @spec remove_non_alphanumeric_chars(String.t) :: String.t
   defp remove_non_alphanumeric_chars(string) do
     valid_chars =
       [
@@ -68,6 +75,7 @@ defmodule BrettProjekt.Question.Type.FillIn do
     |> to_string
   end
 
+  @spec normalize_answer(String.t) :: String.t
   defp normalize_answer(answer) do
     answer
     |> String.downcase
@@ -78,6 +86,7 @@ defmodule BrettProjekt.Question.Type.FillIn do
     |> remove_non_alphanumeric_chars
   end
 
+  @spec answer_valid?(%FillInQuestion{}, map) :: boolean
   def answer_valid?(%FillInQuestion{} = question, answer_json) do
     invalid_answers =
       answer_json["answers"]
@@ -93,7 +102,8 @@ defmodule BrettProjekt.Question.Type.FillIn do
     length(invalid_answers) < 1
   end
 
-  def answer_correct?(%FillInQuestion{} = question, answer_json) do
+  @spec answer_correct?(%FillInQuestion{}, map) :: boolean
+  defp answer_correct?(%FillInQuestion{} = question, answer_json) do
     correct_answers =
       answer_json["answers"]
       |> Enum.with_index

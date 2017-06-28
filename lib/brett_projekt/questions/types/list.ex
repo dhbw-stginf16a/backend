@@ -1,6 +1,8 @@
 defmodule BrettProjekt.Question.Type.List do
   alias BrettProjekt.Question.Type.List, as: ListQuestion
 
+  @type question_parsing_error :: {:error, atom} | {:error, atom, []}
+
   @enforce_keys [
     :id,
     :question,
@@ -18,12 +20,14 @@ defmodule BrettProjekt.Question.Type.List do
     :required_answers
   ]
 
+  @spec parse_answers([map]) :: [String.t]
   defp parse_answers(imported_answers) do
     Enum.map(imported_answers, fn answer ->
       normalize_answer(answer["text"])
     end)
   end
 
+  @spec parse(map) :: %ListQuestion{} | question_parsing_error
   def parse(imported) do
     %BrettProjekt.Question.Type.List{
       id: imported["id"],
@@ -35,6 +39,7 @@ defmodule BrettProjekt.Question.Type.List do
     }
   end
 
+  @spec answer_valid?(%ListQuestion{}, map) :: boolean
   def answer_valid?(_question, json) do
     case json["answers"] do
       answers when is_list answers ->
@@ -46,6 +51,7 @@ defmodule BrettProjekt.Question.Type.List do
     end
   end
 
+  @spec remove_non_alphanumeric_chars(String.t) :: String.t
   defp remove_non_alphanumeric_chars(string) do
     valid_chars =
       [
@@ -60,6 +66,7 @@ defmodule BrettProjekt.Question.Type.List do
     |> to_string
   end
 
+  @spec normalize_answer(String.t) :: String.t
   defp normalize_answer(answer) do
     answer
     |> String.downcase
@@ -70,6 +77,7 @@ defmodule BrettProjekt.Question.Type.List do
     |> remove_non_alphanumeric_chars
   end
 
+  @spec answer_correct?(%ListQuestion{}, map) :: boolean
   defp answer_correct?(%ListQuestion{} = question, answer_json) do
     {correct_answers, _used_solutions} =
       answer_json["answers"]
