@@ -16,7 +16,6 @@ defmodule BrettProjekt.Question.Parser.V1_0 do
                                   {:error, error_code :: atom, msg :: atom}
   @type json_object :: %{string => any}
 
-
   @spec parse(json_object) :: %{question_id => question_struct} |
                                                question_parsing_error
   def parse(decoded_json) do
