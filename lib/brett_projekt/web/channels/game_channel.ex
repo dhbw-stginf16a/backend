@@ -6,8 +6,7 @@ defmodule BrettProjekt.Web.GameChannel do
   @spec auth_token_valid?(String.t, GameManager.game_id) ::
     {:ok, struct} |
     {:error, :auth_token_invalid} |
-    {:error, :auth_token_missing} |
-    {:error, :auth_token_invalid}
+    {:error, :auth_token_missing}
   def auth_token_valid?(auth_token, game_id) do
     verification = Phoenix.Token.verify(BrettProjekt.Web.Endpoint,
                                         "user_auth", auth_token)
@@ -35,7 +34,11 @@ defmodule BrettProjekt.Web.GameChannel do
 
   @spec handle_in(String.t, map, Phoenix.Socket.t) ::
     {:reply,
-      :ok | {:error, %{reason: any}},
+      :ok | {:error, %{reason:
+        :team_invalid |
+        :auth_token_invalid |
+        :auth_token_missing
+      }},
       Phoenix.Socket.t}
   def handle_in("set_team", payload, socket) do
     case auth_token_valid?(payload["auth_token"], socket.assigns[:game_id]) do

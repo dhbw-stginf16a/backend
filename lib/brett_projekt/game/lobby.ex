@@ -1,6 +1,17 @@
 defmodule BrettProjekt.Game.Lobby do
   alias BrettProjekt.Game.Lobby, as: Lobby
 
+  @type t ::%__MODULE__{
+    teams: %{
+      team_id => [player_id]
+    },
+    players: %{
+      player_id => %{
+        name: String.t,
+        ready: boolean
+      }
+    }
+  }
   defstruct [
     {:teams, %{}},
     {:players, %{}}
@@ -136,6 +147,19 @@ defmodule BrettProjekt.Game.Lobby do
   end
 
   def get_update_broadcast(lobby_state) do
-    {:ok, {lobby_state, Map.put(lobby_state, :startable, false)}}
+    players =
+      for {team_id, team} <- lobby_state.teams do
+        for player_id <- team do
+          lobby_state.players[player_id]
+          |> Map.put(:team, team_id)
+          |> Map.put(:id, player_id)
+        end
+      end
+      |> List.flatten
+
+    {:ok, %{
+      startable: false,
+      players: players 
+    }}
   end
 end
