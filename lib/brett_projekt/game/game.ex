@@ -67,4 +67,17 @@ defmodule BrettProjekt.Game do
   def set_ready(game, player_id, ready) do
     apply_pure_function(game, &(Game.Lobby.set_ready(&1, player_id, ready)))
   end
+
+  @spec get_mode(Agent.agent) :: atom
+  def get_mode(game) do
+    game_state = Agent.get(game, &(&1))
+
+    case Map.get(game_state, :__struct__) do
+      Game.Lobby -> :lobby
+      Game.RoundPreparation -> :round_preparation
+      Game.Round -> :round
+      Game.RoundEvaluation -> :round_evaluation
+      Game.EndGame -> :game_end
+    end
+  end
 end
