@@ -1,5 +1,6 @@
 defmodule BrettProjekt.Game.Lobby do
   alias BrettProjekt.Game.Lobby, as: Lobby
+  alias BrettProjekt.Game.LobbyStateTransformation, as: LobbyTrafo
 
   @type t :: %__MODULE__{
     teams: %{
@@ -159,27 +160,11 @@ defmodule BrettProjekt.Game.Lobby do
         end
       end
       |> List.flatten
-    {:ok, {_, startable}} = game_startable?(lobby_state)
+    {startable, _error} = LobbyTrafo.game_startable?(lobby_state)
 
     {:ok, {lobby_state, %{
       startable: startable,
       players: players
     }}}
-  end
-
-  def game_startable?(lobby_state) do
-    all_players_ready =
-      Enum.all?(lobby_state.players, fn {player_id, player} ->
-        team_id = get_player_team_id(lobby_state, player_id)
-        ready = player.ready
-
-        team_id != nil and ready
-      end)
-
-    if all_players_ready do
-      {:ok, {lobby_state, true}}
-    else
-      {:ok, {lobby_state, false}}
-    end
   end
 end

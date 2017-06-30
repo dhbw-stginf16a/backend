@@ -65,7 +65,8 @@ defmodule BrettProjekt.Game.RoundPreparation do
   defp force_set_player_categories(game_state, player_id, category_ids) do
     teams =
       game_state.teams
-      |> Enum.map(fn {team_id, %{players: players, categories: categories}} ->
+      |> Enum.map(fn {team_id, %{players: players, categories: categories,
+                                 points: points}} ->
         categories =
           if players |> Map.keys |> Enum.member?(player_id) do
             map_set_values(categories, category_ids, player_id)
@@ -74,7 +75,8 @@ defmodule BrettProjekt.Game.RoundPreparation do
           end
         {team_id, %{
           players: players,
-          categories: categories
+          categories: categories,
+          points: points
         }}
       end)
       |> Enum.into(%{})

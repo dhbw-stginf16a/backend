@@ -14,7 +14,13 @@ defmodule BrettProjekt.Game.LobbyStateTransformation do
   end
 
   # isses jetz oder net?
-  @spec game_startable?(Lobby.t) :: boolean
+  @spec game_startable?(Lobby.t) ::
+    {false,
+      :not_everyone_ready |
+      :no_players |
+      :you_are_alone
+    } |
+    {true, nil}
   def game_startable?(state) do
     cond do
       not everyone_ready?(state) -> {false, :not_everyone_ready}
@@ -55,7 +61,8 @@ defmodule BrettProjekt.Game.LobbyStateTransformation do
       |> Enum.map(fn {team_id, player_ids} ->
         {team_id, %{
           players: get_players_by_id(state, player_ids),
-          categories: category_map
+          categories: category_map,
+          points: 0
         }}
       end)
       |> Enum.into(%{})

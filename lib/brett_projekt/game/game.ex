@@ -43,9 +43,15 @@ defmodule BrettProjekt.Game do
     end
   end
 
-  @spec game_startable?(Agent.agent) :: {:ok, boolean}
+  @spec game_startable?(Agent.agent) :: {:ok, nil} | {:error, atom}
   def game_startable?(game) do
-    apply_pure_function(game, &Game.Lobby.game_startable?/1)
+    apply_pure_function(game, fn state ->
+      case LobbyTrafo.game_startable?(state) do
+
+        {true, nil} -> {:ok, state}
+        {false, error} -> {:error, error}
+      end
+    end)
   end
 
   def switch_team(game, player_id, team_id) do
@@ -86,14 +92,10 @@ defmodule BrettProjekt.Game do
     {:error, :not_everyone_ready} |
     {:error, :no_players} |
     {:error, :you_are_alone} |
+    {:error, :missing_permission}
     {:ok, nil}
   def start_game(game) do
-    apply_pure_function(game, fn (state) ->
-      state
-      |> IO.inspect(label: "BEFORE PURE SHIAT")
-      |> LobbyTrafo.transform
-      |> IO.inspect(label: "AFTER pure ShIaTand")
-    end)
+    apply_pure_function(game, &LobbyTrafo.transform/1)
   end
 
   def get_round_preparation_broadcast(game) do

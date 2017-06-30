@@ -15,7 +15,8 @@ defmodule BrettProjekt.Game.RoundPreparationTest do
             5 => nil,
             1 => nil,
             2 => nil
-          }
+          },
+          points: 0
         },
         1 => %{
           players: %{
@@ -25,7 +26,8 @@ defmodule BrettProjekt.Game.RoundPreparationTest do
             5 => nil,
             1 => nil,
             2 => nil
-          }
+          },
+          points: 0
         },
         2 => %{
           players: %{
@@ -35,7 +37,8 @@ defmodule BrettProjekt.Game.RoundPreparationTest do
             5 => nil,
             1 => nil,
             2 => nil
-          }
+          },
+          points: 0
         }
       }
     }
