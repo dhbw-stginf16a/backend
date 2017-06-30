@@ -34,6 +34,22 @@ defmodule BrettProjekt.Web.GameChannel do
 
   @spec handle_in(String.t, map, Phoenix.Socket.t) ::
     {:reply,
+      :ok | {:error, %{reason: :auth_token_invalid | :auth_token_missing}},
+      Phoenix.Socket.t}
+  def handle_in("trigger_lobby_update", payload, socket) do
+    case auth_token_valid?(payload["auth_token"], socket.assigns[:game_id]) do
+      {:ok, token_payload} ->
+        game = GameManager.get_game_by_id(:main_game_manager,
+                                          token_payload.game_id)
+
+        broadcast_lobby_update(socket, game)
+        {:reply, :ok, socket}
+      {:error, msg} -> {:reply, {:error, %{reason: msg}}, socket}
+    end
+  end
+
+  @spec handle_in(String.t, map, Phoenix.Socket.t) ::
+    {:reply,
       :ok | {:error, %{reason:
         :team_invalid |
         :auth_token_invalid |
