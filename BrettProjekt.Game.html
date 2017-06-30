@@ -8,7 +8,7 @@
     <title>BrettProjekt.Game – brett_projekt v0.0.1</title>
     <link rel="stylesheet" href="dist/app-4ecae1abb8.css" />
     
-    <script src="dist/sidebar_items-bbed955e3a.js"></script>
+    <script src="dist/sidebar_items-572a9728c4.js"></script>
   </head>
   <body data-type="modules">
     <script>try { if(localStorage.getItem('night-mode')) document.body.className += ' night-mode'; } catch (e) { }</script>
@@ -141,6 +141,18 @@
 </div>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="#get_round_preparation_broadcast/1">get_round_preparation_broadcast(game)</a>
+  </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#get_state/1">get_state(game)</a>
+  </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="#name_valid?/1">name_valid?(name)</a>
   </div>
   
@@ -148,6 +160,12 @@
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#set_ready/3">set_ready(game, player_id, ready)</a>
+  </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#start_game/1">start_game(game)</a>
   </div>
   
 </div>
@@ -312,7 +330,7 @@
     
       <div class="specs">
         
-          <pre>game_startable?(<a href="https://hexdocs.pm/elixir/Agent.html#t:agent/0">Agent.agent</a>) :: {:ok, boolean}</pre>
+          <pre>game_startable?(<a href="https://hexdocs.pm/elixir/Agent.html#t:agent/0">Agent.agent</a>) :: {:ok, nil} | {:error, atom}</pre>
         
       </div>
     
@@ -359,6 +377,38 @@
     
   </section>
 </div>
+<div class="detail" id="get_round_preparation_broadcast/1">
+  
+  <div class="detail-header">
+    <a href="#get_round_preparation_broadcast/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <span class="signature">get_round_preparation_broadcast(game)</span>
+    
+    
+    
+  </div>
+  <section class="docstring">
+    
+  </section>
+</div>
+<div class="detail" id="get_state/1">
+  
+  <div class="detail-header">
+    <a href="#get_state/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <span class="signature">get_state(game)</span>
+    
+    
+    
+  </div>
+  <section class="docstring">
+    
+  </section>
+</div>
 <div class="detail" id="name_valid?/1">
   
   <div class="detail-header">
@@ -391,6 +441,32 @@
           <pre>set_ready(<a href="https://hexdocs.pm/elixir/Agent.html#t:agent/0">Agent.agent</a>, non_neg_integer, boolean) ::
   {:ok, nil} |
   {:error, :invalid_player_id}</pre>
+        
+      </div>
+    
+  </div>
+  <section class="docstring">
+    
+  </section>
+</div>
+<div class="detail" id="start_game/1">
+  
+  <div class="detail-header">
+    <a href="#start_game/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <span class="signature">start_game(game)</span>
+    
+    
+    
+      <div class="specs">
+        
+          <pre>start_game(<a href="https://hexdocs.pm/elixir/Agent.html#t:agent/0">Agent.agent</a>) ::
+  {:error, :not_everyone_ready} |
+  {:error, :no_players} |
+  {:error, :you_are_alone} |
+  {:error, :missing_permission}</pre>
         
       </div>
     

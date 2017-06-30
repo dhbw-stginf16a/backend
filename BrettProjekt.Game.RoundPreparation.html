@@ -8,7 +8,7 @@
     <title>BrettProjekt.Game.RoundPreparation – brett_projekt v0.0.1</title>
     <link rel="stylesheet" href="dist/app-4ecae1abb8.css" />
     
-    <script src="dist/sidebar_items-bbed955e3a.js"></script>
+    <script src="dist/sidebar_items-572a9728c4.js"></script>
   </head>
   <body data-type="modules">
     <script>try { if(localStorage.getItem('night-mode')) document.body.className += ' night-mode'; } catch (e) { }</script>
@@ -78,6 +78,43 @@
             Summary
           </h1>
           
+  <div class="summary-types summary">
+    <h2>
+      <a href="#types">Types</a>
+    </h2>
+    <div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:category_id/0">category_id()</a>
+  </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:player_id/0">player_id()</a>
+  </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:t/0">t()</a>
+  </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:team/0">team()</a>
+  </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:team_id/0">team_id()</a>
+  </div>
+  
+</div>
+
+  </div>
+
 
           
   <div class="summary-functions summary">
@@ -85,6 +122,12 @@
       <a href="#functions">Functions</a>
     </h2>
     <div class="summary-row">
+  <div class="summary-signature">
+    <a href="#get_broadcast/1">get_broadcast(prep_state)</a>
+  </div>
+  
+</div>
+<div class="summary-row">
   <div class="summary-signature">
     <a href="#set_player_categories/3">set_player_categories(game_state, player_id, category_ids)</a>
   </div>
@@ -100,6 +143,129 @@
       
 
       
+        <section id="types" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#types">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+            Types
+          </h1>
+          <div class="types-list">
+            <div class="detail" id="t:category_id/0">
+  
+  <div class="detail-header">
+    <a href="#t:category_id/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <span class="signature">category_id()</span>
+    
+    
+    
+      <div class="specs">
+        
+          <pre>category_id() :: non_neg_integer</pre>
+        
+      </div>
+    
+  </div>
+  <section class="docstring">
+    
+  </section>
+</div>
+<div class="detail" id="t:player_id/0">
+  
+  <div class="detail-header">
+    <a href="#t:player_id/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <span class="signature">player_id()</span>
+    
+    
+    
+      <div class="specs">
+        
+          <pre>player_id() :: non_neg_integer</pre>
+        
+      </div>
+    
+  </div>
+  <section class="docstring">
+    
+  </section>
+</div>
+<div class="detail" id="t:t/0">
+  
+  <div class="detail-header">
+    <a href="#t:t/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <span class="signature">t()</span>
+    
+    
+    
+      <div class="specs">
+        
+          <pre>t() :: %BrettProjekt.Game.RoundPreparation{categories: [<a href="#t:category_id/0">category_id</a>], teams: %{optional(<a href="#t:team_id/0">team_id</a>) => %{players: %{optional(<a href="#t:player_id/0">player_id</a>) => <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>}, categories: %{optional(<a href="#t:category_id/0">category_id</a>) => <a href="#t:player_id/0">player_id</a>}}}}</pre>
+        
+      </div>
+    
+  </div>
+  <section class="docstring">
+    
+  </section>
+</div>
+<div class="detail" id="t:team/0">
+  
+  <div class="detail-header">
+    <a href="#t:team/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <span class="signature">team()</span>
+    
+    
+    
+      <div class="specs">
+        
+          <pre>team() :: [non_neg_integer]</pre>
+        
+      </div>
+    
+  </div>
+  <section class="docstring">
+    
+  </section>
+</div>
+<div class="detail" id="t:team_id/0">
+  
+  <div class="detail-header">
+    <a href="#t:team_id/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <span class="signature">team_id()</span>
+    
+    
+    
+      <div class="specs">
+        
+          <pre>team_id() :: non_neg_integer</pre>
+        
+      </div>
+    
+  </div>
+  <section class="docstring">
+    
+  </section>
+</div>
+
+          </div>
+        </section>
+      
 
       
         <section id="functions" class="details-list">
@@ -110,7 +276,23 @@
             </a>
             Functions
           </h1>
-          <div class="detail" id="set_player_categories/3">
+          <div class="detail" id="get_broadcast/1">
+  
+  <div class="detail-header">
+    <a href="#get_broadcast/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <span class="signature">get_broadcast(prep_state)</span>
+    
+    
+    
+  </div>
+  <section class="docstring">
+    
+  </section>
+</div>
+<div class="detail" id="set_player_categories/3">
   
   <div class="detail-header">
     <a href="#set_player_categories/3" class="detail-link" title="Link to this function">

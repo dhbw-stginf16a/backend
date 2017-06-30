@@ -8,7 +8,7 @@
     <title>BrettProjekt.Game.LobbyStateTransformation – brett_projekt v0.0.1</title>
     <link rel="stylesheet" href="dist/app-4ecae1abb8.css" />
     
-    <script src="dist/sidebar_items-bbed955e3a.js"></script>
+    <script src="dist/sidebar_items-572a9728c4.js"></script>
   </head>
   <body data-type="modules">
     <script>try { if(localStorage.getItem('night-mode')) document.body.className += ' night-mode'; } catch (e) { }</script>
@@ -86,7 +86,7 @@
     </h2>
     <div class="summary-row">
   <div class="summary-signature">
-    <a href="#get_team_players/2">get_team_players(state, team_id)</a>
+    <a href="#game_startable?/1">game_startable?(state)</a>
   </div>
   
 </div>
@@ -116,16 +116,24 @@
             </a>
             Functions
           </h1>
-          <div class="detail" id="get_team_players/2">
+          <div class="detail" id="game_startable?/1">
   
   <div class="detail-header">
-    <a href="#get_team_players/2" class="detail-link" title="Link to this function">
+    <a href="#game_startable?/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <span class="signature">get_team_players(state, team_id)</span>
+    <span class="signature">game_startable?(state)</span>
     
     
+    
+      <div class="specs">
+        
+          <pre>game_startable?(<a href="BrettProjekt.Game.Lobby.html#t:t/0">BrettProjekt.Game.Lobby.t</a>) ::
+  {false, :not_everyone_ready | :no_players | :you_are_alone} |
+  {true, nil}</pre>
+        
+      </div>
     
   </div>
   <section class="docstring">
