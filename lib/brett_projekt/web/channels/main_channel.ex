@@ -70,7 +70,11 @@ defmodule BrettProjekt.Web.MainChannel do
                   %{game_id: game_id, player_id: player_id}
                 )
 
-                {:reply, {:ok, %{auth_token: token}}, socket}
+                {:reply, {:ok, %{
+                  auth_token: token,
+                  player_id: player_id,
+                  team_count: 3 # TODO: Calculate team-count on the fly
+                }}, socket}
             end
         end
     end
