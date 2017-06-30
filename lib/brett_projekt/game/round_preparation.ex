@@ -1,9 +1,28 @@
 defmodule BrettProjekt.Game.RoundPreparation do
 
+  @type t :: %__MODULE__{
+    categories: [category_id],
+    teams: %{
+      team_id => %{
+        players: %{
+          player_id => String.t
+        },
+        categories: %{
+          category_id => player_id
+        }
+      }
+    }
+  }
   defstruct [
     {:categories, []},
     {:teams, %{}}
   ]
+
+  # move all those types in a common module
+  @type team :: [non_neg_integer]
+  @type player_id :: non_neg_integer
+  @type team_id :: non_neg_integer
+  @type category_id :: non_neg_integer
 
   defp any_category_taken?(game_state, category_ids, player_id) do
     game_state.teams
@@ -78,5 +97,16 @@ defmodule BrettProjekt.Game.RoundPreparation do
       {category_id, answerer_id}
     end)
     |> Enum.into(%{})
+  end
+
+  def get_broadcast(prep_state) do
+    {:ok, {prep_state, %{
+      categories: %{
+        7 => "Some very unimportant stuff",
+        2 => "Anything at all",
+        3 => "Covfefe",
+      },
+      teams: prep_state.teams
+    }}}
   end
 end

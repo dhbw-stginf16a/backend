@@ -117,12 +117,17 @@ defmodule BrettProjekt.Web.GameChannel do
         player_id = token_payload.player_id
         {:ok, startable} = Game.game_startable?(game)
         cond do
-          not startable ->
+          not startable ->  # TODO use the built in logix of  lobbytrafo
             {:reply, {:error, %{reason: :game_not_startable}}, socket}
-          player_id == 0 ->
+          player_id != 0 ->
             {:reply, {:error, %{reason: :missing_permission}}, socket}
           true ->
-            nil
+            # ignore error because startable is already checked
+            IO.inspect Game.get_state(game), label: "antes"
+            _ = Game.start_game(game)
+            IO.inspect Game.get_state(game), label: "después"
+            broadcast_round_preparation(socket, game)
+            {:reply, :ok, socket}
         end
       {:error, msg} -> {:reply, {:error, %{reason: msg}}, socket}
     end
@@ -131,5 +136,12 @@ defmodule BrettProjekt.Web.GameChannel do
   def broadcast_lobby_update(socket, game) do
     struct = Game.get_lobby_update_broadcast(game)
     broadcast!(socket, "lobby_update", struct)
+  end
+
+
+  # Round prep
+  def broadcast_round_preparation(socket, game) do
+    struct = Game.get_round_preparation_broadcast(game)
+    broadcast!(socket, "round_preparation", struct)
   end
 end

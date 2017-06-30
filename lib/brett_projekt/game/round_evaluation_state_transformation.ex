@@ -20,23 +20,25 @@ defmodule BrettProjekt.Game.RoundEvaluationStateTransformation do
         end)
       end
 
-    transform(teams, Enum.max(team_points))
+    transform(teams, team_points, Enum.max(team_points))
   end
 
-  def transform(teams, points) when points >= @min_points do
+  def transform(teams, team_points, max_points) when max_points >= @min_points do
     {:ok, %EndGame{teams: teams}}
   end
 
-  def transform(teams, _points) do
+  def transform(teams, team_points, _points) do
     category_map = for category_id <- @new_categories, into: %{} do
       {category_id, nil}
     end
     new_teams =
-      teams
-      |> Enum.map(fn {team_id, team} ->
+      [teams, team_points]
+      |> Enum.zip
+      |> Enum.map(fn {{team_id, team}, points} ->
         {team_id, %{
           players: team.players,
-          categories: Map.merge(team.categories, category_map)
+          categories: Map.merge(team.categories, category_map),
+          points: points
         }}
       end)
       |> Enum.into(%{})

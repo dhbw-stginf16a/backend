@@ -1,5 +1,6 @@
 defmodule BrettProjekt.Game do
   alias __MODULE__, as: Game
+  alias BrettProjekt.Game.LobbyStateTransformation, as: LobbyTrafo
 
   @spec create(pos_integer) :: {:ok, pid}
   def create(team_count) do
@@ -79,5 +80,29 @@ defmodule BrettProjekt.Game do
       Game.RoundEvaluation -> :round_evaluation
       Game.EndGame -> :game_end
     end
+  end
+
+  @spec start_game(Agent.agent) ::
+    {:error, :not_everyone_ready} |
+    {:error, :no_players} |
+    {:error, :you_are_alone} |
+    {:ok, nil}
+  def start_game(game) do
+    apply_pure_function(game, fn (state) ->
+      state
+      |> IO.inspect(label: "BEFORE PURE SHIAT")
+      |> LobbyTrafo.transform
+      |> IO.inspect(label: "AFTER pure ShIaTand")
+    end)
+  end
+
+  def get_round_preparation_broadcast(game) do
+    {:ok, prep} =
+      apply_pure_function(game, &Game.RoundPreparation.get_broadcast/1)
+    prep
+  end
+
+  def get_state(game) do
+    {:ok, Agent.get(game, &(&1))}
   end
 end

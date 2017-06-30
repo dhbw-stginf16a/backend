@@ -31,9 +31,19 @@ defmodule BrettProjekt.Game.RoundEvaluationStateTransformationTest do
     new_teams =
       base_state.teams
       |> Enum.map(fn {team_id, team} ->
+        points =
+          team.players
+          |> Enum.reduce(0, fn ({_id, player}, player_sum) ->
+            player.questions
+            |> hd
+            |> Enum.reduce(player_sum, fn ({_id, question}, sum) ->
+              sum + question.score
+            end)
+          end)
         {team_id, %{
           players: team.players,
-          categories: Map.merge(team.categories, category_map)
+          categories: Map.merge(team.categories, category_map),
+          points: points
         }}
       end)
       |> Enum.into(%{})

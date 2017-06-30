@@ -1,7 +1,7 @@
 defmodule BrettProjekt.Game.Lobby do
   alias BrettProjekt.Game.Lobby, as: Lobby
 
-  @type t ::%__MODULE__{
+  @type t :: %__MODULE__{
     teams: %{
       team_id => [player_id]
     },
@@ -148,7 +148,7 @@ defmodule BrettProjekt.Game.Lobby do
   end
 
   def get_update_broadcast(lobby_state) do
-    # TODO breaks if player is not in team
+    # TODO breaks if player is not in any team
     # - player isnt broadcasted
     players =
       for {team_id, team} <- lobby_state.teams do
