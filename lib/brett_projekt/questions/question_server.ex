@@ -83,7 +83,7 @@ defmodule BrettProjekt.Question.Server do
   @doc """
   Get all questions as a list.
   """
-  @spec get_questions(pid) :: list
+  @spec get_questions(Agent.agent) :: list
   def get_questions(question_server) do
     Agent.get(question_server, fn state -> Map.values state.questions end)
   end
@@ -91,8 +91,55 @@ defmodule BrettProjekt.Question.Server do
   @doc """
   Get a question by its id.
   """
-  @spec get_question(pid, integer) :: map
+  @spec get_question(Agent.agent, integer) :: map
   def get_question(question_server, id) do
     Agent.get(question_server, fn state -> Map.get(state.questions, id) end)
+  end
+
+  @doc """
+  Returns a list of all categories
+  """
+  @spec get_categories(Agent.agent) :: list
+  def get_categories(question_server) do
+    Agent.get(question_server, fn state -> state.categories end)
+  end
+
+  @type team_id :: non_neg_integer
+  @type category_id :: non_neg_integer
+  @type question_id :: non_neg_integer
+  @type question :: any
+
+  @spec get_questions_by_categories(Agent.agent, [category_id], [team_id]) ::
+    %{
+      team_id => %{
+        category_id => %{
+          question_id => question
+        }
+      }
+    }
+  def get_questions_by_categories(question_server, category_ids, team_ids) do
+    for current_team <- team_ids, into: %{} do
+      {
+        current_team,
+        for category_id <- category_ids, into: %{} do
+          {
+            category_id,
+            [get_question_from_category(question_server, category_id)]
+            |> Enum.into(%{})
+          }
+        end
+      }
+    end
+  end
+
+  @spec get_question_from_category(Agent.agent, category_id) :: question
+  def get_question_from_category(question_server, category_id) do
+    Agent.get(question_server, fn state ->
+      state.questions
+      |> Enum.filter(fn {question_id, question} ->
+        question.category == category_id
+      end)
+      |> Enum.random
+    end)
   end
 end

@@ -11,10 +11,11 @@ defmodule BrettProjekt.Question.Parser.V1_0 do
   """
 
   @type question_id :: non_neg_integer
+  @type category_id :: non_neg_integer
   @type question_struct :: map
   @type question_parsing_error :: {:error, error_code :: atom} |
                                   {:error, error_code :: atom, msg :: atom}
-  @type json_object :: %{string => any}
+  @type json_object :: %{String.t => any}
 
   @doc """
   Further parse the incoming data already in elixir datastructures (by Poison)
@@ -22,8 +23,9 @@ defmodule BrettProjekt.Question.Parser.V1_0 do
   This will generate a map of categories (%{category_id: label}) as well as a
   map of questions (%{question_id: question})
   """
-  @spec parse(json_object) :: %{question_id => question_struct} |
-                                               question_parsing_error
+  @spec parse(json_object) ::
+    {%{question_id => question_struct}, %{category_id => String.t}} |
+    question_parsing_error
   def parse(decoded_json) do
     {questions, categories_map} =
       decoded_json
@@ -35,12 +37,18 @@ defmodule BrettProjekt.Question.Parser.V1_0 do
       |> assign_question_ids
       |> to_question_structs
 
-    {question_structs, categories_map}
+    if is_map(question_structs) do
+      # Everything fine
+      {question_structs, categories_map}
+    else
+      # question_structs is probably an error, return it
+      question_structs
+    end
   end
 
   def get_highest_list_value(list, default \\ nil)
   def get_highest_list_value([], default), do: default
-  def get_highest_list_value(list, default) do
+  def get_highest_list_value(list, _default) do
     list
     |> Enum.sort
     |> Enum.take(-1)
@@ -50,7 +58,7 @@ defmodule BrettProjekt.Question.Parser.V1_0 do
   @spec get_category_id(String.t, map) :: {non_neg_integer, map}
   def get_category_id(category_label, categories_map) do
     result =
-      Enum.find(categories_map, fn {cat_id, cat_label} ->
+      Enum.find(categories_map, fn {_cat_id, cat_label} ->
         cat_label == category_label
       end)
 
