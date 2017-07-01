@@ -135,6 +135,25 @@ defmodule BrettProjekt.Web.GameChannel do
     end
   end
 
+  @spec handle_in(String.t, map, Phoenix.Socket.t) ::
+    {:reply, :ok | {:error, %{reason: atom}}, Phoenix.Socket.t}
+  def handle_in("set_categories", payload, socket) do
+    case auth_token_valid?(payload["auth_token"], socket.assigns[:game_id]) do
+      {:ok, token_payload} ->
+        game = GameManager.get_game_by_id(:main_game_manager,
+                                          token_payload.game_id)
+        player_id = token_payload.player_id
+
+        case Game.set_player_categories(game, player_id, payload["categories"]) do
+          :ok ->
+            broadcast_round_preparation(socket, game)
+            {:reply, :ok, socket}
+          {:error, msg} -> {:reply, {:error, %{reason: msg}}, socket}
+        end
+      {:error, msg} -> {:reply, {:error, %{reason: msg}}, socket}
+    end
+  end
+
   def broadcast_lobby_update(socket, game) do
     struct = Game.get_lobby_update_broadcast(game)
     broadcast!(socket, "lobby_update", struct)

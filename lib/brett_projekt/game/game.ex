@@ -1,6 +1,7 @@
 defmodule BrettProjekt.Game do
   alias __MODULE__, as: Game
   alias BrettProjekt.Game.LobbyStateTransformation, as: LobbyTrafo
+  alias Game.RoundPreparation, as: RoundPrep
 
   @spec create(pos_integer) :: {:ok, pid}
   def create(team_count) do
@@ -61,6 +62,14 @@ defmodule BrettProjekt.Game do
 
   def add_new_player(game, name) do
     apply_pure_function(game, &(Game.Lobby.add_player(&1, name)))
+  end
+
+  def set_player_categories(game, player_id, category_ids) do
+    case apply_pure_function(game,
+          &(RoundPrep.set_player_categories(&1,player_id, category_ids))) do
+      {:ok, nil} -> :ok
+      {:error, error} -> {:error, error}
+    end
   end
 
   def get_lobby_update_broadcast(game) do

@@ -25,12 +25,16 @@ defmodule BrettProjekt.Game.RoundPreparation do
   @type category_id :: non_neg_integer
 
   defp any_category_taken?(game_state, category_ids, player_id) do
-    game_state.teams
-    |> Enum.any?(fn {_id, %{players: _, categories: categories}} ->
-      Enum.any?(categories, fn {category_id, answerer_id} ->
-        Enum.member?(category_ids, category_id) and answerer_id != nil
-        and answerer_id != player_id
+    {_team_id, team} =
+      Enum.find(game_state.teams, fn {_team_id, team} ->
+        team.players
+        |> Map.keys
+        |> Enum.member?(player_id)
       end)
+    Enum.any?(category_ids, fn category_id ->
+      # see http://www.urbandictionary.com/define.php?term=mooch
+      mooch = team.categories[category_id]
+      mooch != nil && mooch != player_id
     end)
   end
 
