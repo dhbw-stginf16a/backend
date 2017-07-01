@@ -8,7 +8,7 @@
     <title>BrettProjekt.Question.Parser.V1_0 – brett_projekt v0.0.1</title>
     <link rel="stylesheet" href="dist/app-4ecae1abb8.css" />
     
-    <script src="dist/sidebar_items-608a08bb21.js"></script>
+    <script src="dist/sidebar_items-b19f1f11e9.js"></script>
   </head>
   <body data-type="modules">
     <script>try { if(localStorage.getItem('night-mode')) document.body.className += ' night-mode'; } catch (e) { }</script>
@@ -88,6 +88,12 @@
       <a href="#types">Types</a>
     </h2>
     <div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:category_id/0">category_id()</a>
+  </div>
+  
+</div>
+<div class="summary-row">
   <div class="summary-signature">
     <a href="#t:json_object/0">json_object()</a>
   </div>
@@ -172,7 +178,29 @@
             Types
           </h1>
           <div class="types-list">
-            <div class="detail" id="t:json_object/0">
+            <div class="detail" id="t:category_id/0">
+  
+  <div class="detail-header">
+    <a href="#t:category_id/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <span class="signature">category_id()</span>
+    
+    
+    
+      <div class="specs">
+        
+          <pre>category_id() :: non_neg_integer</pre>
+        
+      </div>
+    
+  </div>
+  <section class="docstring">
+    
+  </section>
+</div>
+<div class="detail" id="t:json_object/0">
   
   <div class="detail-header">
     <a href="#t:json_object/0" class="detail-link" title="Link to this type">
@@ -185,7 +213,7 @@
     
       <div class="specs">
         
-          <pre>json_object() :: %{optional(string) => any}</pre>
+          <pre>json_object() :: %{optional(<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>) => any}</pre>
         
       </div>
     
@@ -330,7 +358,7 @@
       <div class="specs">
         
           <pre>parse(<a href="#t:json_object/0">json_object</a>) ::
-  %{optional(<a href="#t:question_id/0">question_id</a>) => <a href="#t:question_struct/0">question_struct</a>} |
+  {%{optional(<a href="#t:question_id/0">question_id</a>) => <a href="#t:question_struct/0">question_struct</a>}, %{optional(<a href="#t:category_id/0">category_id</a>) => <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>}} |
   <a href="#t:question_parsing_error/0">question_parsing_error</a></pre>
         
       </div>
