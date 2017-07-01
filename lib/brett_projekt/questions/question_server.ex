@@ -59,11 +59,11 @@ defmodule BrettProjekt.Question.Server do
       {:ok, decoded} ->
         case Map.get decoded, "version" do
           "1.0" ->
-            parsed = BrettProjekt.Question.Parser.V1_0.parse(decoded)
-            if is_map(parsed) do
-              set_questions(question_server, parsed)
-            else
-              parsed  # Is error message
+            case BrettProjekt.Question.Parser.V1_0.parse(decoded) do
+              {questions, categories_map} when
+                  is_map(questions) and is_map(categories_map) ->
+                set_questions(question_server, questions, categories_map)
+              error -> error
             end
           nil ->
             {:error, :file_invalid}
@@ -74,10 +74,9 @@ defmodule BrettProjekt.Question.Server do
     end
   end
 
-  defp set_questions(question_server, questions) do
+  defp set_questions(question_server, questions, categories_map) do
     Agent.update(question_server, fn state ->
-      categories = get_categories_from_questions questions
-      %QuestionServer{state | questions: questions, categories: categories}
+      %QuestionServer{state | questions: questions, categories: categories_map}
     end)
   end
 
@@ -95,27 +94,5 @@ defmodule BrettProjekt.Question.Server do
   @spec get_question(pid, integer) :: map
   def get_question(question_server, id) do
     Agent.get(question_server, fn state -> Map.get(state.questions, id) end)
-  end
-
-  @doc """
-  Returns a list of all categories
-  """
-  @spec get_categories(pid) :: list
-  def get_categories(question_server) do
-    Agent.get(question_server, fn state -> state.categories end)
-  end
-
-  @doc """
-  Generates a list of categories from a map of questions
-
-  This function, depending on the list of questions, may have a big overhead.
-  It is better to only call this function when importing the questions and
-  buffer its output.
-  """
-  defp get_categories_from_questions(questions) do
-    questions
-    |> Enum.reduce(MapSet.new, fn({_, question}, acc) ->
-      MapSet.put(acc, question.category) end)
-    |> Enum.to_list
   end
 end

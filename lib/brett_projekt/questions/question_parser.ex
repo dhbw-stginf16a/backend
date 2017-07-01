@@ -16,23 +16,65 @@ defmodule BrettProjekt.Question.Parser.V1_0 do
                                   {:error, error_code :: atom, msg :: atom}
   @type json_object :: %{string => any}
 
+  @doc """
+  Further parse the incoming data already in elixir datastructures (by Poison)
+
+  This will generate a map of categories (%{category_id: label}) as well as a
+  map of questions (%{question_id: question})
+  """
   @spec parse(json_object) :: %{question_id => question_struct} |
                                                question_parsing_error
   def parse(decoded_json) do
-    decoded_json
-    |> Map.get("categories")
-    |> flatten_categories
-    |> assign_question_ids
-    |> to_question_structs
+    {questions, categories_map} =
+      decoded_json
+      |> Map.get("categories")
+      |> flatten_categories
+
+    question_structs =
+      questions
+      |> assign_question_ids
+      |> to_question_structs
+
+    {question_structs, categories_map}
   end
 
-  # TODO: Category already in question (file format change)
-  @spec flatten_categories(json_object) :: [json_object]
-  defp flatten_categories(categories) do
-    Enum.flat_map(Map.to_list(categories), fn({category, questions}) ->
-      category_questions = Enum.map(questions, fn(question) ->
-        Map.put question, "category", category
+  def get_highest_list_value(list, default \\ nil)
+  def get_highest_list_value([], default), do: default
+  def get_highest_list_value(list, default) do
+    list
+    |> Enum.sort
+    |> Enum.take(-1)
+    |> hd
+  end
+
+  @spec get_category_id(String.t, map) :: {non_neg_integer, map}
+  def get_category_id(category_label, categories_map) do
+    result =
+      Enum.find(categories_map, fn {cat_id, cat_label} ->
+        cat_label == category_label
       end)
+
+    if result == nil do
+      new_id = get_highest_list_value(Map.keys(categories_map), -1) + 1
+
+      {new_id, Map.put(categories_map, new_id, category_label)}
+    else
+      {id, _label} = result
+      {id, categories_map}
+    end
+  end
+
+  @spec flatten_categories(json_object) :: {[json_object], map}
+  defp flatten_categories(categories) do
+    Enum.reduce(categories, {[], %{}},
+                fn({cat_label, cat_questions}, {questions, categories_map}) ->
+      {cat_id, categories_map} = get_category_id(cat_label, categories_map)
+
+      category_questions = Enum.map(cat_questions, fn(question) ->
+        Map.put(question, "category", cat_id)
+      end)
+
+      {questions ++ category_questions, categories_map}
     end)
   end
 
