@@ -8,7 +8,7 @@
     <title>BrettProjekt.Question.Parser.V1_0 – brett_projekt v0.0.1</title>
     <link rel="stylesheet" href="dist/app-4ecae1abb8.css" />
     
-    <script src="dist/sidebar_items-d2e1a1cd3b.js"></script>
+    <script src="dist/sidebar_items-608a08bb21.js"></script>
   </head>
   <body data-type="modules">
     <script>try { if(localStorage.getItem('night-mode')) document.body.className += ' night-mode'; } catch (e) { }</script>
@@ -122,8 +122,23 @@
     </h2>
     <div class="summary-row">
   <div class="summary-signature">
+    <a href="#get_category_id/2">get_category_id(category_label, categories_map)</a>
+  </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#get_highest_list_value/2">get_highest_list_value(list, default \\ nil)</a>
+  </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="#parse/1">parse(decoded_json)</a>
   </div>
+  
+    <div class="summary-synopsis"><p>Further parse the incoming data already in elixir datastructures (by Poison)</p>
+</div>
   
 </div>
 <div class="summary-row">
@@ -261,7 +276,47 @@
             </a>
             Functions
           </h1>
-          <div class="detail" id="parse/1">
+          <div class="detail" id="get_category_id/2">
+  
+  <div class="detail-header">
+    <a href="#get_category_id/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <span class="signature">get_category_id(category_label, categories_map)</span>
+    
+    
+    
+      <div class="specs">
+        
+          <pre>get_category_id(<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>, map) :: {non_neg_integer, map}</pre>
+        
+      </div>
+    
+  </div>
+  <section class="docstring">
+    
+  </section>
+</div>
+<div class="detail" id="get_highest_list_value/2">
+  
+    <span id="get_highest_list_value/1"></span>
+  
+  <div class="detail-header">
+    <a href="#get_highest_list_value/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <span class="signature">get_highest_list_value(list, default \\ nil)</span>
+    
+    
+    
+  </div>
+  <section class="docstring">
+    
+  </section>
+</div>
+<div class="detail" id="parse/1">
   
   <div class="detail-header">
     <a href="#parse/1" class="detail-link" title="Link to this function">
@@ -282,7 +337,10 @@
     
   </div>
   <section class="docstring">
-    
+    <p>Further parse the incoming data already in elixir datastructures (by Poison)</p>
+<p>This will generate a map of categories (%{category_id: label}) as well as a
+map of questions (%{question_id: question})</p>
+
   </section>
 </div>
 <div class="detail" id="to_question_struct/1">
